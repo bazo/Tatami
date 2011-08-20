@@ -1,10 +1,12 @@
 <?php
+namespace Tatami\Components\Datagrid\Actions;
+use Nette\ComponentModel\Component,    Nette\Utils\Html,    Nette\Utils\Strings;
 /**
  * Description of DynamicActionColumn
  *
  * @author Martin
  */
-class DibiDatagrid_DynamicAction extends DibiDatagrid_Action
+class DynamicAction extends Action
 {
     public
         $dynamicChange
@@ -12,7 +14,6 @@ class DibiDatagrid_DynamicAction extends DibiDatagrid_Action
 
     public function render()
     {
-        //var_dump($this->record);exit;
         $this->fillParams();
         $output = '';
         $this->dynamicChange[0]($this->value, $this->record, $this);
@@ -21,7 +22,7 @@ class DibiDatagrid_DynamicAction extends DibiDatagrid_Action
         {
             $presenter = Environment::getApplication()->getPresenter();
             $icon = $this->icon != null ? $this->icon : $this->title;
-            $output = Html::el('a')->add(Html::el('span')->class(sprintf('icon icon-%s', String::lower($icon))))
+            $output = Html::el('a')->add(Html::el('span')->class(sprintf('icon icon-%s', Strings::lower($icon))))
                        ->href($presenter->link($this->destination, array($this->key => $this->value) + $this->params))->title($this->title)
                        ->add($title)
                       ;//->setText($title);

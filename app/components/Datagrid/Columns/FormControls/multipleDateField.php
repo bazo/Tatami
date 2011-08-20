@@ -1,6 +1,6 @@
 <?php
 namespace Tatami\Components\Datagrid\Forms\Controls;
-use Nette\Utils\Html, Nette\Utils\Arrays;
+use Nette\Utils\Html, Nette\Utils\Arrays, \Nette\Forms\Controls\TextInput;
 /**
  * multipleDateField
  *

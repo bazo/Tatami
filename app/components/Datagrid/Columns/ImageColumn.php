@@ -1,4 +1,6 @@
 <?php
+namespace Tatami\Components\Datagrid\Columns;
+use Nette\Utils\Html;
 /**
  * Description of ImageColumn
  *

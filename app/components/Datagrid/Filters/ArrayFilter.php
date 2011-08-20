@@ -1,4 +1,5 @@
 <?php
+namespace Tatami\Components\Datagrid\Filters;
 /**
  * ArrayFilter
  *
@@ -25,7 +26,7 @@ class ArrayFilter extends BaseFilter
 
     public function getFilter(&$value)
     {
-        if(is_numeric($value)) return new FilterObject($this->parent->name, '= %i', (int)$value, (int)$value);
+        if(\is_numeric($value)) return new FilterObject($this->parent->name, '= %i', (int)$value, (int)$value);
         return new FilterObject($this->parent->name, '= %s', $value, $value);
     }
 

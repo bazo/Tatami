@@ -1,9 +1,5 @@
 <?php
-/* 
- * 
- * 
- */
-
+namespace Tatami\Components\Datagrid\Columns;
 /**
  * Description of StandardColumn
  *
@@ -13,4 +9,3 @@ class StandardColumn extends BaseColumn
 {
     
 }
-?>

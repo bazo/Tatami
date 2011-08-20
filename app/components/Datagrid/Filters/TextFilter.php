@@ -1,10 +1,12 @@
 <?php
+namespace Tatami\Components\Datagrid\Filters;
+use Nette\Forms\Controls\TextInput;
 /**
  * Description of TextFilter
  *
  * @author Martin
  */
-class DibiDatagrid_TextFilter extends BaseFilter
+class TextFilter extends BaseFilter
 {
     public function render()
     {

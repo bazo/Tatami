@@ -1,12 +1,12 @@
 <?php
 namespace Tatami\Components\Datagrid\Forms\Controls;
-
+use Nette\Forms\Controls\BaseControl;
 /**
  * Description of NullControl
  *
  * @author Martin
  */
-class NullControl extends FormControl
+class NullControl extends BaseControl
 {
     /**
      * @param  string  caption

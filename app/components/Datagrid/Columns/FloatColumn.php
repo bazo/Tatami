@@ -1,4 +1,5 @@
 <?php
+namespace Tatami\Components\Datagrid\Columns;
 /**
  * Description of IntegerColumn
  *

@@ -1,4 +1,5 @@
 <?php
+namespace Tatami\Components\Datagrid\Filters;
 /**
  * DataRangeFilterObject
  *

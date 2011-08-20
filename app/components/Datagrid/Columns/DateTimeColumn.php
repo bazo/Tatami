@@ -1,5 +1,5 @@
 <?php
-
+namespace Tatami\Components\Datagrid\Columns;
 /**
  * DateTimeColumn
  *

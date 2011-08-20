@@ -1,15 +1,12 @@
 <?php
-/* 
- * 
- * 
- */
-
+namespace Tatami\Components\Datagrid\Actions;
+use Nette\ComponentModel\Component,    Nette\Utils\Html;
 /**
  * Description of DibiDatagridAction
  *
  * @author Martin
  */
-class DibiDatagrid_Action extends Component
+class Action extends Component
 {
     protected
         $title,

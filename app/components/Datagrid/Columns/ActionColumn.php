@@ -1,6 +1,6 @@
 <?php
 namespace Tatami\Components\Datagrid\Columns;
-
+use Nette\Application\UI\Control;
 /**
  * Description of ActionColumn
  *

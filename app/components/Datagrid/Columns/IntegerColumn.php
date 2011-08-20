@@ -1,9 +1,5 @@
 <?php
-/* 
- * 
- * 
- */
-
+namespace Tatami\Components\Datagrid\Columns;
 /**
  * Description of IntegerColumn
  *
@@ -11,7 +7,7 @@
  */
 class IntegerColumn extends BaseColumn
 {
-    public function setRecord($value, DibiRow $record)
+    public function setRecord($value, $record)
     {
         $this->value = (int)$value;
         $this->record = $record;

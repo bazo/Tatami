@@ -1,12 +1,12 @@
 <?php
+namespace Tatami\Components\Datagrid;
+use Nette\Application\UI\Control, \Nette\ComponentModel\IContainer;
 /**
- * DibiDatagridPaginator
+ * Paginator
  *
  * @author Martin Bažík
- * @package Core
- * @persistent
  */
-class DibiDatagridPaginator extends Control
+class Paginator extends Control
 {
     public
         /**
@@ -30,7 +30,7 @@ class DibiDatagridPaginator extends Control
 
     public $onPageChange = array();
 
-    public function  __construct(IComponentContainer $parent = NULL, $name = NULL)
+    public function  __construct(IContainer $parent = NULL, $name = NULL)
     {
         parent::__construct($parent, $name);
     }

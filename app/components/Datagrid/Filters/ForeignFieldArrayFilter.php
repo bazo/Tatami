@@ -1,5 +1,6 @@
 <?php
 namespace Tatami\Components\Datagrid\Filters;
+use Nette\ComponentModel\IContainer;
 /**
  * ForeignFieldArrayFilter
  *
@@ -11,7 +12,7 @@ class ForeignFieldArrayFilter extends ArrayFilter
 	$filterField
     ;
     
-    public function  __construct(IComponentContainer $parent = NULL, $name = NULL, $items = array(), $filterField)
+    public function  __construct(IContainer $parent = NULL, $name = NULL, $items = array(), $filterField)
     {
         parent::__construct($parent, $name);
         $this->items = $items;
