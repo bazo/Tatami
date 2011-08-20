@@ -1,1 +1,5 @@
 /nbproject/private/
+/app/config/config.neon
+/temp/cache/
+/www/webtemp/
+/log/
