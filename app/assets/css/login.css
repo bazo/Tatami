@@ -1,0 +1,7 @@
+body{
+    background: url("/../images/login-box.png") no-repeat scroll center top #2B3237;
+}
+#login-box{
+    margin: 210px auto 0;
+    width: 400px;
+}

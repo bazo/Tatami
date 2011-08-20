@@ -1,0 +1,18 @@
+<?php
+/* 
+ * 
+ * 
+ */
+
+/**
+ * Description of IDatagridColumn
+ *
+ * @author Martin
+ */
+interface IDatagridColumn
+{
+    public function setRecord($value, DibiRow $record);
+
+    public function getValue();
+}
+?>

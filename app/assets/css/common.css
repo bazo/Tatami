@@ -1,0 +1,118 @@
+body{
+    font-family: 'PT Sans', 'Tahoma', sans-serif;
+    font-size: 12px;
+}
+h1{
+    font-size: 22px;
+}
+.block-border {
+    background: url("/../images/shine-effect.png") repeat-x scroll 0 0 rgba(33, 40, 44, 0.7);
+    border: 1px solid #25333C;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    margin-top: 15px;
+    padding: 8px;
+}
+.block-header {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: url("/../images/block-header-bg.png") repeat-x scroll left top #CFDEE5;
+    border-color: #4B5E6B #4B5E6B #9BA6AB;
+    border-style: solid;
+    border-width: 1px;
+    margin-bottom: -2px;
+    min-height: 38px;
+    position: relative;
+    z-index: 5;
+}
+.block-header h1 {
+    font-size: 16px;
+    line-height: 37px;
+    margin: 0;
+    padding: 0 0 0 10px;
+    color: #475D68;
+    font-weight: bold;
+    font-family: 'PT Sans','Tahoma',sans-serif;
+}
+.block-border .block-content {
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
+}
+.block-content {
+    background: none repeat scroll 0 0 #FAFAFA;
+    border: 1px solid #4B5E6B;
+    border-radius: 3px 3px 3px 3px;
+    padding: 0 10px;
+    position: relative;
+}
+.block-actions {
+    background: url("/../images/block-actions-bg.png") repeat-x scroll left bottom transparent;
+    border-radius: 0 0 5px 5px;
+    height: 44px;
+    margin: 0 -18px -18px -18px;
+    overflow: hidden;
+}
+.block-actions .button{
+    margin-top: 2px;
+}
+.block-actions ul {
+    list-style: none outside none;
+    margin-top: 5px;
+    padding-left: 10px;
+}
+.block-actions ul.actions-left {
+    float: left;
+    margin-left: 10px;
+}
+.block-actions ul.actions-right {
+    float: right;
+    margin-right: 10px;
+}
+.button{
+    background: url("/../images/button-blue.png") repeat-x scroll 0 0 #2D5672;
+    border-color: #111111;
+    border-radius: 20px 20px 20px 20px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+    color: #FFFFFF !important;
+    cursor: pointer;
+    display: inline-block;
+    height: 14px;
+    padding: 5px 10px;
+    text-decoration: none;
+    font-size: 12px;
+    text-transform: capitalize;
+}
+input::-moz-focus-inner /*Remove button padding in FF*/
+{ 
+    border: 0;
+    padding: 0;
+    margin: 0px;
+}
+
+input.button{
+    display: block;
+    height: 24px;
+    vertical-align: middle;
+}
+.button{
+    background: url("/../images/button-blue.png") repeat-x scroll 0 0 #2D5672;
+}
+.button:hover {
+    background: url("/../images/button-blue.png") repeat-x scroll 0 -24px #834A3F;
+}
+.button:active {
+    background: url("/../images/button-blue.png") repeat-x scroll 0 -48px #A85F51;
+}
+.button.red{
+    background: url("/../images/button-red.png") repeat-x scroll 0 0 #2D5672;
+}
+.button.red:hover {
+    background: url("/../images/button-red.png") repeat-x scroll 0 -24px #834A3F;
+}
+.button.red:active {
+    background: url("/../images/button-red.png") repeat-x scroll 0 -48px #A85F51;
+}

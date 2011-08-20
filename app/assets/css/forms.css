@@ -1,0 +1,45 @@
+form{
+    margin: 10px;
+    margin-left: 0;
+    margin-right: 0;
+}
+form table{
+    width: 100%;
+}
+form tr th, form tr td{
+    padding: 5px; 
+    vertical-align: center;
+}
+form th{
+    text-align: left;
+    width: auto;
+}
+form label{
+    font-weight: bold;
+    font-size: 12px;
+    color: #666666;
+}
+form input[type="text"], form input[type="password"], form textarea, form select {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #AAAAAA #CCCCCC #CCCCCC #AAAAAA;
+    border-radius: 3px 3px 3px 3px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) inset;
+    line-height: 1.5em;
+    padding: 5px 0;
+    color: #777777;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    outline: 0 none;
+    width: 100%;
+}
+input.text:focus, input.email:focus, input.password:focus, textarea.uniform:focus {
+    border-color : #999;
+    background : #fff url('/../images/bg-input-focus.png') repeat-x 0% 0%;
+} 

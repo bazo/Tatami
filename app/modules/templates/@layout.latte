@@ -1,0 +1,108 @@
+{**
+ * Tatami layout template.
+ *
+ * @copyright  Copyright (c) 2011 Martin Bazik
+ * @package    Tatami
+ *
+ * @param string   $basePath web base path
+ * @param string   $robots   tell robots how to index the content of a page (optional)
+ * @param array    $flashes  flash messages
+ *}
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<meta name="description" content="Tatami admin"/>
+	<meta name="robots" content="noindex"/>
+
+	<title>Tatami</title>
+	{control css 'reset.css', 'common.css', 'layout.css'}
+        {block #css}
+	    
+        {/block}
+        {block #js}
+        {/block}
+	<link rel="shortcut icon" href="{$basePath}/favicon.ico" type="image/x-icon"/>
+</head>
+<body id="top">
+    <div id="container">
+	<div id="header-surround">
+	    <header>
+		<div class="home">
+		<a href="{plink :Tatami:Dashboard:default}">
+		    tatami
+		</a>
+		</div>
+		<div class="divider-header"></div>
+		<div id="toolbox">
+		    <nav>
+			{control toolbar}
+		    </nav>
+		    <div id="statusbar">
+			<div id="user-menu">
+			    <a href="" class="ajax">
+				<span class="icon icon-user"></span>
+				<strong>
+				    {if isset($user->identity->name)}
+					{$user->identity->name}
+				    {else}
+					{$user->identity->login}
+				    {/if}
+				</strong></a>
+			    <a href="{link logout!}" class="button red">
+				{_'logout'}</a>
+			    
+			</div>
+			</div>
+		    </div>
+		</div>
+	    </header>
+	</div>
+	
+        <div class="fix-shadow-bottom-height"></div>
+
+	<div id="main" role="main">
+	    
+	    <aside id="sidebar">
+		<section id="shortcuts-header">
+		    <h1>{_'Shortucts'}</h1>
+		</section>
+		<section id="shortcuts-panel">
+		    <span class="no-shortcuts">
+			{_'No shortcuts'}
+		    </span>
+		</section>
+		<nav id="nav">
+		    {control navigation}
+		</nav>
+	    </aside>
+	    
+	    <div id="main-right">
+		<div id="title-bar">
+		    <nav id="breadcrumbs"></nav>
+		    <div id="search-box">
+			{form searchBox}
+			    {input search}
+			    {input btnSearch}
+			{/form}
+		    </div>
+		</div>
+		<div class="shadow-bottom shadow-titlebar"></div>
+		<div id="main-background">
+		<div id="main-content">
+		    <h1> {include #content}</h1>
+		</div>
+		</div>
+	    </div>
+	</div>
+	
+        <h1 class="title" n:ifset="$title">{_$title}</h1>
+        {snippet flash}
+        {foreach $flashes as $flash}<div class="flash flash-{$flash->type}"><span class="icon icon-{$flash->type}"></span>{_$flash->message}</div>{/foreach}
+        {/snippet}
+	
+    </div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+{var robots => noindex}
+
+{block #content}
+    <section id="login-box">
+	<div class="block-border">
+	    <div class="block-header">
+		<h1>{_'Login'}</h1>
+	    </div>
+	    <div class="block-content">
+		{form loginForm class => login-form}
+		<table>
+		    <tr>
+			<th>
+			    {label login /}
+			</th>
+			<td>
+			    {input login}
+			</td>
+		    </tr>
+		    <tr>
+			<th>
+			    {label password /}
+			</th>
+			<td>
+			    {input password}
+			</td>
+		    </tr>
+		    <tr>
+			<td class="colspan" colspan="2">
+			    {input remember}{label remember /}
+			</td>
+		    </tr>
+		</table>
+		<div class="block-actions"> 
+		    <ul class="actions-left"> 
+			<li>
+			</li> 
+			<li class="divider-vertical"></li> 
+			<li>
+			    {input btnLogin class=> button}
+			</li> 
+		    </ul> 
+		    <ul class="actions-right"> 
+			<li></li> 
+		    </ul> 
+		</div>
+		{/form}
+	    </div>
+	</div>
+    </section>
+{/block}
+

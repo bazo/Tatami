@@ -1,0 +1,17 @@
+{*
+    Template   : @popup.phtml
+    Encoding   : UTF-8
+    Created on : 25.5.2010, 20:39:17
+    Author     : Martin Bazik
+*}
+{snippet popup}
+<div id="overlay">
+    <div id="popup_window">
+        <div class="popup_close">
+            <a href="{link closePopup!}" class="ajax"><span class="icon icon-close"></span></a>
+        </div>
+    {block #content}
+    {/block}
+    </div>
+</div>
+{/snippet}

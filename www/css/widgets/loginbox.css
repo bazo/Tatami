@@ -1,0 +1,37 @@
+/*
+    Document   : loginbox.css
+    Created on : 25.5.2010, 14:07:36
+    Author     : Martin
+    Description:
+        login box
+*/
+
+#loginBox{
+    margin: 0 auto;
+    margin-top: 100px;
+    width: 360px;
+    height: auto;
+    padding: 20px;
+}
+div.snippet--flash + #loginBox{
+    margin-top: 0px;
+}
+#loginBox h1{
+    color: #fff;
+    padding: 10px 0 10px 0;
+    text-align: center;
+    background-color: #a60000;
+
+}
+ul.error{
+}
+#loginBox form {
+    width: 100%;
+    height: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+div.flash{
+    width: 360px;
+    margin: 0 auto;
+}

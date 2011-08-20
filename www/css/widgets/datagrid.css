@@ -1,0 +1,270 @@
+/* 
+    Document   : datagrid
+    Created on : 28.7.2010, 17:08:27
+    Author     : Martin Bazik
+*/
+div.datagrid{
+    width: 98%;
+    border: 7px solid #c6dbff;
+    background-color: #e7efff;
+    padding: 10px;
+    display: table;
+    position: relative;
+}
+div.datagrid .overlay{
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    display: none;
+}
+div.datagrid .overlay .loader{
+    width: 68px;
+    height: 68px;
+    display: block;
+    position: absolute;
+    background: url(/icons/datagrid/loader.gif) no-repeat;
+}
+div.datagrid div.header{
+    margin-bottom: 10px;
+}
+div.datagrid div.header span.operations_label{
+    font-weight: 700;
+}
+div.datagrid form{
+    width: auto;
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+div.datagrid form input[type="checkbox"]{
+    width: auto;
+}
+div.datagrid form tr.filters div.buttons{
+    width: 100px;
+    
+}
+div.datagrid form tr.filters div.buttons button .caption{
+    display: none;
+}
+div.datagrid form tr.filters button[type="submit"]:first-child{
+    margin-right: 5px;
+}
+div.datagrid form tr.filters button[type="submit"]{
+    min-width: auto;
+}
+div.datagrid form select.operations{
+    width: 160px;
+    margin-right: 10px;
+}
+div.datagrid form table{
+    width: auto;
+    display: table;
+}
+div.datagrid form table tr{
+
+}
+div.datagrid form table tr th, div.datagrid form table tr td{
+}
+div.datagrid form table tr .cell, div.datagrid form table tr .filter{
+    width: 150px;
+}
+div.datagrid form table tr.header th{
+    width: 150px;
+}
+div.datagrid form table tr.filters input, div.datagrid form table tr.filters select{
+    text-align: left;
+}
+div.datagrid form table tr.filters .filter-control-buttons{
+    text-align: center;
+}
+div.datagrid form table tr.filters .filter-control-buttons .datagrid-button{
+    margin-right: 10px;
+    position: relative;
+    top: 4px !important;
+}
+div.datagrid form table tr.filters td div{
+    width: 150px;
+}
+div.datagrid form table tr.filters input{
+    width: 110px;
+}
+div.datagrid form table tr.filters td.filter{
+    display: table-cell;
+}
+div.datagrid form table tr.filters td.filter select{
+    width: auto;
+}
+div.datagrid form table tr.even{
+    background-color: #f6f7fa;
+}
+div.datagrid form table tr.odd{
+    background-color: #fff;
+}
+div.datagrid form table tr:hover{
+    background-color: #e1e7f3;
+}
+div.datagrid form table tr.selected{
+    background-color: #b3f76f;
+}
+div.datagrid form table tr th, div.datagrid form table tr td{
+    text-align: left;
+    display: table-cell;
+    padding: 5px;
+    border: 1px solid #bbcbf4;
+}
+div.datagrid form table tr th{
+    background-color: #c6dbfe;
+    color: #505767;
+}
+div.datagrid form table tr th a{
+    color: #505767;
+}
+div.datagrid form table tr td{
+    
+}
+div.datagrid .footer{
+    overflow: visible;
+}
+div.datagrid .footer .paginator{
+    float: left;
+}
+div.datagrid .footer .paginator .records_info{
+}
+div.datagrid .footer .paginator .records_info form{
+    display: inline;
+}
+div.datagrid input.datagrid-button{
+    height: 16px !important;
+    width: 16px !important;
+    display: inline-block;
+    border: none;
+    color: transparent;
+    position: relative;
+    top: 6px;
+    text-indent:-9999px;
+    cursor: pointer;
+}
+div.datagrid .datagrid-button-apply{
+    background: url(/icons/datagrid/accept.png) no-repeat;
+}
+div.datagrid .datagrid-button-cancel{
+    background: url(/icons/datagrid/cross.png) no-repeat;
+}
+div.datagrid .footer .reset{
+    float: right;
+    margin-right: 20px
+}
+div.datagrid-configurator{
+    display: none;
+}
+div.datagrid-configurator form{
+    
+}
+div.datagrid-configurator form fieldset{
+    border: 1px solid #e7efff;
+    overflow: hidden;
+}
+div.datagrid-configurator form fieldset input:nth-child(4n){
+    color: red;
+}
+div.datagrid-configurator form fieldset span.pair{
+    min-width: 200px;
+    margin-right: 10px;
+    display: inline-block;
+    float: left;
+}
+div.datagrid .datagrid-icon, .datagrid-configurator .datagrid-icon{
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    text-decoration: none;
+    position: relative;
+    top: 3px;
+}
+div.datagrid .cancel-filter{
+    cursor: pointer;
+    position: relative;
+    top: 4px;
+    float: right;
+}
+.datagrid-icon-firstPage{
+    background: url(/icons/datagrid/first_page.png) no-repeat;
+}
+.datagrid-icon-previousPage{
+    background: url(/icons/datagrid/previous_page.png) no-repeat;
+}
+.datagrid-icon-nextPage{
+    background: url(/icons/datagrid/next_page.png) no-repeat;
+}
+.datagrid-icon-lastPage{
+    background: url(/icons/datagrid/last_page.png) no-repeat;
+}
+.datagrid-icon-reset{
+    background: url(/icons/datagrid/refresh.png) no-repeat;
+}
+.datagrid-icon-cross{
+    background: url(/icons/datagrid/cross.png) no-repeat;
+}
+.datagrid-icon-up{
+    background: url(/icons/datagrid/up.png) no-repeat;
+}
+.datagrid-icon-down{
+    background: url(/icons/datagrid/down.png) no-repeat;
+}
+.datagrid-icon-left{
+    background: url(/icons/datagrid/left.png) no-repeat;
+}
+.datagrid-icon-right{
+    background: url(/icons/datagrid/right.png) no-repeat;
+}
+.datagrid-icon-selectall{
+    background: url(/icons/datagrid/checkbox_yes.png) no-repeat;
+}
+.datagrid-icon-selectnone{
+    background: url(/icons/datagrid/checkbox_no.png) no-repeat;
+}
+.ui-widget-overlay{
+    background: none;
+    background-color: rgba(0,0,0,0.5) !important;
+}
+}
+.buttons button .icon-cancel{
+    background: url(/icons/datagrid/Erase.png) no-repeat;
+}
+.datagrid button.btnExecute, .datagrid-configurator button.btnApply {
+    padding: 0px;
+}
+.datagrid button span.datagrid-icon-apply, .datagrid-configurator button span.datagrid-icon-apply{
+    width: 24px;
+    height: 24px;
+    background: url(/icons/datagrid/Apply.png) no-repeat;
+    margin-left: 2px;
+}
+.datagrid button span.caption, .datagrid-configurator button span.caption{
+    display: inline-block;
+    height: 24px;
+    margin-right: 2px;
+}
+.datagrid .header span.operations_label{
+    margin-right: 5px;
+}
+.datagrid .header select.operations{
+    width: auto;
+}
+.datagrid form table tr.header th.id, .datagrid form table tr.row td.id, .datagrid form table tr.filters td.id{
+    width: 56px;
+}
+.datagrid form table tr.filters td.id div{
+    width: 67px;
+}
+.datagrid form table tr.filters td.id div input{
+    width: 40px;
+}
+.datagrid form table tr.filters td input.datepicker{
+    width: 80px;
+    text-align: left;
+}
+div.datagrid form table tr.filters td.datetime div, div.datagrid form table tr.filters td.timestamp div{
+    width: 200px;
+}

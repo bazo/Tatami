@@ -1,0 +1,14 @@
+{block #menu}
+{dump}
+<ul class="menu" n:inner-foreach="$items as $item">
+    <li {if $item->getModule() == $currentModule}class="active expanded"{/if}>
+	<a href="{plink $item->destination}">{$item->label}</a>
+	{if $item->hasChildren()}
+	<span class="arrow"></span>
+	<ul n:inner-foreach="$item->getChildren() as $child" class="sub">
+	    <li><a href="{plink $child->getDestination()}">{$child->getLabel()}</a></li>
+	</ul>
+	{/if}
+    </li>
+</ul>
+{/block}

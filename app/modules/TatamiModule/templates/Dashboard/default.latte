@@ -1,0 +1,12 @@
+{*
+    Template   : default.phtml
+    Encoding   : UTF-8
+    Created on : 1.6.2010, 19:11:36
+    Author     : Martin Bazik
+*}
+{block #content}
+{_'Dashboard'}
+<div n:foreach="$widgets as $widgetName => $widget" class="dasboard-widget">
+    {control $widgetName}
+</div>
+{/block}

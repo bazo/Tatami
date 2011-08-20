@@ -1,0 +1,32 @@
+{*
+    Template   : default.phtml
+    Encoding   : UTF-8
+    Created on : 1.6.2010, 19:11:36
+    Author     : Martin Bazik
+*}
+{var $title = 'Summary'}
+{block #content}
+<div id="summary">
+    <ul>
+	<li n:foreach="$databaseInfo as $key => $value">
+	    <strong>{$key}:</strong><span>{$value}</span>
+	</li>
+	<li n:foreach="$userAccountInfo as $key => $value">
+	    <strong>{$key}:</strong><span>{$value}</span>
+	</li>
+    </ul>
+</div>
+{form formInstall}
+<ul n:if="$form->hasErrors()">
+        <li n:foreach="$form->errors as $error">{$error}</li>
+</ul>
+<table>
+    <tr>
+	<td>
+	    {input btnPrevious class => 'button'}
+	    {input btnInstall class => 'button red'}
+	</td>
+</tr>
+</table>
+{/form}
+{/block}

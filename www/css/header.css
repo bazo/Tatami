@@ -1,0 +1,183 @@
+/* 
+    Document   : header
+    Created on : 25.5.2010, 16:51:03
+    Author     : Martin Bazik
+*/
+header{
+    width: 100%;
+    display: block;
+    overflow: hidden;
+    color: #fff;
+    font-weight: 700;
+    background: #434343;
+    background: -moz-linear-gradient(top,#434343,#191919);
+    background: -webkit-gradient(linear,left top,left bottom,from(#434343),to(#191919));
+    -pie-background: linear-gradient(top,#434343,#191919);
+    -moz-box-shadow: rgba(0, 0, 0, 0.3) 0 1px 2px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0 1px 2px;
+    -khtml-box-shadow: rgba(0, 0, 0, 0.3) 0 1px 2px;
+    -pie-box-shadow: #BBB -2px 1px 2px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 2px;
+    margin-bottom: 20px;
+    top: 0;
+    zoom: 1;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    
+}
+header a{
+    color: #fff;
+    text-decoration: none;
+}
+header a:hover{
+    color: #fff;
+}
+header .home{
+    display: block;
+    width: auto;
+    float: left;
+    margin-left: 5px;
+}
+header > .module-switcher{
+    display: block;
+    position: relative;
+    width: auto;
+    float: left;
+    text-shadow: 0 1px 0 #FFFFFF
+}
+header .module-switcher > h2 > a.selector {
+    background: url("../icons/arrow-updown.png") no-repeat scroll center center transparent;
+    display: inline-block;
+    height: 17px;
+    text-indent: -999em;
+    width: 10px;
+}
+header > .module-switcher ul{
+    display: none;
+    background: none repeat scroll 0 0 #DEDEFF;
+    border: 1px solid #999999;
+    border-radius: 5px 5px 5px 5px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    list-style-type: none;
+    min-width: 160px;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0px;
+    z-index: 999;
+    margin-left: -20px;
+    top: -12px;
+}
+header > .module-switcher ul li{
+    width: 100%;
+}
+header > .module-switcher ul li a{
+    color: #222222;
+    display: block;
+    font-size: 18px;
+    line-height: 40px;
+    margin: 0 -20px;
+    padding: 0 20px;
+    text-decoration: none;
+}
+header > .module-switcher ul li a:hover{
+    background:#afd4e6;
+}
+header > .module-switcher ul li a.active{
+    font-family: Georgia,'Times New Roman','Bitstream Charter',Times,serif;
+    font-size: 18px;
+    font-weight: normal;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+
+header #statusbar{
+    display: inline-block;
+    float: right;
+    width: auto;
+    margin-right: 5px;
+}
+
+header #statusbar #status #date, header #statusbar #status #time{
+    margin-right: 20px;
+    font-weight: 700;
+}
+header nav{
+    display: inline-block;
+    width: auto;
+    margin-left: 50px;
+    text-align: center;
+}
+/*
+header nav ul:first-child{
+    display: inline-block;
+    margin: 0 auto;
+    overflow: hidden;
+}
+header nav ul:first-child li{
+    float: left;
+    margin-right: 5px;
+    color: #fff;
+    /*-moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    border-radius-top: 0px;
+    -moz-border-radius-topleft: 0px;
+    -moz-border-radius-topright: 0px;
+    
+    padding-left: 5px;
+    padding-right: 15px;
+}
+header nav ul:first-child li a{
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+header nav ul:first-child li.active{
+    background-color: #fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -webkit-border-top-left-radius: 5px;
+    -moz-border-radius-topright: 5px;
+    -webkit-border-top-right-radius: 5px;
+    color: #000;
+}
+
+header nav ul:first-child li ul{
+    display: none;
+}
+header nav ul li:hover > ul{
+    display: block;
+    position: fixed;
+    height: auto;
+    margin-left: -5px;
+    clear: both;
+}
+header nav ul li:hover ul li:hover ul{
+    display: block;
+    position: fixed;
+    height: auto;
+    margin-left: 50px;
+    clear: both;
+    z-index: 900;
+}
+header nav ul li:hover ul li{
+     background-color: transparent;
+     color: #000;
+     float: none;
+}
+header nav ul li:hover ul li:hover{
+    color: #a60000;
+}
+header nav > ul > li.active > a {
+    background: none repeat scroll 0 0 #191919 !important;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+*/
+header h2 {
+    font-family: Georgia,'Times New Roman','Bitstream Charter',Times,serif;
+    font-size: 18px;
+    font-weight: normal;
+    margin: 0;
+    text-shadow: 0 1px 0 #FFFFFF;
+}

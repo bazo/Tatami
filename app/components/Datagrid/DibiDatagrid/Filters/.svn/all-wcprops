@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/exprestlac_admin/!svn/ver/1969/trunk/app/components/DibiDatagrid/Filters
+END
+DateRangeFilterObject.php
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/exprestlac_admin/!svn/ver/1707/trunk/app/components/DibiDatagrid/Filters/DateRangeFilterObject.php
+END
+FilterObject.php
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/exprestlac_admin/!svn/ver/1707/trunk/app/components/DibiDatagrid/Filters/FilterObject.php
+END
+DateRangeFilter.php
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/exprestlac_admin/!svn/ver/1707/trunk/app/components/DibiDatagrid/Filters/DateRangeFilter.php
+END
+BaseFilter.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/exprestlac_admin/!svn/ver/1707/trunk/app/components/DibiDatagrid/Filters/BaseFilter.php
+END
+ForeignFieldArrayFilter.php
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/exprestlac_admin/!svn/ver/1801/trunk/app/components/DibiDatagrid/Filters/ForeignFieldArrayFilter.php
+END
+IDibiFilter.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/exprestlac_admin/!svn/ver/1707/trunk/app/components/DibiDatagrid/Filters/IDibiFilter.php
+END
+NullFilter.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/exprestlac_admin/!svn/ver/1969/trunk/app/components/DibiDatagrid/Filters/NullFilter.php
+END
+ArrayFilter.php
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/exprestlac_admin/!svn/ver/1707/trunk/app/components/DibiDatagrid/Filters/ArrayFilter.php
+END
+TextFilter.php
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/exprestlac_admin/!svn/ver/1707/trunk/app/components/DibiDatagrid/Filters/TextFilter.php
+END

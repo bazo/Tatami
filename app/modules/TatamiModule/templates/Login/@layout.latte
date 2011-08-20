@@ -1,0 +1,33 @@
+{**
+ * My Application layout template.
+ *
+ * @copyright  Copyright (c) 2010 Martin Bazik
+ * @package    Exprestlac admin
+ *
+ * @param string   $basePath web base path
+ * @param string   $robots   tell robots how to index the content of a page (optional)
+ * @param array    $flashes  flash messages
+ *}
+<!DOCTYPE HTML>
+<html>
+    <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<meta name="description" content="Tatami login">
+	<meta name="robots" content="noindex">
+
+	<title>Tatami - {_'Login'}</title>
+
+	{control css 'reset.css', 'common.css', 'forms.css', 'login.css'}
+	<link rel="shortcut icon" href="{$basePath}/favicon.ico" type="image/x-icon">
+    </head>
+
+    <body>
+	{snippet flash}
+	    {foreach $flashes as $flash}<div class="flash flash-{$flash->type}"><span class="icon icon-{$flash->type}"></span>{_$flash->message}</div>{/foreach}
+	{/snippet}
+
+	{include #content}
+
+    </body>
+</html>

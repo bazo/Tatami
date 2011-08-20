@@ -1,0 +1,8 @@
+{dump $items}
+<ul>
+    <li n:foreach="$items as $item">
+	<a href="{plink $item['destination']}" data-label="{$item['label']}" alt="{$item['label']}" n:class="$item['ajax'] == true ? ajax">
+	    <span class="icon {$item['icon']}"></span>
+	</a>
+    </li>
+</ul>

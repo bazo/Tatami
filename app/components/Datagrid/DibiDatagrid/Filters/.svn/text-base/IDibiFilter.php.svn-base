@@ -1,0 +1,10 @@
+<?php
+/**
+ * Description of IDibiFilter
+ *
+ * @author Martin
+ */
+interface IDibiFilter
+{
+    //put your code here
+}

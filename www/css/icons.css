@@ -1,0 +1,94 @@
+/* 
+    Document   : icons
+    Created on : 25.5.2010, 18:37:28
+    Author     : Martin Bazik
+*/
+.icon{
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-right: 5px;
+    background-position: 0px 5px;
+    text-decoration: none;
+    position: relative;
+    top: 5px;
+    z-index: 2;
+}
+.icon-home{
+    background: url(../icons/Home.png) no-repeat;
+}
+.icon-settings{
+    background: url(../icons/Toolbox.png) no-repeat;
+}
+.icon-dispatch{
+    background: url(../icons/Delivery.png) no-repeat;
+}
+.icon-helpdesk{
+    background: url(../icons/Help.png) no-repeat;
+}
+.icon-logout{
+    background: url(../icons/Exit.png) no-repeat;
+}
+.icon-orders{
+    background: url(../icons/Shoppingcart.png) no-repeat;
+}
+.icon-suppliers{
+    background: url(../icons/Company.png) no-repeat;
+}
+.icon-print{
+    background: url(../icons/Print.png) no-repeat;
+}
+.icon-user{
+    background: url(../icons/Person.png) no-repeat;
+}
+.icon-invoices{
+    background: url(../icons/Accounting.png) no-repeat;
+}
+.icon-customers{
+    background: url(../icons/Addressbook.png) no-repeat;
+}
+.icon-complaints{
+    background: url(../icons/Sad.png) no-repeat;
+}
+.icon-employees{
+    background: url(../icons/Usergroup.png) no-repeat;
+}
+.icon-globe{
+    background: url(../icons/Earth.png) no-repeat;
+}
+.icon-new, .icon-add{
+    background: url(../icons/Add.png) no-repeat;
+}
+.icon-ok{
+    background: url(../icons/OK.png) no-repeat;
+}
+.icon-error{
+    background: url(../icons/Error.png) no-repeat;
+}
+.icon-warning{
+    background: url(../icons/Alert.png) no-repeat;
+}
+.icon-info{
+    background: url(../icons/Info.png) no-repeat;
+}
+.icon-reports{
+    background: url(../icons/Report.png) no-repeat;
+}
+.icon-close{
+    background: url(../icons/Close.png) no-repeat;
+}
+.icon-tickets{
+    background: url(../icons/List.png) no-repeat;
+}
+.icon-save{
+    background: url(../icons/Save.png) no-repeat;
+}
+.icon-apply{
+    background: url(../icons/Apply.png) no-repeat;
+}
+.icon-mails{
+    background: url(../icons/Message.png) no-repeat;
+}
+.icon-calls{
+    background: url(../icons/Mobile-phone.png) no-repeat;
+}
