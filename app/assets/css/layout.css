@@ -166,7 +166,7 @@ header #toolbox #user-menu a:hover{
     height: 14px;
 }
 #main #main-background{
-    background: url("/../images/main-bg.png") repeat-x scroll center top transparent;;
+    background: url("/../images/main-bg.png") repeat-x scroll center transparent;;
     min-height: 434px;
     margin-top: -14px;
 }
@@ -176,4 +176,9 @@ header #toolbox #user-menu a:hover{
     width: 98%;
     padding-top: 14px;
     padding-left: -1%;
+}
+#main #main-content h1{
+    font-weight: bold;
+    margin-top: 10px;
+    width: 100%;
 }
