@@ -27,18 +27,17 @@ abstract class ModulePresenter extends \TatamiModule\SecuredPresenter
     public function startup()
     {
 	parent::startup();
+	if(!$this->module->isActive())
+	    throw new \Nette\Application\BadRequestException(sprintf('Module %s not activated', $this->module->getName()));
 	$this->em = $this->context->getService('EntityManager');
         $this->eventManager = $this->context->getService('EventManager');
 	$this->moduleManager = $this->context->getService('ModuleManager');
-        //$this->template->modules = $this->moduleManager->getModules();
-        //$this->activeModule = $this->moduleManager->getCurrentModule($this->getName());
-        //$this->template->activeModule = $this->activeModule;
     }
     
     protected function createComponentNavigation($name)
     {
 	$navigationItems = array();
-	foreach($this->moduleManager->getModules() as $module)
+	foreach($this->moduleManager->getActiveModules() as $module)
 	{
 	    $navigationItems[$module->getName()] = $module->getNavigation();
 	}

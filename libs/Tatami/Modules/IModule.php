@@ -22,4 +22,6 @@ interface IModule
     public function getSearchResults($expression);
     
     public function getToolbar($toolbarName);
+    
+    public function isActive();
 }

@@ -51,7 +51,7 @@ abstract class BasePresenter extends \Nette\Application\UI\Presenter
     {
 	$params = $this->context->params;
         
-	$js = new \WebLoader\JavaScriptLoader($this, $name);
+	$js = new \Tatami\Components\WebLoader\JavaScriptLoader($this, $name);
         $js->tempUri = $this->getHttpRequest()->getUrl()->baseUrl . "webtemp";
         $js->sourcePath = $params['assetsDir'] . "/js";
 	$js->tempPath = $params['wwwDir'] . "/webtemp";

@@ -43,17 +43,31 @@ class Installer
 	return $drivers;
     }
     
+    private function getEntities()
+    {
+	$entities = array();
+	foreach($this->loadedClasses as $class => $file)
+	{
+	    $reflection = new \Nette\Reflection\ClassType($class);
+	    $namespace = $reflection->getNamespaceName();
+	    if($reflection->getNamespaceName() == 'Entity')
+		$entities[] = $class;
+	}
+	return $entities;
+    }
+    
     public function installDatabase()
     {
 	$schemaTool =  new \Doctrine\ORM\Tools\SchemaTool($this->entityManager);
-        
+        $entityClasses = $this->getEntities();
         $classes = array(
             $this->entityManager->getClassMetadata('Entity\User'),
             $this->entityManager->getClassMetadata('Entity\Message'),
             $this->entityManager->getClassMetadata('Entity\Mailbox'),
             $this->entityManager->getClassMetadata('Entity\Module')
         );
-	$schemaTool->updateSchema($classes);
+	$schemaTool->dropDatabase();
+	$schemaTool->createSchema($classes);
 	return $this;
     }
     

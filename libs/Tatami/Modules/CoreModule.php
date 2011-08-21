@@ -20,12 +20,18 @@ abstract class CoreModule extends \Tatami\Subscriber implements IModule
 	    
         $entryPoint = null,
 	    
+	$settingsPoint = null,
+	    
         $navigation = array(),
 	    
 	$toolbar = array(),    
 	    
 	/** @var \Doctrine\ORM\EntityManager */
-	$entityManager
+	$entityManager,
+	    
+	$icon = 'default',
+	    
+	$active
     ;
 
     public function onDashboardLoad(&$dispatcher, $args)
@@ -110,5 +116,30 @@ abstract class CoreModule extends \Tatami\Subscriber implements IModule
     public function getSearchResults($expression)
     {
 	
+    }
+    
+    public function getSettingsPoint()
+    {
+	return $this->settingsPoint;
+    }
+    
+    public function getIcon()
+    {
+	return $this->icon;
+    }
+    
+    public function isActive()
+    {
+	return $this->active == true ? true : false;
+    }
+    
+    public function setActive()
+    {
+	$this->active = true;
+    }
+    
+    public function IsEssential()
+    {
+	return $this->getReflection()->implementsInterface('Tatami\Modules\IEssentialModule');
     }
 }
