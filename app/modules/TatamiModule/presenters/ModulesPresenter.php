@@ -24,4 +24,10 @@ class ModulesPresenter extends \Tatami\Modules\ModulePresenter
     {
 	$this->invalidateControl('navigation');
     }
+    
+    public function renderBrowseModules()
+    {
+	$availableModules = $this->moduleManager->getAvailableModules();
+	var_dump($availableModules);exit;
+    }
 }
