@@ -8,6 +8,11 @@ namespace TatamiModule;
 class ModulesPresenter extends \Tatami\Modules\ModulePresenter
 {
 
+    protected 
+	$toolbar = 'modules'
+    ;
+
+
     public function createComponentModuleViewer($name)
     {
 	$moduleViewer = new \Tatami\Components\ModuleViewer($this, $name);

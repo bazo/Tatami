@@ -42,9 +42,18 @@
 .icon.small.delete{
     background-image: url('/../icons/small/delete.png');
 }
+.icon.small.dashboard{
+    background-image: url('/../icons/small/dashboard.png');
+}
 /* NORMAL ICONS */
+.icon.normal.download{
+    background-image: url('/../icons/normal/package-download.png');
+}
 /* MEDIUM ICONS */
+.icon.medium.download{
+    background-image: url('/../icons/medium/package-download.png');
+}
 /* LARGE ICONS */
 .icon.large.module-default{
-    background-image: url('/../icons/module-default.png');
+    background-image: url('/../icons/large/module-default.png');
 }
