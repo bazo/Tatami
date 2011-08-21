@@ -30,7 +30,9 @@ final class ModuleManager extends \Tatami\Subscriber
 	$cache,
 	    
 	/** @var \Tatami\Events\EventManager */
-	$eventManager
+	$eventManager,
+	    
+	$endpoint = 'http://repository.local'
     ;
 
     /**
@@ -243,6 +245,13 @@ final class ModuleManager extends \Tatami\Subscriber
     public function getActiveModules()
     {
 	return array_intersect_key($this->modules, array_flip($this->activeModulesList));
+    }
+    
+    public function getAvailableModules($endPoint = null)
+    {
+	$endPoint = $endPoint != null ? $endPoint : $this->endpoint;
+	$response = file_get_contents($endPoint);
+	return json_decode($response);
     }
 
 }
