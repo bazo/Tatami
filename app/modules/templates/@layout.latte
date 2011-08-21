@@ -18,12 +18,10 @@
 	<meta name="robots" content="noindex"/>
 
 	<title>Tatami</title>
-	{control css 'reset.css', 'common.css', 'layout.css'}
-        {block #css}
-	    
-        {/block}
-        {block #js}
-        {/block}
+	{control css 'reset.css', 'common.css', 'layout.css', 'icons.css'}
+        {block #css}{/block}
+	{control js 'jquery-1.6.2.min.js', 'jquery.nette.js', 'tatami.js'}
+        {block #js}{/block}
 	<link rel="shortcut icon" href="{$basePath}/favicon.ico" type="image/x-icon"/>
 </head>
 <body id="top">
@@ -53,7 +51,6 @@
 				</strong></a>
 			    <a href="{link logout!}" class="button red">
 				{_'logout'}</a>
-			    
 			</div>
 			</div>
 		    </div>
@@ -67,7 +64,7 @@
 	    
 	    <aside id="sidebar">
 		<section id="shortcuts-header">
-		    <h1>{_'Shortucts'}</h1>
+		    <h1>{_'Shortcuts'}</h1>
 		</section>
 		<section id="shortcuts-panel">
 		    <span class="no-shortcuts">
@@ -75,7 +72,9 @@
 		    </span>
 		</section>
 		<nav id="nav">
-		    {control navigation}
+		    {snippet navigation}
+			{control navigation}
+		    {/snippet}
 		</nav>
 	    </aside>
 	    
@@ -85,20 +84,25 @@
 		    <div id="search-box">
 			{form searchBox}
 			    {input search}
-			    {input btnSearch}
+			    {input btnSearch class => button}
 			{/form}
 		    </div>
 		</div>
 		<div class="shadow-bottom shadow-titlebar"></div>
 		<div id="main-background">
 		<div id="main-content">
-		    <h1> {include #content}</h1>
+		    <h1 class="title" n:ifset="$title">{$title}</h1>
+		    <div class="block-border">
+			<div class="block-content">
+			    {include #content}
+			</div>
+		    </div>
 		</div>
 		</div>
 	    </div>
 	</div>
 	
-        <h1 class="title" n:ifset="$title">{_$title}</h1>
+        
         {snippet flash}
         {foreach $flashes as $flash}<div class="flash flash-{$flash->type}"><span class="icon icon-{$flash->type}"></span>{_$flash->message}</div>{/foreach}
         {/snippet}

@@ -1,5 +1,4 @@
 <?php
-
 // absolute filesystem path to this web root
 $params['wwwDir'] = __DIR__;
 

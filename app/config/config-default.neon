@@ -26,6 +26,9 @@ common:
 			
 		authorizator:
 			factory: \Core\Security::initialize
+      
+		presenterFactory:
+			factory: \Tatami\ServiceFactories\PresenterFactory::create
 			
 		Translator: \Tatami\Tools\Translator
 		EntityManager:

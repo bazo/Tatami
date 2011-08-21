@@ -1,0 +1,29 @@
+<div id="module-listing">
+{snippet view}
+	{foreach $modules as $moduleName => $module}
+	    <div class="module">
+		<span class="module-name">{$moduleName}</span>
+		<a href="" class="module-icon"><span class="icon large module-{$module->getIcon()}"></a>
+		<div class="toolbar">
+		    <ul>
+			<li n:if="!$module->isEssential()">
+			    {*if !$module->isEssential()*}
+				{if $module->isActive()}
+				    <a n:href="deactivateModule!, name => $module->getName()" class="ajax" title="{_'Stop'}"><span class="icon small stop"></span></a>
+				    {else}
+				    <a n:href="activateModule!, name => $module->getName()" class="ajax" title="{_'Start'}"><span class="icon small start"></span></a>
+				{/if}
+			    {*/if*}
+			</li>
+			<li>
+			    <a n:href="activateModule!, name => $module->getName()" class="ajax" title="{_'Start'}"><span class="icon small cog"></span></a>
+			</li>
+			<li n:if="!$module->isEssential()">
+			    <a n:href="deleteModule!, name => $module->getName()" class="ajax" title="{_'Delete'}"><span class="icon small delete"></span></a>
+			</li>
+		    </ul>
+		</div>
+	    </div>
+	{/foreach}
+{/snippet}
+</div>

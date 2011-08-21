@@ -1,0 +1,50 @@
+/* 
+    Document   : icons
+    Created on : 20.8.2011, 17:01:23
+    Author     : Martin
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+.icon{
+    display: inline-block;
+}
+.icon.small{
+    height: 16px;
+    width: 16px;
+}
+.icon.normal{
+    height: 24px;
+    width: 24px;
+}
+.icon.medium{
+    height: 32px;
+    width: 32px;
+}
+.icon.large{
+    height: 48px;
+    width: 48px;
+}
+/* SMALL ICONS */
+.icon.small.start{
+    background-image: url('/../icons/small/start.png');
+}
+.icon.small.stop{
+    background-image: url('/../icons/small/stop.png');
+}
+.icon.small.cog{
+    background-image: url('/../icons/small/cog.png');
+}
+.icon.small.delete{
+    background-image: url('/../icons/small/delete.png');
+}
+/* NORMAL ICONS */
+/* MEDIUM ICONS */
+/* LARGE ICONS */
+.icon.large.module-default{
+    background-image: url('/../icons/module-default.png');
+}

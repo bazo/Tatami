@@ -5,7 +5,7 @@ namespace Tatami\Modules;
  *
  * @author Martin
  */
-final class TatamiModule extends CoreModule
+final class TatamiModule extends CoreModule implements IEssentialModule
 {
     protected
         $name = 'Tatami',

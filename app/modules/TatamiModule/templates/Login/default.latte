@@ -8,6 +8,9 @@
 	    </div>
 	    <div class="block-content">
 		{form loginForm class => login-form}
+		<ul n:if="$form->hasErrors()">
+		    <li n:foreach="$form->errors as $error">{$error}</li>
+		</ul>
 		<table>
 		    <tr>
 			<th>

@@ -5,3 +5,6 @@ body{
     margin: 210px auto 0;
     width: 400px;
 }
+#login-box .block-content{
+    overflow: inherit;
+}

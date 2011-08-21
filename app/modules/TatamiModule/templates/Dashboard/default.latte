@@ -4,8 +4,10 @@
     Created on : 1.6.2010, 19:11:36
     Author     : Martin Bazik
 *}
+
+{var $title =  'Dashboard'|translate}
+
 {block #content}
-{_'Dashboard'}
 <div n:foreach="$widgets as $widgetName => $widget" class="dasboard-widget">
     {control $widgetName}
 </div>

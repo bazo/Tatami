@@ -161,6 +161,17 @@ header #toolbox #user-menu a:hover{
     height: 42px;
     background: url("/../images/title-bar-bg.png") repeat-x scroll left top transparent;
 }
+#main #title-bar > *{
+    margin-top: 10px;
+}
+#main #title-bar #breadcrumbs{
+    float: left;
+}
+#main #title-bar #search-box{
+    display: inline-block;
+    float: right;
+    margin-right: 5px;
+}
 .shadow-bottom {
     background: url("/../images/shadow-bottom.png") repeat-x scroll left bottom transparent;
     height: 14px;

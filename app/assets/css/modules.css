@@ -1,0 +1,41 @@
+/* 
+    Document   : modules
+    Created on : 20.8.2011, 16:31:20
+    Author     : Martin
+    Description:
+        Purpose of the stylesheet follows.
+*/
+#module-listing{
+    padding: 10px;
+    overflow: hidden;
+}
+#module-listing .module{
+    float: left;
+    height: 95px;
+    width: 100px;
+    margin-right: 20px;
+    border: #000 1px solid;
+    text-align: center;
+    padding-top: 5px;
+}
+#module-listing .module a.module-icon{
+    display: block;
+    width: 48px;
+    height: 48px;
+    margin: 0 auto;
+}
+#module-listing .module .module-name{
+    margin-bottom: 10px;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+#module-listing .module .toolbar ul{
+    margin: 0 auto;
+    display: inline-block;
+    width: auto;
+}
+#module-listing .module .toolbar ul li{
+    float: left;
+    margin-right: 5px;
+}
