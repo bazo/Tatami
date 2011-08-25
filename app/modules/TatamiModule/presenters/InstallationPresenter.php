@@ -21,7 +21,10 @@ class InstallationPresenter extends BasePresenter
     {
 	parent::startup();
 	$this->installer = new \Tatami\Installer($this->getService('robotLoader')->getIndexedClasses(), 
-		$this->context->params['appDir'].'/config/config-default.neon', $this->context->params['appDir'].'/config/config.neon');
+		$this->context->params['appDir'].'/config/config-default.neon',
+                $this->context,
+                $this->context->params['appDir'].'/config/config.neon');
+        
 	$this->session = $this->getSession($this->sessionSection);
     }
 
@@ -33,6 +36,7 @@ class InstallationPresenter extends BasePresenter
     public function actionStep1()
     {
 	$this->currentStep = 1;
+        $this->installer->checkFolders();
 	$databaseInfo = $this->installer->readDatabaseSettings();
 	if(!empty($databaseInfo))
 	    $this->session->database = $databaseInfo;
