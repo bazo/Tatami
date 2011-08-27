@@ -18,7 +18,8 @@ final class TatamiModule extends CoreModule implements IEssentialModule
 	    'Tatami' => array(
 		':tatami:settings:',
 		'Modules' => ':tatami:modules:',
-		'Users' => ':tatami:users:'
+		'Users' => ':tatami:users:',
+                'Permissions' => ':tatami:permissions:'
 	    )
         ),
 	    
@@ -39,6 +40,11 @@ final class TatamiModule extends CoreModule implements IEssentialModule
 		    'ajax' => false
 		)
 	    )
-	)
+	),
+            
+        $permissions = array(
+            'user_add' => 'Add user',
+            'user_delete' => 'Delete user',
+        )
     ;
 }
