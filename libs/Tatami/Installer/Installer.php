@@ -14,13 +14,26 @@ class Installer
 	/**
 	 * @var \Doctrine\ORM\EntityManager
 	 */
-	$entityManager
+	$entityManager,
+        
+        /**
+         * @var \Nette\DI\IContainer 
+         */    
+        $context,    
+            
+        $folders = array(
+            '%wwwDir%/webtemp',
+            '%tempDir%',
+            '%tempDir%/cache',
+            '%tempDir%/Proxies'
+            )
     ;
     
-    public function __construct($loadedClasses, $configFile, $destinationConfigFile = 'config.neon')
+    public function __construct($loadedClasses, $configFile, $context, $destinationConfigFile = 'config.neon')
     {
 	$this->loadedClasses = $loadedClasses;
 	$this->configFile = $configFile;
+        $this->context = $context;
 	$this->destinationConfigFile = $destinationConfigFile;
     }
     
@@ -56,18 +69,31 @@ class Installer
 	return $entities;
     }
     
+    public function checkFolders()
+    {
+        foreach($this->folders as $folder)
+        {
+            $file = $this->context->expand($folder);
+            if(!file_exists($file))
+            {
+                mkdir($file, 0777, true);
+            }
+        }
+    }
+    
     public function installDatabase()
     {
 	$schemaTool =  new \Doctrine\ORM\Tools\SchemaTool($this->entityManager);
         $entityClasses = $this->getEntities();
-        $classes = array(
-            $this->entityManager->getClassMetadata('Entity\User'),
-            $this->entityManager->getClassMetadata('Entity\Message'),
-            $this->entityManager->getClassMetadata('Entity\Mailbox'),
-            $this->entityManager->getClassMetadata('Entity\Module')
-        );
+        $classes = array();
+        foreach($entityClasses as $entityClass)
+        {
+            $classes[] = $this->entityManager->getClassMetadata($entityClass);
+        }
 	$schemaTool->dropDatabase();
 	$schemaTool->createSchema($classes);
+        $this->activateTatami();
+        $this->installUserRoles();
 	return $this;
     }
     
@@ -85,6 +111,33 @@ class Installer
 	}
     }
     
+    private function activateTatami()
+    {
+        $tatami = new \Entity\Module;
+        $tatami->setName('Tatami');
+        $tatami->setInstalled(true);
+        $tatami->setActive(true);
+        
+        $this->entityManager->persist($tatami);
+	$this->entityManager->flush();
+    }
+    
+    private function installUserRoles()
+    {
+        $user = new \Entity\UserRole;
+        $user->setName('User');
+        //$user->setParent(null);
+        
+        $admin = new \Entity\UserRole;
+        $admin->setName('Admin');
+        //$admin->setParent($user);
+        
+        $this->entityManager->persist($user);
+        $this->entityManager->persist($admin);
+        
+        $this->entityManager->flush();
+    }
+    
     public function createAdminUserAccount($login, $password, $email)
     {
 	$user = new \Entity\User();
@@ -92,7 +145,11 @@ class Installer
 	$user->setLogin($login);
 	$user->setPassword($password);
 	$user->setEmail($email);
-	$user->setRole('admin');
+        
+        $adminRole = $this->entityManager->getRepository('\Entity\UserRole')
+                ->findOneBy(array('name' => 'Admin'));
+        
+	$user->setRole($adminRole);
 
 	$this->entityManager->persist($user);
 	$this->entityManager->flush();

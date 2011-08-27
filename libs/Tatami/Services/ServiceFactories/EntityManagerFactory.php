@@ -20,9 +20,11 @@ class EntityManagerFactory
         $driverImpl = $config->newDefaultAnnotationDriver($container->params['appDir'].'/models/Entities');
         $config->setMetadataDriverImpl($driverImpl);
         $config->setQueryCacheImpl($cache);
-        $config->setProxyDir($container->params['appDir'].'/models/Proxies');
+        $config->setProxyDir($container->params['tempDir'].'/Proxies');
         $config->setProxyNamespace('Tatami\Proxies');
-        if ($container->params['productionMode'])
+        $config->setAutoGenerateProxyClasses(true);
+        /*
+        if ($container->params['productionMode'] == true)
         {
             $config->setAutoGenerateProxyClasses(true);
         }
@@ -30,6 +32,9 @@ class EntityManagerFactory
         {
             $config->setAutoGenerateProxyClasses(false);
         }
+        var_dump()
+         * 
+         */
         try
         {
 	    $dbConfig = $container->params['database'];

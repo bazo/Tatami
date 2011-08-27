@@ -128,8 +128,13 @@ final class ModuleManager extends \Tatami\Subscriber
 	    if(!$this->isModuleInstalled($module))
 		$this->installModule($module);
 	    
+            /*
+            if($module instanceof IEssentialModule)
+                $this->activateModule ($module->getName());
+            */
 	    if($this->isModuleActive($module))
 	    {
+                
 		$module->setActive();
 		$this->registerModule($module->getName());
 		//signup module for events
@@ -137,7 +142,6 @@ final class ModuleManager extends \Tatami\Subscriber
 		$this->eventManager->addSubscriber(Events\Event::PERMISSIONS_LOAD, $module);
 		$this->eventManager->addSubscriber(Events\Event::ROUTES_LOAD, $module);
 	    }
-	    
 	    $this->modules[$module->getName()] = $module;
 	}
     }
@@ -252,6 +256,16 @@ final class ModuleManager extends \Tatami\Subscriber
 	$endPoint = $endPoint != null ? $endPoint : $this->endpoint;
 	$response = file_get_contents($endPoint);
 	return json_decode($response);
+    }
+    
+    public function getPermissions()
+    {
+        $permissions = array();
+        foreach($this->getActiveModules() as $module)
+        {
+            $permissions[$module->getName()] = $module->getPermissions();
+        }
+        return $permissions;
     }
 
 }

@@ -68,4 +68,9 @@ abstract class ModulePresenter extends \TatamiModule\SecuredPresenter
 	    $toolbar->build($toolbarArray);
 	}
     }
+    
+    protected function createComponentShortcuts($name)
+    {
+        $shortcuts = new \Tatami\Components\Shortcuts($this, $name);
+    }
 }

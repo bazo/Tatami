@@ -9,18 +9,16 @@ class PresenterFactory extends \Nette\Application\PresenterFactory
     ;
 
 
-    public function __construct($baseDir, \Nette\DI\IContainer $context, Modules\ModuleManager $moduleManager)
+    public function __construct($baseDir, \Nette\DI\IContainer $context)
     {
 	parent::__construct($baseDir, $context);
-	$this->moduleManager = $moduleManager;
 	$this->context = $context;
     }
     
     public static function create(\Nette\DI\IContainer $context)
     {
-	$moduleManager = $context->getService('ModuleManager');
 	$baseDir = $context->params['appDir'];
-	return new self($baseDir, $context, $moduleManager);
+	return new self($baseDir, $context);
     }
     
     /**
@@ -33,10 +31,11 @@ class PresenterFactory extends \Nette\Application\PresenterFactory
          $class = $this->getPresenterClass($name);
          $presenter = new $class;
          $presenter->setContext($this->context);
-	 if($presenter instanceof Modules\ModulePresenter)
+	 if($presenter instanceof Modules\ModulePresenter and (isset($this->context->params['installed']) and $this->context->params['installed'] == true))
 	 {
-	     $moduleName = $this->moduleManager->getModuleNameFromPresenterClass($class);
-	     $module = $this->moduleManager->getModule($moduleName);
+             $moduleManager = $this->context->getService('ModuleManager');
+	     $moduleName = $moduleManager->getModuleNameFromPresenterClass($class);
+	     $module = $moduleManager->getModule($moduleName);
 	     $presenter->setModule($module);
 	 }
          return $presenter;
