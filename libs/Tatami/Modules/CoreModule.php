@@ -54,6 +54,11 @@ abstract class CoreModule extends \Tatami\Subscriber implements IModule
 	
     }
 
+    public function onPermissionsLoad(\Tatami\Security\Acl $acl)
+    {
+        
+    }
+    
     public function getName()
     {
         return $this->moduleName != null ? $this->moduleName :  \str_replace('Module', '', $this->getReflection()->getShortName());

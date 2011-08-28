@@ -126,15 +126,30 @@ class Installer
     {
         $user = new \Entity\UserRole;
         $user->setName('User');
-        //$user->setParent(null);
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
         
         $admin = new \Entity\UserRole;
         $admin->setName('Admin');
-        //$admin->setParent($user);
+        $admin->setParent($user);
         
-        $this->entityManager->persist($user);
+        $tatamiModule = new Modules\TatamiModule;
+        $tatamiPermissions = $tatamiModule->getPermissions();
+        
+        foreach($tatamiPermissions as $resourceName => $privileges)
+        {
+            $resource = new \Entity\Resource($resourceName);
+            
+            foreach($privileges as $privilege => $privilegeText)
+            {
+                $permission = new \Entity\Permission;
+                $permission->setResource($resource)->setPrivilege($privilege)
+                        ->setPrivilegeText($privilegeText);
+                $admin->addPermission($permission);
+            }        
+        }
+        
         $this->entityManager->persist($admin);
-        
         $this->entityManager->flush();
     }
     

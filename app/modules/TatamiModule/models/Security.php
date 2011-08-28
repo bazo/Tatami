@@ -1,12 +1,5 @@
 <?php
-
-/**
- * My Application
- *
- * @copyright  Copyright (c) 2010 John Doe
- * @package    MyApplication
- */
-namespace Core;
+namespace Tatami\Security;
 
 use Nette\Object;
 use Nette\Security\AuthenticationException;
@@ -57,11 +50,12 @@ class Security extends Object implements \Nette\Security\IAuthenticator, \Nette\
 	$userEntity = $this->entityManager->getRepository('Entity\User')->findOneBy(array('login' => $login));
 	if(!is_object($userEntity) or $userEntity->password != $password)
 	    throw new AuthenticationException('Username and password mismatch');
-	return new \Nette\Security\Identity($userEntity->id, 'admin', $userEntity);
+	return new \Nette\Security\Identity($userEntity->id, $userEntity->getRole()->getName(), $userEntity);
     }
 
     public function isAllowed($role = self::ALL, $resource = self::ALL, $privilege = self::ALL)
     {
+        //var_dump($role, $resource, $privilege);exit;
 	return true;
     }
 }

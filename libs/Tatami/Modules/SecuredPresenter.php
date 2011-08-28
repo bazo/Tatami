@@ -12,8 +12,9 @@ abstract class SecuredPresenter extends TatamiPresenter
         {
             $this->redirect(':Tatami:Login:');
         }
-        $resource = $this->name;
-        $privilege = '';
+        
+        $resource = 'user';
+        $privilege = 'add';
         
         if(!$this->getUser()->isAllowed($resource, $privilege ))
         {

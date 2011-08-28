@@ -14,13 +14,7 @@ abstract class BasePresenter extends \Nette\Application\UI\Presenter
         $translator,
 
         /** @var \Nette\Http\User */
-        $user,
-            
-        /** @var \Doctrine\ORM\EntityManager */
-        $em,
-
-        /** @var \Tatami\Events\EventManager */
-        $eventManager
+        $user
     ;
 
     public function startup()

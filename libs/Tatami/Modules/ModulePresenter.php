@@ -11,6 +11,12 @@ abstract class ModulePresenter extends \TatamiModule\SecuredPresenter
         /** @var \Tatami\Modules\ModuleManager */
         $moduleManager,
 
+        /** @var \Doctrine\ORM\EntityManager */
+        $em,
+            
+        /** @var \Tatami\Events\EventManager */
+        $eventManager,
+            
         $activeModule = '',
 	    
 	$toolbar = null,

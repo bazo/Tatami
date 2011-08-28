@@ -43,8 +43,12 @@ final class TatamiModule extends CoreModule implements IEssentialModule
 	),
             
         $permissions = array(
-            'user_add' => 'Add user',
-            'user_delete' => 'Delete user',
+            'user' => array(
+                'view' => 'View user',
+                'edit' => 'Edit user',
+                'add' => 'Add user',
+                'delete' => 'Delete user'
+            )
         )
     ;
 }

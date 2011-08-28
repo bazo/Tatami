@@ -22,10 +22,10 @@ common:
 			run: true
 			
 		authenticator:
-			factory: \Core\Security::initialize
+			factory: \Tatami\Security\Security::initialize
 			
 		authorizator:
-			factory: \Core\Security::initialize
+			factory: \Tatami\Security\Acl::create
       
 		presenterFactory:
 			factory: \Tatami\ServiceFactories\PresenterFactory::create

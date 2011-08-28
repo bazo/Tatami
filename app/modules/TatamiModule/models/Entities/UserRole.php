@@ -1,11 +1,7 @@
 <?php
 namespace Entity;
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/** @Entity */
+/** @Entity(repositoryClass="Repositories\UserRoleRepository") */
 class UserRole extends BaseEntity
 {
     protected
@@ -19,11 +15,32 @@ class UserRole extends BaseEntity
         $name,
             
         /**
-         * @OneToOne(targetEntity="UserRole")
-         * @Column(nullable=true)
+         * @ManyToOne(targetEntity="UserRole", inversedBy="children")
+         * @JoinColumn(name="parent_id", referencedColumnName="id")
          */
-        $parent = null
+        $parent = null,
+          
+        /**
+          * @OneToMany(targetEntity="UserRole", mappedBy="parent")
+          */    
+        $children,
+            
+        /**
+         * @var \Doctrine\Common\Collections\ArrayCollection
+         * @ManyToMany(targetEntity="Permission", cascade={"persist", "remove"})
+         * @JoinTable(name="groups_permissions",
+         *      joinColumns={@JoinColumn(name="group_id", referencedColumnName="id")},
+         *      inverseJoinColumns={@JoinColumn(name="permission_id", referencedColumnName="id")}
+         *      )
+         */
+        $permissions
     ;
+    
+    public function __construct()
+    {
+        $this->permissions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+    }
     
     public function getId() 
     {
@@ -53,5 +70,19 @@ class UserRole extends BaseEntity
         return $this;
     }
 
-
+    public function getChildren()
+    {
+        return $this->children;
+    }
+    
+    public function addPermission(Permission $permission)
+    {
+        $this->permissions[] = $permission;
+        return $this;
+    }
+    
+    public function getPermissions() 
+    {
+        return $this->permissions;
+    }
 }

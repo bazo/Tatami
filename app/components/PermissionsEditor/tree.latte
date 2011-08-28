@@ -1,0 +1,14 @@
+<div id="permission-editor">
+{block #tree, items => $items}
+{dump $items}
+<ul>
+{foreach $items as $item}
+    <li>{$item['parent']}
+
+    {if $item['children']}
+        {include #tree, items => $item['children']}
+    {/if}
+</li>
+{/foreach}
+</ul>
+{/block}

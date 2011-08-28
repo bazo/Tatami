@@ -7,8 +7,13 @@ namespace TatamiModule;
  */
 class PermissionsPresenter extends \Tatami\Modules\ModulePresenter
 {
-    public function actionDefault()
+    public function renderDefault()
     {
-        var_dump($this->moduleManager->getPermissions());exit;
+    }
+    
+    public function createComponentPermissionsEditor($name)
+    {
+        $editor = new \Tatami\Components\PermissionsEditor($this, $name);
+        $editor->setRepository($this->em->getRepository('Entity\UserRole'));
     }
 }
