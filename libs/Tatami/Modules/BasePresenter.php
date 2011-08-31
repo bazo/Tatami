@@ -90,4 +90,10 @@ abstract class BasePresenter extends \Nette\Application\UI\Presenter
     {
         $this->template->setTranslator($this->translator);
     }
+    
+    public function createComponentPopup($name)
+    {
+        $popup = new \Tatami\Components\Popup($this, $name);
+        $popup->setContext($this->context);
+    }
 }

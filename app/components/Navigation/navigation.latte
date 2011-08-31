@@ -1,5 +1,4 @@
 {block #menu}
-{dump}
 <ul class="menu" n:inner-foreach="$items as $item">
     <li {if $item->getModule() == $currentModule}class="active expanded"{/if}>
 	<a href="{plink $item->destination}">{$item->label}</a>
