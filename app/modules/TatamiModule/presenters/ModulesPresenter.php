@@ -28,6 +28,20 @@ class ModulesPresenter extends \Tatami\Modules\ModulePresenter
     public function renderBrowseModules()
     {
 	$availableModules = $this->moduleManager->getAvailableModules();
-	var_dump($availableModules);exit;
+	foreach($availableModules as $module)
+	{
+	    if($this->moduleManager->isModuleInstalled($module->name))
+		    $module->installed = true;
+	    else $module->installed = false;
+	}
+	$this->template->availableModules = $availableModules;
+	if($this->isAjax()) $this->setLayout('popup');
+	$this->invalidateControl('popup');
+    }
+    
+    public function handleDownloadModule($url)
+    {
+	$destination = $this->context->params['tempDir'].'/'.basename($url);
+	$downloader = \Tatami\Tools\Downloader::download($url, $destination);
     }
 }

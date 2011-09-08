@@ -156,4 +156,24 @@ class InstallationPresenter extends BasePresenter
             $button->form->addError('Installation failed: '.$e->getMessage());
         }
     }
+    
+    protected function createComponentCss($name)
+    {
+	$params = $this->context->params;
+	$basePath = $this->getHttpRequest()->getUrl()->basePath;
+	$css = new \Tatami\Components\WebLoader\CssLoader($this, $name, $params['wwwDir'], $basePath);
+        $css->sourcePath = __DIR__ . "/../assets/css";
+        $css->tempUri = $this->getHttpRequest()->getUrl()->baseUrl . "webtemp";
+        $css->tempPath = $params['wwwDir'] . "/webtemp";
+    }
+
+    protected function createComponentJs($name)
+    {
+	$params = $this->context->params;
+        
+	$js = new \Tatami\Components\WebLoader\JavaScriptLoader($this, $name);
+        $js->tempUri = $this->getHttpRequest()->getUrl()->baseUrl . "webtemp";
+        $js->sourcePath = __DIR__ . "/../assets/js";
+	$js->tempPath = $params['wwwDir'] . "/webtemp";
+    }
 }

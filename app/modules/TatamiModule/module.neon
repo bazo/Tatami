@@ -1,0 +1,13 @@
+name: Tatami
+version: 1
+author: Martin Bazik
+assets:
+  css:
+    - common.css
+    - forms.css
+    - icons.css
+    - install.css
+    - layout.css
+    - login.css
+    - modules.css
+    - reset.css

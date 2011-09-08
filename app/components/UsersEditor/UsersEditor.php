@@ -5,7 +5,9 @@ class UsersEditor extends BaseControl
 {
     private 
         /** @var \Repositories\UserRoleRepository */
-        $repository
+        $repository,
+	    
+	$userId
     ;
     
     public function setRepository(\Doctrine\Common\Persistence\ObjectRepository $repository)
@@ -41,13 +43,17 @@ class UsersEditor extends BaseControl
     {
         $this->template->id = $id;
         $this->template->setFile(__DIR__.'/userEdit.latte');
+	$this->userId = $id;
         $this->refreshPopup();
         $this->template->render();
     }
     
     protected function createComponentFormTest($name)
     {
-        $form = new \Tatami\Forms\BaseForm($this, $name);
+        $form = new \Tatami\Forms\AjaxForm($this, $name);
+	$form->addHidden('id', $this->userId);
+	$roles = $this->repository->getRolesTree();
+	var_dump($roles);exit;
         $form->addText('test', 'Test');
         $form->addSubmit('btnSubmit', 'Submit')->onClick[] = callback($this, 'testFormSubmitted');
                 

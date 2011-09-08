@@ -39,7 +39,7 @@ final class ModuleManager extends \Tatami\Subscriber
      * Construct
      * @param Doctrine\ORM\EntityManager $entityManager 
      */
-    public function __construct(\Doctrine\ORM\EntityManager $entityManager, \Nette\Loaders\RobotLoader $robotLoader, \Tatami\Events\EventManager $eventManager, \Nette\Caching\Cache $cache)
+    public function __construct(\Nette\Loaders\RobotLoader $robotLoader, \Tatami\Events\EventManager $eventManager, \Nette\Caching\Cache $cache, \Doctrine\ORM\EntityManager $entityManager = null)
     {
 	$this->entityManager = $entityManager;
 	$this->robotLoader = $robotLoader;
@@ -105,6 +105,7 @@ final class ModuleManager extends \Tatami\Subscriber
 			    $modules[$module->getName()] = $module;
 			}
 		    }
+		    unset($reflection);
 		}
             }
             $this->cache->offsetSet('modules', $modules);
@@ -168,7 +169,9 @@ final class ModuleManager extends \Tatami\Subscriber
     {
 	try
 	{
-	   $moduleEntity = $this->entityManager->getRepository('Entity\Module')->findOneByName($module->getName());
+	   if($module instanceof IModule) $name = $module->getName();
+	   else $name = $module;
+	   $moduleEntity = $this->entityManager->getRepository('Entity\Module')->findOneByName($name);
 	}
 	catch(\PDOException $e)
 	{
@@ -237,6 +240,7 @@ final class ModuleManager extends \Tatami\Subscriber
     
     public function getModule($moduleName)
     {
+	$moduleName = ucfirst(mb_strtolower($moduleName));
 	$modules = $this->getModules();
 	return $modules[$moduleName];
     }
@@ -256,6 +260,11 @@ final class ModuleManager extends \Tatami\Subscriber
 	$endPoint = $endPoint != null ? $endPoint : $this->endpoint;
 	$response = file_get_contents($endPoint);
 	return json_decode($response);
+    }
+    
+    public function moduleExists($moduleName)
+    {
+	return isset($this->modules[ucfirst($moduleName)]);
     }
     
     public function getPermissions()

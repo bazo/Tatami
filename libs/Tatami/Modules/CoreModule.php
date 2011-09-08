@@ -33,7 +33,15 @@ abstract class CoreModule extends \Tatami\Subscriber implements IModule
 	    
 	$active
     ;
-
+    
+    public function getFile()
+    {
+	$reflection = new \ReflectionClass(get_called_class());
+	$file = $reflection->getFileName();
+	unset($reflection);
+	return $file;
+    }
+    
     public function onDashboardLoad(&$dispatcher, $args)
     {
 	return $this->loadDashboardWidget($dispatcher, $args);

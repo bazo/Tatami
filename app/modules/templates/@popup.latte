@@ -5,13 +5,13 @@
     Author     : Martin Bazik
 *}
 {snippet popup}
-<div id="overlay">
-    <div id="popup_window">
-        <div class="popup_close">
-            <a href="{link closePopup!}" class="ajax"><span class="icon icon-close"></span></a>
-        </div>
-    {block #content}
-    {/block}
+    <div id="popup-overlay">
+	<div class="block-border">
+	    <div class="block-content">
+		<a href="{link closePopup!}" class="ajax close"><span class="icon normal close"></span></a>
+		{block #content}
+		{/block}
+	    </div>
+	</div>
     </div>
-</div>
 {/snippet}

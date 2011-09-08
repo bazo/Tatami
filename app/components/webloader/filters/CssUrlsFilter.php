@@ -108,7 +108,7 @@ class CssUrlsFilter extends \Nette\Object
 		$path = $basePath . substr($sourcePath, strlen($docroot)) . DIRECTORY_SEPARATOR . $url;
 	}
 
-	//$path = self::cannonicalizePath($path);
+	$path = self::cannonicalizePath($path);
 
 	return $quote === '"' ? addslashes($path) : $path;
     }

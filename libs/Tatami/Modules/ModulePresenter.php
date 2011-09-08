@@ -28,6 +28,12 @@ abstract class ModulePresenter extends \TatamiModule\SecuredPresenter
     public function setModule(IModule $module)
     {
 	$this->module = $module;
+	return $this;
+    }
+    
+    public function getModule()
+    {
+	return $this->module;
     }
     
     public function startup()
@@ -77,6 +83,40 @@ abstract class ModulePresenter extends \TatamiModule\SecuredPresenter
     
     protected function createComponentShortcuts($name)
     {
-        $shortcuts = new \Tatami\Components\Shortcuts($this, $name);
+	$shortcutsManager = $this->context->getService('ShortcutsManager');
+        $shortcuts = new \Tatami\Components\Shortcuts($this, $name, $shortcutsManager);
     }
+    
+    protected function createComponentCss($name)
+    {
+	$params = $this->context->params;
+	$basePath = $this->getHttpRequest()->getUrl()->basePath;
+	$css = new \Tatami\Components\WebLoader\CssLoader($this, $name, $params['wwwDir'], $basePath);
+        $css->sourcePath = $params['assetsDir'] . "/css";
+	
+        $css->tempUri = $this->getHttpRequest()->getUrl()->baseUrl . "webtemp";
+        $css->tempPath = $params['wwwDir'] . "/webtemp";
+    }
+
+    protected function createComponentJs($name)
+    {
+	$params = $this->context->params;
+        
+	$js = new \Tatami\Components\WebLoader\JavaScriptLoader($this, $name);
+        $js->tempUri = $this->getHttpRequest()->getUrl()->baseUrl . "webtemp";
+        $js->sourcePath = $params['assetsDir'] . "/js";
+	$js->tempPath = $params['wwwDir'] . "/webtemp";
+    }
+    
+    protected function createComponentAssetsLoader($name)
+    {
+	$params = $this->context->params;
+	$assetsLoader = new \Tatami\Components\AssetsLoader\AssetsLoader($this, $name);
+	$assetsLoader->setModuleManager($this->moduleManager)
+		    ->setWwwDir($params['wwwDir'])
+		    ->setBasePath($basePath = $this->getHttpRequest()->getUrl()->basePath)
+		    ->setWebtemp($params['wwwDir'] . "/webtemp")
+		    ->setTempUrl($this->getHttpRequest()->getUrl()->baseUrl . "webtemp");
+    }
+    
 }

@@ -15,7 +15,6 @@ abstract class SecuredPresenter extends TatamiPresenter
         
         $resource = 'user';
         $privilege = 'add';
-        
         if(!$this->getUser()->isAllowed($resource, $privilege ))
         {
             //log the attempt to do forbidden things

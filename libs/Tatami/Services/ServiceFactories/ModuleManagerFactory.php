@@ -20,7 +20,7 @@ class ModuleManagerFactory
 	
 	$cache =  new \Nette\Caching\Cache($cacheStorage, self::$namespace);
 	$eventManager = $container->getService('EventManager');
-	$moduleManager = new \Tatami\Modules\ModuleManager($entityManager, $robotLoader, $eventManager, $cache);
+	$moduleManager = new \Tatami\Modules\ModuleManager($robotLoader, $eventManager, $cache, $entityManager);
 	$eventManager->addSubscriber(\Tatami\Events\Event::APPLICATION_STARTUP, $moduleManager);
 	
 	return $moduleManager;

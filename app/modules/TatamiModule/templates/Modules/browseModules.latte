@@ -1,0 +1,16 @@
+{block #content}
+{dump}
+<div id="module-listing">
+    <div class="module" n:foreach="$availableModules as $module">
+	<span class="module-name">{$module->name}</span>
+	<a href="" class="module-icon"><span class="icon large module-default"></a>
+	<div class="toolbar">
+	    <ul>
+		<li n:if="!$module->installed">
+		    <a n:href="downloadModule!, url => $module->url" class="ajax" title="{_'Download'}"><span class="icon small download"></span></a>
+		</li>
+	    </ul>
+	</div>
+    </div>
+</div>
+{/block}

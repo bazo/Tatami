@@ -1,3 +1,11 @@
-<span class="no-shortcuts">
-			{_'No shortcuts'}
-		    </span>
+<div id="shortcuts">
+    <span class="no-shortcuts">
+	{_'No shortcuts'}
+    </span>
+    {snippet form}
+	{if $showForm}
+	    {control formAddShortcut}
+	{/if}
+    {/snippet}
+    <a n:href="addShortcut!" class="ajax"><span class="icon small two-cog"></span></a>
+</div>

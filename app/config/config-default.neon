@@ -40,6 +40,8 @@ common:
 		ModuleManager:
 			factory: \Tatami\ServiceFactories\ModuleManagerFactory::create
 			
+		ShortcutsManager:
+			factory: \Tatami\ServiceFactories\ShortcutsManagerFactory::create
 		
 	memcache:
 		host: false

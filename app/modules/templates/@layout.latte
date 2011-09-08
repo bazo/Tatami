@@ -8,7 +8,6 @@
  * @param string   $robots   tell robots how to index the content of a page (optional)
  * @param array    $flashes  flash messages
  *}
-
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -18,9 +17,10 @@
 	<meta name="robots" content="noindex"/>
 
 	<title>Tatami</title>
-	{control css 'reset.css', 'common.css', 'layout.css', 'icons.css'}
+	{control assetsLoader:css 'tatami', 'reset.css', 'common.css', 'layout.css', 'icons.css'}
+	{*control css 'reset.css', 'common.css', 'layout.css', 'icons.css'*}
         {block #css}{/block}
-	{control js 'jquery-1.6.2.min.js', 'jquery.nette.js', 'tatami.js'}
+	{*control js 'jquery-1.6.2.min.js', 'jquery.nette.js', 'tatami.js'*}
         {block #js}{/block}
 	<link rel="shortcut icon" href="{$basePath}/favicon.ico" type="image/x-icon"/>
 </head>
@@ -107,7 +107,7 @@
 	
     </div>
 {snippet popup}
-{control popup}
+    {control popup}
 {/snippet}
 </body>
 </html>

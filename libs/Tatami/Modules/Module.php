@@ -9,6 +9,10 @@ use Tatami\Events;
 abstract class Module extends CoreModule
 {
     
+    public
+	$version
+    ;
+    
     protected
         $name = null,
         $widgetName = null,

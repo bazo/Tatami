@@ -55,7 +55,7 @@ class Security extends Object implements \Nette\Security\IAuthenticator, \Nette\
 
     public function isAllowed($role = self::ALL, $resource = self::ALL, $privilege = self::ALL)
     {
-        //var_dump($role, $resource, $privilege);exit;
+        var_dump($role, $resource, $privilege);exit;
 	return true;
     }
 }

@@ -37,7 +37,7 @@ final class TatamiModule extends CoreModule implements IEssentialModule
 		    'label' => 'Install module from internet',
 		    'destination' => ':tatami:modules:browseModules',
 		    'icon' => 'download',
-		    'ajax' => false
+		    'ajax' => true
 		)
 	    )
 	),
