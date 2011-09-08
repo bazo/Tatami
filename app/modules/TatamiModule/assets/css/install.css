@@ -6,7 +6,7 @@
         Purpose of the stylesheet follows.
 */
 body{
-    background: url("/../images/login-box.png") no-repeat scroll center top #2B3237;
+    background: url("images/login-box.png") no-repeat scroll center top #2B3237;
 }
 #install-box{
     margin: 210px auto 0;

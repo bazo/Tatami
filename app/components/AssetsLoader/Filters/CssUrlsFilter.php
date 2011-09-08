@@ -1,8 +1,7 @@
 <?php
 
-namespace Tatami\Components\WebLoader\Filters;
+namespace Tatami\Components\AssetsLoader\Filters;
 
-use Nette\Environment;
 use Nette\Utils\Strings;
 
 /**
@@ -55,7 +54,7 @@ class CssUrlsFilter extends \Nette\Object
      * @param string file
      * @return string
      */
-    public function __invoke($code, \Tatami\Components\WebLoader\WebLoader $loader, $file = null)
+    public function __invoke($code, \Tatami\Components\AssetsLoader\Renderers\IAssetRenderer $renderer, $file = null)
     {
 	// thanks to kravco
 	$regexp = '~
@@ -78,9 +77,9 @@ class CssUrlsFilter extends \Nette\Object
 	$basePath = $this->basePath;
 	return preg_replace_callback(
 		$regexp,
-		function ($matches) use ($loader, $file, $docroot, $basePath) 
+		function ($matches) use ($renderer, $file, $docroot, $basePath) 
 		{
-		    return "url('" . CssUrlsFilter::absolutizeUrl($matches[2], $matches[1], $file, $loader->sourcePath, $docroot, $basePath) . "')";
+		    return "url('" . CssUrlsFilter::absolutizeUrl($matches[2], $matches[1], $file, $renderer->getSourcePath(), $docroot, $basePath) . "')";
 		},
 		$code
 	);

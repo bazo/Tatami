@@ -7,12 +7,12 @@ h1, h2, h3, h4, h5, h6 {
     text-shadow: 0 1px 0 #FFFFFF;
 }
 body{
-    background: url('/../images/nav-bg.png') repeat-y scroll left top #e3e5e7;
+    background: url('images/nav-bg.png') repeat-y scroll left top #e3e5e7;
     color: #2A3640;
 }
 header{
     height: 43px;
-    background: url('/../images/header-bg.png') repeat-x;
+    background: url('images/header-bg.png') repeat-x;
     position: relative;
     overflow: hidden;
     color: #fff;
@@ -28,7 +28,7 @@ header .home a{
     font-weight: 900;
 }
 header .divider-header{
-    background: url("/../images/divider-vertical.png") no-repeat scroll left top transparent;
+    background: url("images/divider-vertical.png") no-repeat scroll left top transparent;
     height: 43px;
     overflow: hidden;
     width: 2px;
@@ -58,7 +58,7 @@ header #toolbox #user-menu a:hover{
     color: #fff;
 }
 #header-surround{
-    background: url("/../images/shadow-bottom.png") repeat-x scroll left bottom transparent;
+    background: url("images/shadow-bottom.png") repeat-x scroll left bottom transparent;
     padding-bottom: 14px;
     position: relative;
     z-index: 50;
@@ -73,7 +73,7 @@ header #toolbox #user-menu a:hover{
 }
 #main aside #shortcuts-header{
     height: 42px;
-    background: url("/../images/title-bar-bg.png") repeat-x scroll left top transparent;
+    background: url("images/title-bar-bg.png") repeat-x scroll left top transparent;
 }
 #main aside #shortcuts-header h1{
     text-align: left;
@@ -82,7 +82,7 @@ header #toolbox #user-menu a:hover{
 }
 #main aside #shortcuts-panel{
     min-height: 105px;
-    background: url("/../images/blue-box-bg.png") repeat-x scroll center #212F3B;
+    background: url("images/blue-box-bg.png") repeat-x scroll center #212F3B;
 }
 #main aside #shortcuts-panel .no-shortcuts{
     display: inline-block;
@@ -102,7 +102,7 @@ header #toolbox #user-menu a:hover{
     width: 100%;
 }
 #main aside nav ul li{
-    background: url("/../images/nav-item-bg.png") repeat-x scroll 0 0 transparent;
+    background: url("images/nav-item-bg.png") repeat-x scroll 0 0 transparent;
     width: 100%;
 }
 #main aside nav ul li a{
@@ -117,7 +117,7 @@ header #toolbox #user-menu a:hover{
     margin-right: 0px;
 }
 #main aside nav ul li:hover{
-    background: url("/../images/nav-item-bg.png") repeat-x scroll 0 -39px transparent;
+    background: url("images/nav-item-bg.png") repeat-x scroll 0 -39px transparent;
     color: #fff;
 }
 #main aside nav ul li a:hover{
@@ -132,7 +132,7 @@ header #toolbox #user-menu a:hover{
     width: 100%;
 }
 #main aside nav ul li.active, #main aside nav ul li.expanded{
-    background: url("/../images/nav-item-bg.png") repeat-x scroll 0 -39px transparent;
+    background: url("images/nav-item-bg.png") repeat-x scroll 0 -39px transparent;
 }
 #main aside nav ul li.active a, #main aside nav ul li.expanded a, #main aside nav ul li:hover ul li a{
     color: #E5E5E5;
@@ -159,7 +159,7 @@ header #toolbox #user-menu a:hover{
 }
 #main #title-bar{
     height: 42px;
-    background: url("/../images/title-bar-bg.png") repeat-x scroll left top transparent;
+    background: url("images/title-bar-bg.png") repeat-x scroll left top transparent;
 }
 #main #title-bar > *{
     margin-top: 10px;
@@ -173,11 +173,11 @@ header #toolbox #user-menu a:hover{
     margin-right: 5px;
 }
 .shadow-bottom {
-    background: url("/../images/shadow-bottom.png") repeat-x scroll left bottom transparent;
+    background: url("images/shadow-bottom.png") repeat-x scroll left bottom transparent;
     height: 14px;
 }
 #main #main-background{
-    background: url("/../images/main-bg.png") repeat-x scroll center transparent;;
+    background: url("images/main-bg.png") repeat-x scroll center transparent;;
     min-height: 434px;
     margin-top: -14px;
 }

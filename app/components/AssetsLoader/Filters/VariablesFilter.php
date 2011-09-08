@@ -1,7 +1,6 @@
 <?php
 
-namespace WebLoader;
-
+namespace Tatami\Components\AssetsLoader\Filters;
 /**
  * Variables filter for WebLoader
  *

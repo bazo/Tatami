@@ -31,29 +31,38 @@
 }
 /* SMALL ICONS */
 .icon.small.start{
-    background-image: url('/../icons/small/start.png');
+    background-image: url('icons/small/start.png');
 }
 .icon.small.stop{
-    background-image: url('/../icons/small/stop.png');
+    background-image: url('icons/small/stop.png');
 }
 .icon.small.cog{
-    background-image: url('/../icons/small/cog.png');
+    background-image: url('icons/small/cog.png');
+}
+.icon.small.two-cog{
+    background-image: url('icons/small/cog_4.png');
 }
 .icon.small.delete{
-    background-image: url('/../icons/small/delete.png');
+    background-image: url('icons/small/delete.png');
 }
 .icon.small.dashboard{
-    background-image: url('/../icons/small/dashboard.png');
+    background-image: url('icons/small/dashboard.png');
+}
+.icon.small.download{
+    background-image: url('icons/small/package-download.png');
 }
 /* NORMAL ICONS */
 .icon.normal.download{
-    background-image: url('/../icons/normal/package-download.png');
+    background-image: url('icons/normal/package-download.png');
+}
+.icon.normal.close{
+    background-image: url('icons/normal/close.png');
 }
 /* MEDIUM ICONS */
 .icon.medium.download{
-    background-image: url('/../icons/medium/package-download.png');
+    background-image: url('icons/medium/package-download.png');
 }
 /* LARGE ICONS */
 .icon.large.module-default{
-    background-image: url('/../icons/large/module-default.png');
+    background-image: url('icons/large/module-default.png');
 }

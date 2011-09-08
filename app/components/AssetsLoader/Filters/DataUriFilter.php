@@ -1,53 +1,27 @@
 <?php
 
-namespace Tatami\Components\WebLoader\Filters;
+namespace Tatami\Components\AssetsLoader\Filters;
 
-use Nette\Environment;
 use Nette\Utils\Strings;
 
 /**
  * Absolutize urls in CSS
- *
+ * @author Martin Bazik
  * @author Jan Marek
  * @license MIT
  */
-class CssUrlsFilter extends \Nette\Object 
+class DataUriFilter extends \Nette\Object 
 {
-    private
-	$docRoot,
-	$basePath
+    
+    private 
+	$sourcePath
     ;
     
-    public function __construct($docRoot, $basePath) 
+    public function __construct($sourcePath) 
     {
-	$this->docRoot = realpath($docRoot);
-	$this->basePath = rtrim($basePath); 
+	$this->sourcePath = $sourcePath;
     }
     
-    /**
-     * Cannonicalize path
-     * @param string path
-     * @return path
-     */
-    private static function cannonicalizePath($path) 
-    {
-	foreach (explode(DIRECTORY_SEPARATOR, $path) as $i => $name) 
-	{
-	    if ($name === "." || ($name === "" && $i > 0)) continue;
-
-	    if ($name === "..") 
-	    {
-		array_pop($pathArr);
-		continue;
-	    }
-
-	    $pathArr[] = $name;
-	}
-
-	return implode("/", $pathArr);
-    }
-
-
     /**
      * Invoke filter
      * @param string code
@@ -55,7 +29,7 @@ class CssUrlsFilter extends \Nette\Object
      * @param string file
      * @return string
      */
-    public function __invoke($code, \Tatami\Components\WebLoader\WebLoader $loader, $file = null)
+    public function __invoke($code)
     {
 	// thanks to kravco
 	$regexp = '~
@@ -74,43 +48,34 @@ class CssUrlsFilter extends \Nette\Object
 			\s*                                   ##   optional whitespace
 		\)                                        ## )
 	~xs';
-	$docroot = $this->docRoot;
-	$basePath = $this->basePath;
+	
+	$sourcePath = $this->sourcePath;
+	
 	return preg_replace_callback(
 		$regexp,
-		function ($matches) use ($loader, $file, $docroot, $basePath) 
+		function ($matches) use ($sourcePath) 
 		{
-		    return "url('" . CssUrlsFilter::absolutizeUrl($matches[2], $matches[1], $file, $loader->sourcePath, $docroot, $basePath) . "')";
+		    return "url('" . DataUriFilter::convert($matches[2], $sourcePath) . "')";
 		},
 		$code
 	);
     }
-    
+
     /**
-     * Make relative url absolute
-     * @param string image url
-     * @param string single or double quote
-     * @param string absolute css file path
-     * @param string source path
-     * @return string
+     * Replace image with data uri
+     * @param type $url
+     * @param type $quote
+     * @param type $sourcePath 
      */
-    public static function absolutizeUrl($url, $quote, $cssFile, $sourcePath, $docroot, $basePath) 
+    public static function convert($url, $sourcePath) 
     {
-	// is already absolute
-	if (preg_match("/^([a-z]+:\/)?\//", $url)) return $url;
-
-	// inside document root
-	if (Strings::startsWith($cssFile, $docroot)) {
-		$path = $basePath . substr(dirname($cssFile), strlen($docroot)) . DIRECTORY_SEPARATOR . $url;
-
-	// outside document root
-	} else {
-		$path = $basePath . substr($sourcePath, strlen($docroot)) . DIRECTORY_SEPARATOR . $url;
+	$file = $sourcePath.DIRECTORY_SEPARATOR.$url;
+	if(file_exists($file))
+	{
+	    $type = \Nette\Utils\MimeTypeDetector::fromFile($file);
+	    return 'data:' . ($type ? "$type;" : '') . 'base64,' . base64_encode(file_get_contents($file));
 	}
-
-	//$path = self::cannonicalizePath($path);
-
-	return $quote === '"' ? addslashes($path) : $path;
+	else return $url;
     }
 
 }

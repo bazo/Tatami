@@ -41,5 +41,5 @@ form input[type="text"], form input[type="password"], form textarea, form select
 }
 input.text:focus, input.email:focus, input.password:focus, textarea.uniform:focus {
     border-color : #999;
-    background : #fff url('/../images/bg-input-focus.png') repeat-x 0% 0%;
+    background : #fff url('images/bg-input-focus.png') repeat-x 0% 0%;
 } 
