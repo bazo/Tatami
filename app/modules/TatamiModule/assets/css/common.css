@@ -141,14 +141,26 @@ input.button{
     position: relative;
     display: none;
     margin: 0 auto;
+    min-width: 200px;
+}
+#popup-window .block-header{
+    position: relative;
+}
+#popup-window .block-header h1{
+    margin-right: 30px;
+    line-height: 37px;
+    display: block;
+    height: 37px;
+    vertical-align: bottom;
+    width: 100%;
 }
 #popup-overlay .block-border{
     display: table;
-    
 }
 #popup-overlay a.close{
-    float: right;
-    clear: left;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 .flash{
     border: 1px solid;

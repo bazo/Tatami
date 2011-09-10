@@ -13,14 +13,16 @@ class User extends BaseEntity implements \Iterator
          * @GeneratedValue(strategy="AUTO")
          */
         $id,
-	/** @Column(type="string", length=50, unique=true) */
-        $login,
-        /** @Column(type="string", length=50, nullable=true) */
+	    
+        /** @Column(type="string", length=100) */
         $name,
-        /** @Column(type="string", length=60) */
+	    
+        /** @Column(type="string", length=100) */
         $password,
-	/** @Column(type="string", length=255) */    
+	    
+	/** @Column(type="string", length=255, unique=true) */    
 	$email,
+	    
         /**
          * @ManyToOne(targetEntity="UserRole")
          */
@@ -29,27 +31,9 @@ class User extends BaseEntity implements \Iterator
 	$created
     ;
 
-    private
-        $position = 0,
-        $properties = array(
-            0 => 'id', 1 => 'login', 2 => 'name', 3 => 'password', 4 => 'email', 5 => 'role'
-        )
-    ;
-
     public function getId() 
     {
 	return $this->id;
-    }
-        
-    public function getLogin() 
-    {
-	return $this->login;
-    }
-
-    public function setLogin($login) 
-    {
-	$this->login = $login;
-	return $this;
     }
         
     public function getName()
@@ -70,7 +54,8 @@ class User extends BaseEntity implements \Iterator
 
     public function setPassword($password)
     {
-        $this->password = $password;
+	$hasher = new PasswordHasher();
+        $this->password = $hasher->hashPassword($password);
         return $this;
     }
     
@@ -98,8 +83,21 @@ class User extends BaseEntity implements \Iterator
     /** @PrePersist */
     public function onPrePersist()
     {
+	if($this->password == null) $this->password = $this->generateRandomPassword();
 	$this->created = new \DateTime;
-	$hasher = new PasswordHasher();
-	$this->password = $hasher->hashPassword($this->password);
+    }
+    
+    private function generateRandomPassword($length = 8)
+    {
+	$chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+[];,./';
+	$password = '';
+	$max = strlen($chars) - 1;
+	for($i = 1; $i <= $length; $i++)
+	{
+	    $pos = rand(0, $max);
+	    $char = substr($chars, $pos, 1);
+	    $password .= $char;
+	}
+	return $password;
     }
 }

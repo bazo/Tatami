@@ -38,6 +38,12 @@ abstract class BasePresenter extends \Nette\Application\UI\Presenter
         $this->invalidateControl('flash');
     }
 
+    public function getShortName()
+    {
+	$start = strpos($this->name, ':') + 1;
+	return substr($this->name, $start);
+    }
+    
     //shortcut for setting the popup layout and invalidating popup
     public function popupOn()
     {
@@ -84,7 +90,6 @@ abstract class BasePresenter extends \Nette\Application\UI\Presenter
         $set = \Nette\Latte\Macros\MacroSet::install($latte->parser);
         $set->addMacro('css', callback('\Tatami\Components\AssetsLoader\Macro', 'macroCss'));
 	$set->addMacro('js', callback('\Tatami\Components\AssetsLoader\Macro', 'macroJs'));
-
     }
     
     protected function createComponentAssetsLoader($name)

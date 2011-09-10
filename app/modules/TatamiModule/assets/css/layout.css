@@ -39,6 +39,7 @@ header .divider-header{
 header #toolbox{
     margin-left: 260px;
     height: 43px;
+    padding-left: 10px;
 }
 header #toolbox nav{
     float: left;
@@ -82,7 +83,7 @@ header #toolbox #user-menu a:hover{
 }
 #main aside #shortcuts-panel{
     min-height: 105px;
-    background: url("images/blue-box-bg.png") repeat-x scroll center #212F3B;
+    background: url("images/blue-box-bg.png") repeat-x scroll top #212F3B;
 }
 #main aside #shortcuts-panel .no-shortcuts{
     display: inline-block;
@@ -166,10 +167,61 @@ header #toolbox #user-menu a:hover{
 #main #title-bar #breadcrumbs{
     float: left;
 }
-#main #title-bar #search-box{
+#breadcrumbs ul{
+    margin-top: -10px;
+}
+#breadcrumbs ul li{
+    float: left;
+    padding-left: 10px;
+    background: url('images/bc-seperator.png') no-repeat scroll right top transparent;
+    height: 40px;
+}
+#breadcrumbs ul li:last-child{
+    background-image: none;
+}
+#breadcrumbs ul li a, #breadcrumbs ul li span{
+    margin-top: 15px;
+    display: inline-block;
+    margin-right: 20px;
+}
+#breadcrumbs li.home{
+    background-image: none;
+}
+#breadcrumbs li.home a {
+    color: #515151;
+    background: url('images/bc-seperator.png') no-repeat scroll right top transparent;
+    display: block;
+    height: 40px;
+    padding-right: 20px;
+    text-decoration: none;
+    margin-top: 0;
+    margin-right: 0;
+}
+#breadcrumbs li.home span{
+    margin-top: 0;
+    margin-right: 0;
+}
+#breadcrumbs li.home:hover
+{
+    background: url('images/bc-shine.png') no-repeat scroll bottom transparent;
+}
+#breadcrumbs li.home a:hover {
+    color: #2e2e2e;
+}
+#search-box{
     display: inline-block;
     float: right;
     margin-right: 5px;
+}
+#search-box form{
+    display: block;
+    height: 40px;
+    width: 500px;
+}
+#search-box form input:first-child{
+    float: left;
+    width: 85%;
+    margin-right: 10px;
 }
 .shadow-bottom {
     background: url("images/shadow-bottom.png") repeat-x scroll left bottom transparent;

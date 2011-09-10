@@ -11,7 +11,7 @@ use Nette\Object,
  * @author     John Doe
  * @package    MyApplication
  */
-class Security extends Object implements \Nette\Security\IAuthenticator, \Nette\Security\IAuthorizator
+class Security extends Object implements \Nette\Security\IAuthenticator
 {
 
     private 
@@ -49,23 +49,13 @@ class Security extends Object implements \Nette\Security\IAuthenticator, \Nette\
      */
     public function authenticate(array $credentials)
     {
-	$login = $credentials[self::USERNAME];
-	//$password = self::hashPassword($credentials[self::PASSWORD]);
-	
-	$userEntity = $this->entityManager->getRepository('User')->findOneBy(array('login' => $login));
-	if(!is_object($userEntity) or !$this->hasher->checkPassword($credentials[self::PASSWORD], $userEntity->password))
-	    throw new AuthenticationException('Username and password mismatch');
-	return new \Nette\Security\Identity($userEntity->id, $userEntity->getRole()->getName(), $userEntity);
-    }
+	$email = $credentials[self::USERNAME];
+	$userEntity = $this->entityManager->getRepository('User')->findOneBy(array('email' => $email));
 
-    public function isAllowed($role = self::ALL, $resource = self::ALL, $privilege = self::ALL)
-    {
-        var_dump($role, $resource, $privilege);exit;
-	return true;
-    }
-    
-    public function createPasswordChangeToken($email)
-    {
+	//if(!is_object($userEntity) or !($credentials[self::PASSWORD] == $userEntity->password))
 	
+	if(!is_object($userEntity) or !$this->hasher->checkPassword($credentials[self::PASSWORD], $userEntity->password))
+	    throw new AuthenticationException('Email and password mismatch');
+	return new \Nette\Security\Identity($userEntity->id, $userEntity->getRole()->getName(), $userEntity);
     }
 }

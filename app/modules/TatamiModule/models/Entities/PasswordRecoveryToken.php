@@ -12,23 +12,35 @@ class PasswordRecoveryToken extends BaseEntity
         $token,
         /**
          * @ManyToOne(targetEntity="User")
+	 * @var User
          */
         $user,
 	/** @Column(type="datetime") */    
-	$created
+	$created,
+	/** @Column(type="boolean") */    
+	$used
     ;
     
+    public function __construct()
+    {
+	$this->used = false;
+    }
+
     public function getToken() 
     {
 	return $this->token;
     }
 
-    public function setUser($user) 
+    public function setUser(User $user) 
     {
 	$this->user = $user;
 	return $this;
     }
-        
+    
+    /**
+     *
+     * @return User
+     */
     public function getUser() 
     {
 	return $this->user;
@@ -39,11 +51,22 @@ class PasswordRecoveryToken extends BaseEntity
 	return $this->created;
     }
 
-        
+    public function getUsed() 
+    {
+	return $this->used;
+    }
+
+    public function setUsed($used) 
+    {
+	$this->used = $used;
+	return $this;
+    }
+
+            
     /** @PrePersist */
     public function onPrePersist()
     {
-	$this->token = uniqid(sha1($this->user->login));
+	$this->token = uniqid(sha1($this->user->email));
 	$this->created = new \DateTime;
     }
 }

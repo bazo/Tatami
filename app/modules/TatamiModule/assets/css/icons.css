@@ -65,6 +65,14 @@
 .icon.medium.download{
     background-image: url('icons/medium/package-download.png');
 }
+.icon.medium.home{
+    background-image: url('icons/medium/home-hover.png');
+    background-position: 0 5px;
+}
+.icon.medium.home:hover{
+    background-image: url('icons/medium/home-hover.png');
+    /*background-position: 0 37px;*/
+}
 .icon.medium.ok{
     background-image: url('icons/medium/tick.png');
 }

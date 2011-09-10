@@ -7,10 +7,10 @@ class LoginPresenter extends TatamiPresenter
 	/** @var \Tatami\Services\EntityManager */
 	$em,
 	$tokenValidity = 3600,
-	$userId,
+	/** @var \Entity\PasswordRecoveryToken */    
+	$token,
 	$hideForm = false
     ;
-
 
     public function startup()
     {
@@ -25,7 +25,6 @@ class LoginPresenter extends TatamiPresenter
 	$this->template->hideForm = $this->hideForm;
     }
 
-
     public function actionNewPassword($token)
     {
 	$tokenEntity = $this->em->getRepository('PasswordRecoveryToken')->findOneBy(array('token' => $token));
@@ -34,7 +33,8 @@ class LoginPresenter extends TatamiPresenter
 	$tokenValid = true;
 	if($tokenEntity != null) #token not found
 	{
-	    if($now->getTimestamp() - $tokenEntity->getCreated()->getTimestamp() > $tokenValidity ) #token expired
+	    if(($now->getTimestamp() - $tokenEntity->getCreated()->getTimestamp() > $tokenValidity) 
+		    or ($tokenEntity->getUsed() == true) ) #token expired
 	    {
 		$tokenValid = false;
 	    }
@@ -50,7 +50,7 @@ class LoginPresenter extends TatamiPresenter
 	    $tokenValid = false;
 	}
 	if($tokenValid === false) $this->flash ('Token invalid', 'error');
-	elseif($tokenEntity != null) $this->userId = $tokenEntity->user->id;
+	elseif($tokenEntity != null) $this->token = $tokenEntity;
 	$this->hideForm = !$tokenValid;
     }
     
@@ -65,7 +65,7 @@ class LoginPresenter extends TatamiPresenter
         $values = $form->getValues();
 	try
 	{
-	    $this->getUser()->login($values->login, $values->password);
+	    $this->getUser()->login($values->email, $values->password);
 	    if ($values->remember) 
 	    {
 		$this->getUser()->setExpiration('+ 14 days', FALSE);
@@ -119,7 +119,8 @@ class LoginPresenter extends TatamiPresenter
     public function createComponentFormChangePassword($name)
     {
 	$form = new \Tatami\Forms\AjaxForm($this, $name);
-	$form->addHidden('userId', $this->userId);
+	$form->addHidden('userId', $this->token->getUser()->getId());
+	$form->addProtection('Time limit 30min has expired. Send the form again', 1800);
 	$form->addPassword('password', 'New password')->setRequired('Fill your new password');
 	$form->addSubmit('btnSubmit', 'Save');
 	$form->onSuccess[] = callback($this, 'formChangePasswordSubmitted');
@@ -133,6 +134,14 @@ class LoginPresenter extends TatamiPresenter
 	$user = $this->em->getRepository('User')->find($userId);
 	try{
 	    $user->setPassword($password);
+	    $this->em->persist($user);
+	    
+	    $this->token->setUsed(true);
+	    $this->em->persist($this->token);
+	    $this->em->flush();
+
+	    $this->token = null;
+	    
 	    $this->mailBuilder->buildPasswordChangeConfirmationEmail($user)->send();
 	    $this->flash('Password changed successfully!');
 	    $this->redirect(':tatami:login:');

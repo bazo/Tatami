@@ -1,8 +1,0 @@
-<div id="users-editor">
-<ul n:inner-foreach="$users as $user">
-    <li><strong>{$user->login}<strong> - {$user->role->name} 
-<a n:href="editUser!, id => $user->id" class="ajax"><span class="icon small edit"></span></a></li>
-</ul>
-</div>
-{snippet popup}
-{/snippet}

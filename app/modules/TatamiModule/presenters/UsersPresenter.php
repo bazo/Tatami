@@ -38,25 +38,41 @@ class UsersPresenter extends \Tatami\Modules\ModulePresenter
     {
 	$values = $form->values;
 	try{
-	    
 	    $userRole = $this->em->getRepository('UserRole')->find($values->role);
 	    $values->role = $userRole;
+	    
 	    $user = new \Entity\User;
 	    $user->setValues((array)$values);
 	    $this->em->persist($user);
+	    
+	    $token = new \Entity\PasswordRecoveryToken;
+	    $token->setUser($user);
+	    $this->em->persist($token);
+
 	    $this->em->flush();
+	    $this->mailBuilder->buildAccountCreatedEmail($user, $token)->send();
+	    $this->flash(sprintf('User added', $user->login));
+	    $this->invalidateControl('usersBrowser');
+	    $this->popupOff();
 	}
-	catch(Exception $e)
+	catch(\PDOException $e)
 	{
-	    $form->addError($e->getMessage());
+	    switch($e->getCode())
+	    {
+		case '23000':
+		    $message = 'Duplicate data';
+		break;
+	    }
+	    $form->addError($message);
+	    $this->invalidateControl('form');
 	}
     }
     
 
-    protected function createComponentUsersEditor($name)
+    protected function createComponentUsersBrowser($name)
     {
-        $editor = new \Tatami\Components\UsersEditor($this, $name);
+        $browser = new \Tatami\Components\UsersBrowser($this, $name);
         $repository = $this->em->getRepository('User');
-        $editor->setRepository($repository);
+        $browser->setRepository($repository);
     }
 }

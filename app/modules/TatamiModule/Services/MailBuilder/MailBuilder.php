@@ -124,4 +124,18 @@ class MailBuilder
 	$message->setBody($text);
 	return $message;
     }
+    
+    public function buildAccountCreatedEmail(\Entity\User $user, \Entity\PasswordRecoveryToken $token)
+    {
+	$this->template->user = $user;
+	$this->template->token = $token;
+	$this->template->setFile(__DIR__.'/templates/accountCreated.latte');
+	$text = $this->template->__toString();
+	
+	$message = $this->prepareMessage();
+	$message->addTo($user->getEmail());
+	$message->setSubject(_('Tatami account created'));
+	$message->setBody($text);
+	return $message;
+    }
 }

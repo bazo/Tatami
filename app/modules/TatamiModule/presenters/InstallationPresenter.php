@@ -123,7 +123,7 @@ class InstallationPresenter extends BasePresenter
     protected function createComponentFormUserAccount($name)
     {
 	$form = new \Tatami\Forms\AjaxForm($this, $name);
-	$form->addText('login', 'Login');
+	$form->addText('name', 'Name');
 	$form->addText('password', 'Password');
 	$form->addText('email', 'E-mail')->addRule(\Nette\Forms\Form::EMAIL, 'Please provide valid email address');
 	$form->addSubmit('btnPrevious', 'Previous')->setValidationScope(false)->onClick[] = callback($this, 'goToPreviousStep');
@@ -236,13 +236,13 @@ class InstallationPresenter extends BasePresenter
     
     public function install(\Nette\Forms\Controls\SubmitButton $button)
     {
-	$login = $this->session->userAccount->login;
+	$name = $this->session->userAccount->name;
 	$password = $this->session->userAccount->password;
 	$email = $this->session->userAccount->email;
 	try
 	{
 	    $this->installer->installDatabase();
-	    $admin = $this->installer->createAdminUserAccount($login, $password, $email);
+	    $admin = $this->installer->createAdminUserAccount($name, $password, $email);
 	    $this->installer->writeInstalled();
 	    $this->mailBuilder->buildInstallationEmail($admin)->send();
 	    $this->flash('Installation successful!');
