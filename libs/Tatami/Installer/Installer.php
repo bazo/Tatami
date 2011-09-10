@@ -1,5 +1,6 @@
 <?php
 namespace Tatami;
+use Nette\Mail\Message, Nette\Mail\SmtpMailer;
 /**
  * Installer
  *
@@ -153,6 +154,13 @@ class Installer
         $this->entityManager->flush();
     }
     
+    /**
+     *
+     * @param type $login
+     * @param type $password
+     * @param type $email
+     * @return \Entity\User 
+     */
     public function createAdminUserAccount($login, $password, $email)
     {
 	$user = new \Entity\User();
@@ -161,7 +169,7 @@ class Installer
 	$user->setPassword($password);
 	$user->setEmail($email);
         
-        $adminRole = $this->entityManager->getRepository('\Entity\UserRole')
+        $adminRole = $this->entityManager->getRepository('UserRole')
                 ->findOneBy(array('name' => 'Admin'));
         
 	$user->setRole($adminRole);
@@ -169,7 +177,7 @@ class Installer
 	$this->entityManager->persist($user);
 	$this->entityManager->flush();
 	    
-	return $this;
+	return $user;
     }
     
     public function readDatabaseSettings()
@@ -187,6 +195,47 @@ class Installer
 	$config['production']['database'] = $databaseSettings;
 	$config['development']['database'] = $databaseSettings;
 	$config['console']['database'] = $databaseSettings;
+	\Nette\Config\NeonAdapter::save($config, $this->destinationConfigFile);
+    }
+    
+    public function sendTestEmailSendmail($from, $to)
+    {
+	$message = new Message;
+	$message->setFrom($from);
+	$message->addTo($to);
+	$message->setBody('Tatami mail test');
+	$message->send();
+    }
+    
+    public function sendTestEmailSmtp($from, $to, $settings)
+    {
+	$mailer = new SmtpMailer($settings);
+	
+	$message = new Message;
+	$message->setFrom($from);
+	$message->addTo($to);
+	$message->setBody('Tatami mail test');
+	
+	$message->setMailer($mailer);
+	
+	$message->send();
+    }
+    
+    public function writeMailerSettings($mailerSettings)
+    {
+	$mailer = $mailerSettings['mailer'];
+	$config = \Nette\Config\NeonAdapter::load($this->destinationConfigFile);
+	$config['common']['mail'] = $mailerSettings;
+	$config['production']['mail'] = $mailerSettings;
+	$config['development']['mail'] = $mailerSettings;
+	$config['console']['mail'] = $mailerSettings;
+	
+	$mailerService = array();
+	$mailerService['factory'] = 'Tatami\ServiceFactories\MailerFactory::create';
+	$config['common']['services']['mailer'] = $mailerService;
+	$config['production']['services']['mailer'] = $mailerService;
+	$config['development']['services']['mailer'] = $mailerService;
+	$config['console']['services']['mailer'] = $mailerService;
 	\Nette\Config\NeonAdapter::save($config, $this->destinationConfigFile);
     }
     

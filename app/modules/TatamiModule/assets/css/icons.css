@@ -51,6 +51,9 @@
 .icon.small.download{
     background-image: url('icons/small/package-download.png');
 }
+.icon.small.info{
+    background-image: url('icons/small/info.png');
+}
 /* NORMAL ICONS */
 .icon.normal.download{
     background-image: url('icons/normal/package-download.png');
@@ -61,6 +64,15 @@
 /* MEDIUM ICONS */
 .icon.medium.download{
     background-image: url('icons/medium/package-download.png');
+}
+.icon.medium.ok{
+    background-image: url('icons/medium/tick.png');
+}
+.icon.medium.info{
+    background-image: url('icons/medium/info.png');
+}
+.icon.medium.error{
+    background-image: url('icons/medium/exclamation.png');
 }
 /* LARGE ICONS */
 .icon.large.module-default{

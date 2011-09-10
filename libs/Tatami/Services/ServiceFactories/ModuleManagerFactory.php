@@ -14,12 +14,19 @@ class ModuleManagerFactory
     
     public static function create(DI\Container $container)
     {
-	$entityManager = $container->getService('EntityManager');
+	try
+	{
+	    $entityManager = $container->getService('entityManager');
+	}
+	catch(\InvalidArgumentException $e) //on purpose, entity manager is not needed all the time
+	{
+	    $entityManager = null;
+	}
 	$robotLoader = $container->getService('robotLoader');
 	$cacheStorage = $container->getService('cacheStorage');
 	
 	$cache =  new \Nette\Caching\Cache($cacheStorage, self::$namespace);
-	$eventManager = $container->getService('EventManager');
+	$eventManager = $container->getService('eventManager');
 	$moduleManager = new \Tatami\Modules\ModuleManager($robotLoader, $eventManager, $cache, $entityManager);
 	$eventManager->addSubscriber(\Tatami\Events\Event::APPLICATION_STARTUP, $moduleManager);
 	

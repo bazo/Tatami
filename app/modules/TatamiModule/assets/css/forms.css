@@ -1,7 +1,5 @@
 form{
-    margin: 10px;
-    margin-left: 0;
-    margin-right: 0;
+    margin-bottom: 10px;
 }
 form table{
     width: 100%;
@@ -43,3 +41,17 @@ input.text:focus, input.email:focus, input.password:focus, textarea.uniform:focu
     border-color : #999;
     background : #fff url('images/bg-input-focus.png') repeat-x 0% 0%;
 } 
+form .error{
+    margin-top: 0;
+    margin-bottom: 10px;
+    margin-left: -10px;
+    margin-right: -10px;
+    background-color: #FACFCF;
+    color: #820101;
+    border-bottom: 1px #DC1C1C solid;
+    padding: 10px;
+    padding-left: 35px;
+    background-position: 10px 8px;
+    background-repeat: no-repeat;
+    background-image: url('icons/small/error.png');
+}

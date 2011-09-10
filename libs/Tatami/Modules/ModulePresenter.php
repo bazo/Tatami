@@ -41,9 +41,9 @@ abstract class ModulePresenter extends \TatamiModule\SecuredPresenter
 	parent::startup();
 	if(!$this->module->isActive())
 	    throw new \Nette\Application\BadRequestException(sprintf('Module %s not activated', $this->module->getName()));
-	$this->em = $this->context->getService('EntityManager');
-        $this->eventManager = $this->context->getService('EventManager');
-	$this->moduleManager = $this->context->getService('ModuleManager');
+	$this->em = $this->context->getService('entityManager');
+        $this->eventManager = $this->context->getService('eventManager');
+	$this->moduleManager = $this->context->getService('moduleManager');
     }
     
     protected function createComponentNavigation($name)
@@ -83,29 +83,8 @@ abstract class ModulePresenter extends \TatamiModule\SecuredPresenter
     
     protected function createComponentShortcuts($name)
     {
-	$shortcutsManager = $this->context->getService('ShortcutsManager');
+	$shortcutsManager = $this->context->getService('shortcutsManager');
         $shortcuts = new \Tatami\Components\Shortcuts($this, $name, $shortcutsManager);
-    }
-    
-    protected function createComponentCss($name)
-    {
-	$params = $this->context->params;
-	$basePath = $this->getHttpRequest()->getUrl()->basePath;
-	$css = new \Tatami\Components\WebLoader\CssLoader($this, $name, $params['wwwDir'], $basePath);
-        $css->sourcePath = $params['assetsDir'] . "/css";
-	
-        $css->tempUri = $this->getHttpRequest()->getUrl()->baseUrl . "webtemp";
-        $css->tempPath = $params['wwwDir'] . "/webtemp";
-    }
-
-    protected function createComponentJs($name)
-    {
-	$params = $this->context->params;
-        
-	$js = new \Tatami\Components\WebLoader\JavaScriptLoader($this, $name);
-        $js->tempUri = $this->getHttpRequest()->getUrl()->baseUrl . "webtemp";
-        $js->sourcePath = $params['assetsDir'] . "/js";
-	$js->tempPath = $params['wwwDir'] . "/webtemp";
     }
     
     protected function createComponentAssetsLoader($name)

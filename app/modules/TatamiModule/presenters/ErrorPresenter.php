@@ -1,23 +1,15 @@
 <?php
-
-/**
- * My Application
- *
- * @copyright  Copyright (c) 2010 John Doe
- * @package    MyApplication
- */
-
-use Nette\Diagnostics\Debugger, Nette\Application\BadRequestException;
-
-
+namespace TatamiModule;
+use Nette\Diagnostics\Debugger,
+	Nette\Application as NA;
 
 /**
  * Error presenter.
  *
- * @author     John Doe
- * @package    MyApplication
+ * @author     Martin Bazik
+ * @package    Tatami
  */
-class ErrorPresenter extends TatamiModule\BasePresenter
+class ErrorPresenter extends BasePresenter
 {
 
 	/**
@@ -30,12 +22,13 @@ class ErrorPresenter extends TatamiModule\BasePresenter
 			$this->payload->error = TRUE;
 			$this->terminate();
 
-		} elseif ($exception instanceof BadRequestException) {
-			$this->setView('404'); // load template 404.phtml
+		} elseif ($exception instanceof NA\BadRequestException) {
+			$code = $exception->getCode();
+			$this->setView(in_array($code, array(403, 404, 405, 410, 500)) ? $code : '4xx'); // load template 403.latte or 404.latte or ... 4xx.latte
 
 		} else {
-			$this->setView('500'); // load template 500.phtml
-			Debugger::processException($exception); // and handle error by Nette\Debug
+			$this->setView('500'); // load template 500.latte
+			Debugger::log($exception, Debugger::ERROR); // and log exception
 		}
 	}
 

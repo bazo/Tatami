@@ -81,7 +81,7 @@ final class ModuleManager extends \Tatami\Subscriber
     
     private function formatModuleClass($moduleName)
     {
-	return '\Tatami\Modules\\'.$moduleName; 
+	return '\Tatami\Modules\\'.$moduleName.'Module'; 
     }
     
     private function findModules()
@@ -115,7 +115,7 @@ final class ModuleManager extends \Tatami\Subscriber
     
     public function getModuleEntities()
     {
-	return $this->entityManager->getRepository('Entity\Module')->findAll();
+	return $this->entityManager->getRepository('Module')->findAll();
     }
     
     private function initializeModules()
@@ -171,7 +171,7 @@ final class ModuleManager extends \Tatami\Subscriber
 	{
 	   if($module instanceof IModule) $name = $module->getName();
 	   else $name = $module;
-	   $moduleEntity = $this->entityManager->getRepository('Entity\Module')->findOneByName($name);
+	   $moduleEntity = $this->entityManager->getRepository('Module')->findOneByName($name);
 	}
 	catch(\PDOException $e)
 	{
@@ -184,13 +184,13 @@ final class ModuleManager extends \Tatami\Subscriber
 
     public function isModuleActive(IModule $module)
     {
-        $moduleEntity = $this->entityManager->getRepository('Entity\Module')->findOneByName($module->getName());
+        $moduleEntity = $this->entityManager->getRepository('Module')->findOneByName($module->getName());
         return $moduleEntity->getActive();
     }
 
     public function activateModule($moduleName)
     {
-	$moduleEntity = $this->entityManager->getRepository('Entity\Module')->findOneByName($moduleName);
+	$moduleEntity = $this->entityManager->getRepository('Module')->findOneByName($moduleName);
 	$moduleEntity->setActive(true);
 	$this->entityManager->persist($moduleEntity);
 	$this->entityManager->flush();
@@ -200,7 +200,7 @@ final class ModuleManager extends \Tatami\Subscriber
 
     public function deactivateModule($moduleName)
     {
-	$moduleEntity = $this->entityManager->getRepository('Entity\Module')->findOneByName($moduleName);
+	$moduleEntity = $this->entityManager->getRepository('Module')->findOneByName($moduleName);
 	$moduleEntity->setActive(false);
 	$this->entityManager->persist($moduleEntity);
 	$this->entityManager->flush();
@@ -210,7 +210,7 @@ final class ModuleManager extends \Tatami\Subscriber
     
     public function deleteModule($moduleName)
     {
-	$moduleEntity = $this->entityManager->getRepository('Entity\Module')->findOneByName($moduleName);
+	$moduleEntity = $this->entityManager->getRepository('Module')->findOneByName($moduleName);
 	$moduleEntity->setActive(false);
 	$this->entityManager->persist($moduleEntity);
 	$this->entityManager->flush();
@@ -242,7 +242,12 @@ final class ModuleManager extends \Tatami\Subscriber
     {
 	$moduleName = ucfirst(mb_strtolower($moduleName));
 	$modules = $this->getModules();
-	return $modules[$moduleName];
+	if(isset($modules[$moduleName]))
+	    return $modules[$moduleName];
+	else{
+	    $moduleClass = $this->formatModuleClass($moduleName);
+	    return new $moduleClass;
+	}
     }
     
     public function getModules() 

@@ -18,16 +18,30 @@
 
 	<title>Tatami - {_'Login'}</title>
 
-	{control css 'reset.css', 'common.css', 'forms.css', 'login.css'}
+	{css 'reset.css', 'common.css', 'icons.css', 'forms.css', 'login.css'}
+	{js 'jquery-1.6.3.min.js', 'jquery.nette.js', 'netteForms.js', 'jquery.ajaxform.js', 'tatami.js'}
 	<link rel="shortcut icon" href="{$basePath}/favicon.ico" type="image/x-icon">
     </head>
 
     <body>
-	{snippet flash}
-	    {foreach $flashes as $flash}<div class="flash flash-{$flash->type}"><span class="icon icon-{$flash->type}"></span>{_$flash->message}</div>{/foreach}
+	
+<section id="login-box">
+    {snippet flash}
+	    {foreach $flashes as $flash}<div class="flash {$flash->type}"><span class="icon medium {$flash->type}"></span>
+		<span class="message">{_$flash->message}</span></div>{/foreach}
 	{/snippet}
-
+	{snippet form}
+    {if $hideForm == false}
+	<div class="block-border">
+	    <div class="block-header">
+		<h1>{$title}</h1>
+	    </div>
+	    <div class="block-content">
 	{include #content}
-
+</div>
+	</div>
+    {/if}
+    {/snippet}
+    </section>
     </body>
 </html>

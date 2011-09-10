@@ -33,7 +33,7 @@ class PresenterFactory extends \Nette\Application\PresenterFactory
          $presenter->setContext($this->context);
 	 if($presenter instanceof Modules\ModulePresenter and (isset($this->context->params['installed']) and $this->context->params['installed'] == true))
 	 {
-             $moduleManager = $this->context->getService('ModuleManager');
+             $moduleManager = $this->context->getService('moduleManager');
 	     $moduleName = $moduleManager->getModuleNameFromPresenterClass($class);
 	     $module = $moduleManager->getModule($moduleName);
 	     $presenter->setModule($module);

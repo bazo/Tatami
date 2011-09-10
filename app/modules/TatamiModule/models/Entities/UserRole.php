@@ -1,7 +1,7 @@
 <?php
 namespace Entity;
 
-/** @Entity(repositoryClass="Repositories\UserRoleRepository") */
+/** @Entity(repositoryClass="Tatami\Models\Repositories\UserRoleRepository") */
 class UserRole extends BaseEntity
 {
     protected

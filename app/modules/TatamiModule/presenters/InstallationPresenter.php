@@ -1,5 +1,6 @@
 <?php
 namespace TatamiModule;
+use Nette\Forms\Form, Nette\Utils\Html;
 /**
  * Description of UsersPresenter
  *
@@ -14,7 +15,9 @@ class InstallationPresenter extends BasePresenter
 	$sessionSection = 'installer',
 	/** @var \Nette\Http\SessionSection */
 	$session,
-	$allSteps = 3
+	$totalSteps = 4,
+	/** @var \Tatami\Services\MailBuilder */
+	$mailBuilder
     ;
 
     public function startup()
@@ -26,6 +29,7 @@ class InstallationPresenter extends BasePresenter
                 $this->context->params['appDir'].'/config/config.neon');
         
 	$this->session = $this->getSession($this->sessionSection);
+	$this->mailBuilder = new \Tatami\Services\MailBuilder($this);
     }
 
     public function actionDefault()
@@ -50,7 +54,12 @@ class InstallationPresenter extends BasePresenter
     public function actionStep3()
     {
 	$this->currentStep = 3;
-	$entityManager = $this->getService('EntityManager');
+    }
+    
+    public function actionStep4()
+    {
+	$this->currentStep = 4;
+	$entityManager = $this->getService('entityManager');
 	$this->installer->setEntityManager($entityManager);
 	$this->template->databaseInfo = $this->session->database;
 	$this->template->userAccountInfo = $this->session->userAccount;
@@ -60,7 +69,7 @@ class InstallationPresenter extends BasePresenter
     {
 	parent::beforeRender();
 	$this->template->currentStep = $this->currentStep;
-	$this->template->allSteps = $this->allSteps;
+	$this->template->totalSteps = $this->totalSteps;
     }
     
     public function goToPreviousStep()
@@ -70,7 +79,7 @@ class InstallationPresenter extends BasePresenter
 	$this->redirect('installation:'.$action);
     }
     
-    public function createComponentFormDatabaseInfo($name)
+    protected function createComponentFormDatabaseInfo($name)
     {
 	$form = new \Tatami\Forms\AjaxForm($this, $name);
 	$form->addSelect('driver', 'Driver', $this->installer->getDatabaseDrivers());
@@ -94,6 +103,7 @@ class InstallationPresenter extends BasePresenter
 	    try
 	    {
 		$this->installer->writeDatabaseSettings($values);
+		$this->redirect('installation:step2');
 	    }
 	    catch(Nette\FileNotFoundException $e)
 	    {
@@ -103,7 +113,6 @@ class InstallationPresenter extends BasePresenter
 	    {
 		$button->form->addError($e->getMessage);
 	    }
-	    $this->redirect('installation:step2');
 	}
 	else
 	{
@@ -111,7 +120,7 @@ class InstallationPresenter extends BasePresenter
 	}
     }
     
-    public function createComponentFormUserAccount($name)
+    protected function createComponentFormUserAccount($name)
     {
 	$form = new \Tatami\Forms\AjaxForm($this, $name);
 	$form->addText('login', 'Login');
@@ -131,6 +140,93 @@ class InstallationPresenter extends BasePresenter
 	$this->redirect('installation:step3');
     }
     
+    protected function createComponentFormMailSetup($name)
+    {
+	$form = new \Tatami\Forms\BaseForm($this, $name);
+	
+	$form->addGroup('Basic settings')->setOption('container', Html::el('div'));
+	$defaultFrom = 'tatami@'.$this->context->expand('%domain%');
+	$form->addText('from', 'From')->setDefaultValue($defaultFrom)->setRequired('Please fill %name');
+	$form->addText('fromName', 'From name')->setDefaultValue('Tatami');
+	$mailers = array(
+	  'mail' => 'mail() function - default',
+	  'smtp' => 'custom smtp server'
+	);
+	$mailer = $form->addRadioList('mailer', 'Select mailer', $mailers)->setDefaultValue('mail');
+	$mailer->addCondition(Form::EQUAL, 'smtp')
+                ->toggle('smtp');
+	
+	$form->addGroup('Smtp settings')->setOption('container', Html::el('div')->id('smtp'));
+	$smtp = $form->addContainer('smtp');
+	$encryptions = array(
+	    'none' => 'none',
+	    'ssl' => 'SSL',
+	    'tls' => 'TLS'
+	);
+	$smtp->addRadioList('secure', 'Select encryption', $encryptions);
+	$smtp->addText('host', 'Server');
+	$smtp->addText('port', 'Port');
+	$smtp->addText('username', 'Username');
+	$smtp->addText('password', 'Password');
+	
+	$form->addGroup('')->setOption('container', Html::el(''));
+	$form->addSubmit('btnPrevious', 'Previous')->setValidationScope(false)->onClick[] = callback($this, 'goToPreviousStep');
+	$form->addSubmit('btnNext', 'Next')->onClick[] = callback($this, 'formMailSetupSubmitted');
+	
+	if(isset($this->session->mailSettings))
+	    $form->setDefaults($this->session->mailSettings);
+    }
+    
+    public function formMailSetupSubmitted(\Nette\Forms\Controls\SubmitButton $button)
+    {
+	$values = $button->form->values;
+	$this->session->mailSettings = $values;
+	//var_dump($values);exit;
+	$to = $this->session->userAccount->email;
+	
+	$canContinue = true;
+	try
+	{
+	    switch($values->mailer)
+	    {
+		case 'mail':
+		    $this->installer->sendTestEmailSendmail($values->from, $to);
+		break;
+	    
+		case 'smtp':
+		    $this->installer->sendTestEmailSmtp($values->from, $to, (array)$values->smtp);
+		break;
+	    }
+	}
+	catch(\Nette\InvalidStateException $e)
+	{
+	    $button->form->addError($e->getMessage());
+	    $canContinue = false;
+	}
+	catch(\Nette\Mail\SmtpException $e)
+	{
+	    $button->form->addError($e->getMessage());
+	    $canContinue = false;
+	}
+	if($canContinue)
+	{
+	    $mailerSettings = $values;
+	    try
+	    {
+		$this->installer->writeMailerSettings($mailerSettings);
+		$this->redirect('installation:step4');
+	    }
+	    catch(Nette\FileNotFoundException $e)
+	    {
+		$button->form->addError($e->getMessage);
+	    }
+	    catch(Nette\InvalidStateException $e)
+	    {
+		$button->form->addError($e->getMessage);
+	    }
+	}
+    }
+    
     public function createComponentFormInstall($name)
     {
 	$form = new \Tatami\Forms\AjaxForm($this, $name);
@@ -146,8 +242,9 @@ class InstallationPresenter extends BasePresenter
 	try
 	{
 	    $this->installer->installDatabase();
-	    $this->installer->createAdminUserAccount($login, $password, $email);
+	    $admin = $this->installer->createAdminUserAccount($login, $password, $email);
 	    $this->installer->writeInstalled();
+	    $this->mailBuilder->buildInstallationEmail($admin)->send();
 	    $this->flash('Installation successful!');
 	    $this->redirect(':tatami:login:');
 	}
@@ -155,25 +252,5 @@ class InstallationPresenter extends BasePresenter
         {
             $button->form->addError('Installation failed: '.$e->getMessage());
         }
-    }
-    
-    protected function createComponentCss($name)
-    {
-	$params = $this->context->params;
-	$basePath = $this->getHttpRequest()->getUrl()->basePath;
-	$css = new \Tatami\Components\WebLoader\CssLoader($this, $name, $params['wwwDir'], $basePath);
-        $css->sourcePath = __DIR__ . "/../assets/css";
-        $css->tempUri = $this->getHttpRequest()->getUrl()->baseUrl . "webtemp";
-        $css->tempPath = $params['wwwDir'] . "/webtemp";
-    }
-
-    protected function createComponentJs($name)
-    {
-	$params = $this->context->params;
-        
-	$js = new \Tatami\Components\WebLoader\JavaScriptLoader($this, $name);
-        $js->tempUri = $this->getHttpRequest()->getUrl()->baseUrl . "webtemp";
-        $js->sourcePath = __DIR__ . "/../assets/js";
-	$js->tempPath = $params['wwwDir'] . "/webtemp";
     }
 }

@@ -16,22 +16,26 @@
 	<meta name="description" content="Tatami login">
 	<meta name="robots" content="noindex">
 
-	<title>Tatami - {_'Login'}</title>
+	<title>Tatami - {_'Install'}</title>
 
-        {control assetsLoader:css 'tatami','reset.css', 'common.css', 'forms.css', 'install.css'}
+        {css 'reset.css', 'common.css', 'icons.css', 'forms.css', 'install.css'}
+	{js 'netteForms.js'}
 	<link rel="shortcut icon" href="{$basePath}/favicon.ico" type="image/x-icon">
 </head>
 
 <body>
-    {snippet flash}
-        {foreach $flashes as $flash}<div class="flash flash-{$flash->type}"><span class="icon icon-{$flash->type}"></span>{_$flash->message}</div>{/foreach}
-    {/snippet}
     <section id="install-box">
+	{snippet flash}
+	    {foreach $flashes as $flash}<div class="flash {$flash->type}"><span class="icon {$flash->type}"></span>{_$flash->message}</div>{/foreach}
+	{/snippet}
 	<div class="block-border">
 	    <div class="block-header">
 		<h1>{$title}</h1>
 	    </div>
 	    <div class="block-content">
+		<div class="flash info top"><span class="icon small info"></span>
+		    <span class="message small">{_sprintf('Step %s of %s', $currentStep, $totalSteps)}</span>
+		</div>
 		{include #content}
 	    </div>
 	</div>

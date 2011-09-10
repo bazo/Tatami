@@ -27,28 +27,8 @@ abstract class BasePresenter extends \Nette\Application\UI\Presenter
           if($this->lang == null) $this->lang = 'en';
           $this->canonicalize();
         }
-        $this->translator = $this->context->getService('Translator');
+        $this->translator = $this->context->getService('translator');
         $this->translator->setLang($this->lang);
-    }
-
-    protected function createComponentCss($name)
-    {
-	$params = $this->context->params;
-	$basePath = $this->getHttpRequest()->getUrl()->basePath;
-	$css = new \Tatami\Components\WebLoader\CssLoader($this, $name, $params['wwwDir'], $basePath);
-        $css->sourcePath = $params['assetsDir'] . "/css";
-        $css->tempUri = $this->getHttpRequest()->getUrl()->baseUrl . "webtemp";
-        $css->tempPath = $params['wwwDir'] . "/webtemp";
-    }
-
-    protected function createComponentJs($name)
-    {
-	$params = $this->context->params;
-        
-	$js = new \Tatami\Components\WebLoader\JavaScriptLoader($this, $name);
-        $js->tempUri = $this->getHttpRequest()->getUrl()->baseUrl . "webtemp";
-        $js->sourcePath = $params['assetsDir'] . "/js";
-	$js->tempPath = $params['wwwDir'] . "/webtemp";
     }
     
     //shortcut for setting the flash message and invalidating it
@@ -95,5 +75,27 @@ abstract class BasePresenter extends \Nette\Application\UI\Presenter
     {
         $popup = new \Tatami\Components\Popup($this, $name);
         $popup->setContext($this->context);
+    }
+    
+    public function templatePrepareFilters($template)
+    {
+        $latte = new \Nette\Latte\Engine;
+        $template->registerFilter($latte);
+        $set = \Nette\Latte\Macros\MacroSet::install($latte->parser);
+        $set->addMacro('css', callback('\Tatami\Components\AssetsLoader\Macro', 'macroCss'));
+	$set->addMacro('js', callback('\Tatami\Components\AssetsLoader\Macro', 'macroJs'));
+
+    }
+    
+    protected function createComponentAssetsLoader($name)
+    {
+	$params = $this->context->params;
+	$assetsLoader = new \Tatami\Components\AssetsLoader\AssetsLoader($this, $name);
+	$assetsLoader->setModule('tatami')
+		->setModuleManager($this->context->moduleManager)
+		    ->setWwwDir($params['wwwDir'])
+		    ->setBasePath($basePath = $this->getHttpRequest()->getUrl()->basePath)
+		    ->setWebtemp($params['wwwDir'] . "/webtemp")
+		    ->setTempUrl($this->getHttpRequest()->getUrl()->baseUrl . "webtemp");
     }
 }

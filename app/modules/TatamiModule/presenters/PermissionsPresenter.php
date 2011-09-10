@@ -14,6 +14,6 @@ class PermissionsPresenter extends \Tatami\Modules\ModulePresenter
     public function createComponentPermissionsEditor($name)
     {
         $editor = new \Tatami\Components\PermissionsEditor($this, $name);
-        $editor->setRepository($this->em->getRepository('Entity\UserRole'));
+        $editor->setRepository($this->em->getRepository('UserRole'));
     }
 }

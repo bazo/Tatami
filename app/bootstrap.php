@@ -10,6 +10,7 @@ use
     Nette\Application\Routers\SimpleRouter,
     Nette\Application\Routers\Route
 ;
+
 // Load Nette Framework
 $params['libsDir'] = __DIR__ . '/../libs';
 require $params['libsDir'] . '/Nette/loader.php';
@@ -17,6 +18,7 @@ require $params['libsDir'] . '/Nette/loader.php';
 $params['logDir'] = __DIR__ . '/../log';
 Debugger::$logDirectory = $params['logDir'];
 Debugger::$strictMode = TRUE;
+Debugger::$productionMode = false;
 Debugger::enable();
 
 $params['assetsDir'] = __DIR__ . '/assets';
@@ -50,11 +52,11 @@ $application->onStartup[] = function(Nette\Application\Application $application)
 		'id' => null
 	    ));
     
-    $eventManager = $configurator->getContainer()->getService('EventManager');
+    $eventManager = $configurator->getContainer()->getService('eventManager');
     $params = $configurator->getContainer()->params;
     if(isset($params['installed']) and $params['installed'] == true)
     {
-	$moduleManager = $configurator->getContainer()->getService('ModuleManager');
+	$moduleManager = $configurator->getContainer()->getService('moduleManager');
 	$eventManager->addSubscriber(Tatami\Events\Event::APPLICATION_STARTUP, $moduleManager);
     }
     $eventManager->fireEvent(Tatami\Events\Event::APPLICATION_STARTUP, $application, $configurator);
@@ -62,21 +64,22 @@ $application->onStartup[] = function(Nette\Application\Application $application)
 
 $application->onShutdown[] = function(Nette\Application\Application $application) use($configurator)
 {
-    $configurator->getContainer()->getService('EventManager')->fireEvent(Tatami\Events\Event::APPLICATION_SHUTDOWN, $application);
+    $configurator->getContainer()->getService('eventManager')->fireEvent(Tatami\Events\Event::APPLICATION_SHUTDOWN, $application);
 };
 
 $application->onError[] = function(Nette\Application\Application $application) use($configurator)
 {
-    $configurator->getContainer()->getService('EventManager')->fireEvent(Tatami\Events\Event::APPLICATION_ERROR, $application);
+    $configurator->getContainer()->getService('eventManager')->fireEvent(Tatami\Events\Event::APPLICATION_ERROR, $application);
 };
 
 $application->onRequest[] = function(Nette\Application\Application $application) use($configurator)
 {
-    $configurator->getContainer()->getService('EventManager')->fireEvent(Tatami\Events\Event::APPLICATION_REQUEST, $application);
+    $configurator->getContainer()->getService('eventManager')->fireEvent(Tatami\Events\Event::APPLICATION_REQUEST, $application);
 };
 
 $application->onResponse[] = function(Nette\Application\Application $application) use($configurator)
 {
-    $configurator->getContainer()->getService('EventManager')->fireEvent(Tatami\Events\Event::APPLICATION_RESPONSE, $application);
+    $configurator->getContainer()->getService('eventManager')->fireEvent(Tatami\Events\Event::APPLICATION_RESPONSE, $application);
 };
+
 $application->run();

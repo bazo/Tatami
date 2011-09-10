@@ -6,22 +6,22 @@ class Acl extends Permission
 {
     public static function create(\Nette\DI\IContainer $container)
     {
-        return new self($container->getService('EntityManager'), 
-                $container->getService('ModuleManager'),
-                $container->getService('EventManager'));
+        return new self($container->getService('entityManager'), 
+                $container->getService('moduleManager'),
+                $container->getService('eventManager'));
     }
     
     private function __construct(\Doctrine\ORM\EntityManager $entityManager, 
             \Tatami\Modules\ModuleManager $moduleManager,
             \Tatami\Events\EventManager $eventManager)
     {
-        $resources = $entityManager->getRepository('Entity\Resource')->findAll();
+        $resources = $entityManager->getRepository('Resource')->findAll();
         foreach($resources as $resource)
         {
             $this->addResource($resource->getName());
         }
         
-        $roles = $entityManager->getRepository('Entity\UserRole')->findAll();
+        $roles = $entityManager->getRepository('UserRole')->findAll();
         foreach($roles as $role)
         {
             if(is_object($role->getParent()))

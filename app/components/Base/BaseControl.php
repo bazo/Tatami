@@ -19,7 +19,7 @@ class BaseControl extends Control
     protected function createTemplate($class = NULL)
     {
 	$template = parent::createTemplate($class);
-	$translator = $this->getPresenter()->getService('Translator');
+	$translator = $this->getPresenter()->getService('translator');
 	$template->setTranslator($translator);
 	return $template;
     }

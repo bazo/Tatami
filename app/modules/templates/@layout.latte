@@ -17,10 +17,9 @@
 	<meta name="robots" content="noindex"/>
 
 	<title>Tatami</title>
-	{control assetsLoader:css 'tatami', 'reset.css', 'common.css', 'layout.css', 'icons.css'}
-	{*control css 'reset.css', 'common.css', 'layout.css', 'icons.css'*}
+	{css tatami 'reset.css', 'common.css', 'layout.css', 'forms.css', 'icons.css'}
         {block #css}{/block}
-	{*control js 'jquery-1.6.2.min.js', 'jquery.nette.js', 'tatami.js'*}
+	{js tatami 'jquery-1.6.3.min.js', 'jquery.nette.js', 'netteForms.js', 'jquery.ajaxform.js', 'tatami.js'}
         {block #js}{/block}
 	<link rel="shortcut icon" href="{$basePath}/favicon.ico" type="image/x-icon"/>
 </head>
@@ -89,6 +88,10 @@
 		<div class="shadow-bottom shadow-titlebar"></div>
 		<div id="main-background">
 		<div id="main-content">
+		    {snippet flash}
+		    {foreach $flashes as $flash}<div class="flash {$flash->type}"><span class="icon medium {$flash->type}"></span>
+			<span class="message">{_$flash->message}</span></div>{/foreach}
+		    {/snippet}
 		    <h1 class="title" n:ifset="$title">{$title}</h1>
 		    <div class="block-border">
 			<div class="block-content">
@@ -101,9 +104,7 @@
 	</div>
 	
         
-        {snippet flash}
-        {foreach $flashes as $flash}<div class="flash flash-{$flash->type}"><span class="icon icon-{$flash->type}"></span>{_$flash->message}</div>{/foreach}
-        {/snippet}
+        
 	
     </div>
 {snippet popup}

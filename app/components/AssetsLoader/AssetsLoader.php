@@ -16,7 +16,8 @@ class AssetsLoader extends Control
 	$tempUrl,
 	$mode,
 	$wwwDir,
-	$basePath
+	$basePath,
+	$module
     ;
     
     const
@@ -35,6 +36,12 @@ class AssetsLoader extends Control
     public function setWebtemp($dir)
     {
 	$this->webtemp = $dir;
+	return $this;
+    }
+    
+    public function setModule($moduleName)
+    {
+	$this->module = $moduleName;
 	return $this;
     }
     
@@ -89,17 +96,23 @@ class AssetsLoader extends Control
 	$this->render(func_get_args());
     }
     
+    public function renderJs($files)
+    {
+	$this->mode = self::MODE_JS;
+	$this->render(func_get_args());
+    }
+    
     private function render($args)
     {
 	$this->files = array();
-	//$args = func_get_args();
-	if($this->isModule($args[0]))
+	if(!isset($this->module))
 	{
-	    $module = Strings::lower(array_shift($args));
+	    if($this->isModule($args[0]))
+		$module = Strings::lower(array_shift($args));
+	    else $module = Strings::lower ($this->parent->module->name);
 	}
-	else $module = Strings::lower ($this->parent->module->name);
+	else $module = $this->module;
 	$files = $args;
-	//$this->addFiles($module, $files);
 	$moduleDir = dirname($this->moduleManager->getModule($module)->getFile());
 	switch ($this->mode)
 	{

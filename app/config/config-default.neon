@@ -10,7 +10,11 @@ common:
 		lang: en
 		tempDir: %appDir%/../temp
 		logDir: %appDir%/../log
-		
+
+	mail:
+		from: tatami@%domain%
+		fromName: Tatami
+
 	services:
 		robotLoader:
 			option:
@@ -30,19 +34,19 @@ common:
 		presenterFactory:
 			factory: \Tatami\ServiceFactories\PresenterFactory::create
 			
-		Translator: \Tatami\Tools\Translator
-		EntityManager:
+		translator: \Tatami\Tools\Translator
+		entityManager:
 			factory: \Tatami\ServiceFactories\EntityManagerFactory::create
 			
-		EventManager:
+		eventManager:
 			factory: \Tatami\ServiceFactories\EventManagerFactory::create
 			
-		ModuleManager:
+		moduleManager:
 			factory: \Tatami\ServiceFactories\ModuleManagerFactory::create
 			
-		ShortcutsManager:
+		shortcutsManager:
 			factory: \Tatami\ServiceFactories\ShortcutsManagerFactory::create
-		
+
 	memcache:
 		host: false
 		port: false

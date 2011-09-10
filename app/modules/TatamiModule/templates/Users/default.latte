@@ -1,3 +1,6 @@
+{var $title = 'Users'|translate}
+
 {block #content}
+<a n:href="add" class="ajax"><span class="icon add"></span>{_'Add user'}</a>
     {control usersEditor:tree}
 {/block}

@@ -1,14 +1,8 @@
 {var robots => noindex}
-
+{var $title = 'Login'|translate}
 {block #content}
-    <section id="login-box">
-	<div class="block-border">
-	    <div class="block-header">
-		<h1>{_'Login'}</h1>
-	    </div>
-	    <div class="block-content">
-		{form loginForm class => login-form}
-		<ul n:if="$form->hasErrors()">
+		{form formLogin class => login-form}
+		<ul n:if="$form->hasErrors()" class="error">
 		    <li n:foreach="$form->errors as $error">{$error}</li>
 		</ul>
 		<table>
@@ -29,8 +23,11 @@
 			</td>
 		    </tr>
 		    <tr>
-			<td class="colspan" colspan="2">
+			<td>
 			    {input remember}{label remember /}
+			</td>
+			<td>
+			    <a n:href=":tatami:login:forgottenPassword">{_'Forgot your password? Click here!'}</a>
 			</td>
 		    </tr>
 		</table>
@@ -48,8 +45,6 @@
 		    </ul> 
 		</div>
 		{/form}
-	    </div>
-	</div>
-    </section>
+	    
 {/block}
 

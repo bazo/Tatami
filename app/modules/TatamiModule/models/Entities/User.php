@@ -1,8 +1,10 @@
 <?php
-
 namespace Entity;
-
-/** @Entity */
+use Tatami\Security\Security, Tatami\Security\Passwords\PasswordHasher;
+/** 
+ * @Entity 
+ * @HasLifecycleCallbacks
+ */
 class User extends BaseEntity implements \Iterator
 {
     protected
@@ -15,14 +17,16 @@ class User extends BaseEntity implements \Iterator
         $login,
         /** @Column(type="string", length=50, nullable=true) */
         $name,
-        /** @Column(type="string", length=40, nullable=false) */
+        /** @Column(type="string", length=60) */
         $password,
 	/** @Column(type="string", length=255) */    
 	$email,
         /**
-         * @OneToOne(targetEntity="UserRole")
+         * @ManyToOne(targetEntity="UserRole")
          */
-        $role
+        $role,
+	/** @Column(type="datetime") */    
+	$created
     ;
 
     private
@@ -66,7 +70,7 @@ class User extends BaseEntity implements \Iterator
 
     public function setPassword($password)
     {
-        $this->password = \sha1($password);
+        $this->password = $password;
         return $this;
     }
     
@@ -91,24 +95,11 @@ class User extends BaseEntity implements \Iterator
         return $this;
     }
 
-    public function rewind() {
-        $this->position = 0;
-    }
-
-    public function current() {
-        $func = 'get'.\ucfirst($this->properties[$this->position]);
-        return $this->$func();
-    }
-
-    public function key() {
-        return $this->properties[$this->position];
-    }
-
-    public function next() {
-        ++$this->position;
-    }
-
-    public function valid() {
-        return isset($this->properties[$this->position]);
+    /** @PrePersist */
+    public function onPrePersist()
+    {
+	$this->created = new \DateTime;
+	$hasher = new PasswordHasher();
+	$this->password = $hasher->hashPassword($this->password);
     }
 }

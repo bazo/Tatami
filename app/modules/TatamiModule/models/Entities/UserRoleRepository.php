@@ -1,6 +1,6 @@
 <?php
-namespace Repositories;
-class UserRoleRepository extends \Doctrine\ORM\EntityRepository
+namespace Tatami\Models\Repositories;
+class UserRoleRepository extends EntityRepository
 {
     public function getRolesTree()
     {
@@ -10,7 +10,6 @@ class UserRoleRepository extends \Doctrine\ORM\EntityRepository
     
     private function parseRoles($roles, &$result = array())
     {
-	$zip = \Tatami\Tools\Zip::open('test.zip');
         foreach($roles as $role)
         {
             $roleId = $role->getId();

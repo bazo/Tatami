@@ -129,7 +129,6 @@ header #toolbox #user-menu a:hover{
 }
 #main aside nav ul li ul{
     display: none;
-    width: 100%;
 }
 #main aside nav ul li.active, #main aside nav ul li.expanded{
     background: url("images/nav-item-bg.png") repeat-x scroll 0 -39px transparent;

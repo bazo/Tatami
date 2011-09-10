@@ -18,40 +18,45 @@ jQuery.extend({
                         }
                         if(id == 'snippet--popup')
                         {
-                            var popup = $('#popup_window');
+                            var popup = $('#popup-window');
                             var popup_width = popup.width();
-                            var popup_height = popup.height();
-                            var screen_height = $(document).height();
-                            var top = Math.floor((screen_height - popup_height) / 2);
-                            if(top < 0) top = 0;
-                        
-                            popup.css({
-                                'top':  Math.floor(screen_height / 2),
-                                'height': 0,
-                                'width' : 0,
-                                'display': 'none'
-                            })
-                            .animate({
-                                'height' : popup_height,
-                                'width' : popup_width,
-                                'display': 'table',
-                                'top': top
-                            },'fast', 'swing');
+			    var popup_height = popup.height();
+			    var screen_height = $(window).height();
+			    var top = Math.floor((parseInt(screen_height) - parseInt(popup_height)) / 2)+"px";
+			    //popup_width = parseInt(popup_width)+5+"px";//plus 5, because components in windows->chrome sometimes moving down
+
+			    if(top < 0) top = 20;
+			    popup.css({
+				'top':  Math.floor(screen_height / 2),
+				'height': 0,
+				'width' : 0,
+				'display': 'block'
+			    })
+			    .animate({
+				'height' : popup_height,
+				'width' : popup_width,
+				'display': 'block',
+				'top': top
+			    },'fast', 'swing', function(){
+				$(this).css('min-height', popup_height);
+			    });
                         }
 		},
 
 		success: function (payload) {
 			// redirect
-			if (payload.redirect) {
+			if(payload){
+			    if (payload.redirect) {
 				window.location.href = payload.redirect;
 				return;
-			}
+			    }
 
-			// snippets
-			if (payload.snippets) {
+			    // snippets
+			    if (payload.snippets) {
 				for (var i in payload.snippets) {
-					jQuery.nette.updateSnippet(i, payload.snippets[i]);
+				    jQuery.nette.updateSnippet(i, payload.snippets[i]);
 				}
+			    }
 			}
 		}
 	}

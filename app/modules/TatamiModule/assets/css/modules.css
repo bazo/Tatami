@@ -29,6 +29,8 @@
     display: inline-block;
     width: 100%;
     text-align: center;
+    color: #2D5672;
+    font-weight: bold;
 }
 #module-listing .module .toolbar ul{
     margin: 0 auto;

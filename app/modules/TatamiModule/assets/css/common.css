@@ -2,6 +2,14 @@ body{
     font-family: 'PT Sans', 'Tahoma', sans-serif;
     font-size: 12px;
 }
+a{
+    color: #2D5672;
+    text-decoration: none;
+    font-weight: bold;
+}
+a:hover{
+    text-decoration: underline;
+}
 h1{
     font-size: 22px;
 }
@@ -36,6 +44,8 @@ h1{
     color: #475D68;
     font-weight: bold;
     font-family: 'PT Sans','Tahoma',sans-serif;
+    width: auto;
+    display: inline-block;
 }
 .block-border .block-content {
     box-shadow: 0 0 6px rgba(255, 255, 255, 0.3);
@@ -119,7 +129,7 @@ input.button{
 }
 
 #popup-overlay{
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 100;
@@ -127,11 +137,69 @@ input.button{
     width: 100%;
     height: 100%;
 }
+#popup-overlay #popup-window{
+    position: relative;
+    display: none;
+    margin: 0 auto;
+}
 #popup-overlay .block-border{
     display: table;
-    margin: 0 auto;
+    
 }
 #popup-overlay a.close{
     float: right;
     clear: left;
+}
+.flash{
+    border: 1px solid;
+    border-radius: 5px 5px 5px 5px;
+    /*clear: both;*/
+    margin-bottom: 9px;
+    margin-top: 10px;
+    padding: 10px 10px 10px 35px;
+    overflow: hidden;
+}
+.flash.top{
+    border-width: 0 0 1px;
+    margin: 0;
+    margin-left: -10px;
+    margin-right: -10px;
+    border-radius: 0 0 0 0;
+}
+.flash .message{
+    display: block;
+    position: relative;
+    top: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    width: auto;
+    height: auto;
+    margin-bottom: 5px;
+}
+.flash .icon{
+    float: left;
+    margin-bottom: 5px;
+}
+.flash .icon.small{
+    margin-left: -25px;
+}
+.flash .message.small{
+    top: 2px;
+    font-size: 12px;
+    font-weight: bold;
+}
+.flash.ok{
+    background-color: #D1E8D2;
+    border-color: #339933;
+    color: #00632E;
+}
+.flash.info{
+    background-color: #D8E7FA;
+    border-color: #9DBFEA;
+    color: #00357B;
+}
+.flash.error{
+    background-color: #FACFCF;
+    border-color: #DC1C1C;
+    color: #820101;
 }

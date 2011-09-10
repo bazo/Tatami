@@ -1,9 +1,9 @@
 <?php
 namespace Tatami\Security;
 
-use Nette\Object;
-use Nette\Security\AuthenticationException;
-
+use Nette\Object,
+    Nette\Security\AuthenticationException,
+    Tatami\Security\Passwords\PasswordHasher;
 
 /**
  * Users authenticator.
@@ -18,23 +18,27 @@ class Security extends Object implements \Nette\Security\IAuthenticator, \Nette\
 	/**
 	 * @var Doctrine\ORM\EntityManager
 	 */
-	$entityManager
+	$entityManager,
+	    
+	/**
+	 *
+	 * @var Passwords\IPasswordHasher
+	 */
+	$hasher
     ;
     
     static $instance;
     
     public static function initialize(\Nette\DI\Container $container)
     {
-	
-	\Nette\Diagnostics\Debugger::fireLog(__METHOD__);
-	\Nette\Diagnostics\Debugger::fireLog(self::$instance);
 	if(!isset(self::$instance)) self::$instance = new self($container);
 	return self::$instance;
     }
     
     private function __construct(\Nette\DI\Container $container)
     {
-	$this->entityManager = $container->getService('EntityManager');
+	$this->entityManager = $container->getService('entityManager');
+	$this->hasher = new PasswordHasher();
     }
     
     /**
@@ -46,9 +50,10 @@ class Security extends Object implements \Nette\Security\IAuthenticator, \Nette\
     public function authenticate(array $credentials)
     {
 	$login = $credentials[self::USERNAME];
-	$password = \sha1($credentials[self::PASSWORD]);
-	$userEntity = $this->entityManager->getRepository('Entity\User')->findOneBy(array('login' => $login));
-	if(!is_object($userEntity) or $userEntity->password != $password)
+	//$password = self::hashPassword($credentials[self::PASSWORD]);
+	
+	$userEntity = $this->entityManager->getRepository('User')->findOneBy(array('login' => $login));
+	if(!is_object($userEntity) or !$this->hasher->checkPassword($credentials[self::PASSWORD], $userEntity->password))
 	    throw new AuthenticationException('Username and password mismatch');
 	return new \Nette\Security\Identity($userEntity->id, $userEntity->getRole()->getName(), $userEntity);
     }
@@ -57,5 +62,10 @@ class Security extends Object implements \Nette\Security\IAuthenticator, \Nette\
     {
         var_dump($role, $resource, $privilege);exit;
 	return true;
+    }
+    
+    public function createPasswordChangeToken($email)
+    {
+	
     }
 }

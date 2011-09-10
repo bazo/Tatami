@@ -2,7 +2,7 @@
 namespace Tatami\ServiceFactories;
 use 
     Nette\DI,
-    Doctrine\ORM\EntityManager
+     \Tatami\Services\EntityManager
 ;
 /**
  * EntityManagerFactory
