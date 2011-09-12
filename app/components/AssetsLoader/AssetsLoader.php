@@ -17,7 +17,8 @@ class AssetsLoader extends Control
 	$mode,
 	$wwwDir,
 	$basePath,
-	$module
+	$module,
+	$media = null
     ;
     
     const
@@ -45,6 +46,12 @@ class AssetsLoader extends Control
 	return $this;
     }
     
+    public function setMedia($media)
+    {
+	$this->media = $media;
+	return $this;
+    }
+    
     public function setTempUrl($tempUrl) 
     {
 	$this->tempUrl = $tempUrl;
@@ -62,7 +69,6 @@ class AssetsLoader extends Control
 	$this->basePath = $basePath;
 	return $this;
     }
-
             
     public function addFile($module, $file)
     {
@@ -82,8 +88,6 @@ class AssetsLoader extends Control
 	$this->files[$module] = $moduleDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.$assetFolder.DIRECTORY_SEPARATOR.$file;
 	return $this;
     }
-    
-    
     
     private function isModule($moduleName)
     {
@@ -118,6 +122,7 @@ class AssetsLoader extends Control
 	{
 	    case self::MODE_CSS:
 		$renderer = new Renderers\CssRenderer($moduleDir, $files, $this->webtemp, $this->tempUrl);
+		$renderer->setMedia($this->media);
 		//$renderer->fileFilters[] = new Filters\CssUrlsFilter($this->wwwDir, $this->basePath);
 		$renderer->filters[] = new Filters\DataUriFilter($moduleDir.DIRECTORY_SEPARATOR.'assets');
 	    break;

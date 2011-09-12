@@ -32,7 +32,7 @@ final class ModuleManager extends \Tatami\Subscriber
 	/** @var \Tatami\Events\EventManager */
 	$eventManager,
 	    
-	$endpoint = 'http://repository.local'
+	$endpoint = 'http://modules.tatami.bazik.biz'
     ;
 
     /**

@@ -18,9 +18,10 @@
 	<meta name="robots" content="noindex"/>
 
 	<title>Tatami</title>
-	{css tatami 'reset.css', 'common.css', 'layout.css', 'forms.css', 'icons.css'}
+	{css module:tatami 'reset.css', 'common.css', 'layout.css', 'forms.css', 'icons.css'}
+	{css module:tatami media:'only screen and (min-device-width: 768px) and (max-device-width: 1024px)' 'ipad.css'}
         {block #css}{/block}
-	{js tatami 'jquery-1.6.3.min.js', 'jquery.nette.js', 'netteForms.js', 'jquery.ajaxform.js', 'tatami.js'}
+	{js module:tatami 'jquery-1.6.3.min.js', 'jquery.nette.js', 'netteForms.js', 'jquery.ajaxform.js', 'tatami.js'}
         {block #js}{/block}
 	<link rel="shortcut icon" href="{$basePath}/favicon.ico" type="image/x-icon"/>
 </head>
@@ -85,6 +86,8 @@
 				    <span class="icon medium home"></span>
 				</a>
 			    </li>
+			    {ifCurrent :tatami:dashboard:}
+			    {else}
 			    <li>
 				<a n:href="$presenter->module->getEntryPoint()">{$presenter->module->name}</a>
 			    </li>
@@ -95,6 +98,7 @@
 				</a>
 			    </li>
 			    <li n:if="$presenter->getShortName() != $title"><span>{$title}</span></li>
+			    {/ifCurrent}
 			</ul>
 		    </nav>
 		    <div id="search-box">

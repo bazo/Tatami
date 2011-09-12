@@ -1,0 +1,37 @@
+/* 
+    Document   : ipad.css
+    Created on : 12.9.2011, 0:12:05
+    Author     : Martin
+    Description:
+        Purpose of the stylesheet follows.
+*/
+#header-surround{
+    background: none;
+    padding-bottom: 14px;
+    position: relative;
+    z-index: 50;
+}
+#search-box{
+    display: inline-block;
+    float: right;
+    margin-right: 5px;
+}
+#search-box form{
+    display: block;
+    height: 40px;
+    width: 400px;
+    position: relative;
+    top: -6px;
+}
+#search-box form .button{
+    position: relative;
+    top: 4px;
+}
+#search-box form input:first-child{
+    float: left;
+    width: 80%;
+    margin-right: 10px;
+}
+.shadow-bottom {
+    background: none;
+}

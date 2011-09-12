@@ -18,7 +18,7 @@ require $params['libsDir'] . '/Nette/loader.php';
 $params['logDir'] = __DIR__ . '/../log';
 Debugger::$logDirectory = $params['logDir'];
 Debugger::$strictMode = TRUE;
-Debugger::$productionMode = false;
+//Debugger::$productionMode = false;
 Debugger::enable();
 
 $params['assetsDir'] = __DIR__ . '/assets';
