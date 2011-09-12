@@ -16,7 +16,7 @@ final class TatamiModule extends CoreModule implements IEssentialModule
 	    
         $navigation = array(
 	    'Tatami' => array(
-		':tatami:settings:',
+		':tatami:dashboard:',
 		'Modules' => ':tatami:modules:',
 		'Users' => ':tatami:users:',
                 'Permissions' => ':tatami:permissions:'
@@ -51,4 +51,15 @@ final class TatamiModule extends CoreModule implements IEssentialModule
             )
         )
     ;
+    
+    public function loadRoutes(\Nette\Application\IRouter $router, $args)
+    {
+	/*
+	$router[] = $backRouter = new \Nette\Application\Routers\RouteList('Messages');
+	$backRouter[] = new \Nette\Application\Routers\Route('admin/tatami/<presenter>[/<action>][/<id>]', array(
+	    'action' => 'default',
+	    'id' => NULL
+	));
+*/
+    }
 }

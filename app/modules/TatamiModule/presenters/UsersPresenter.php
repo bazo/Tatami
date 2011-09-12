@@ -5,7 +5,7 @@ namespace TatamiModule;
  *
  * @author Martin
  */
-class UsersPresenter extends \Tatami\Modules\ModulePresenter
+class UsersPresenter extends \Tatami\Presenters\BackendPresenter
 {
     protected $toolbar = 'users';
     
@@ -14,7 +14,6 @@ class UsersPresenter extends \Tatami\Modules\ModulePresenter
         $limit = 10;
         $offset = 0;
         $users = $this->em->getRepository('User');//->findBy(array(), null, $limit, $offset);
-        
     }
     
     public function actionAdd()
@@ -25,7 +24,6 @@ class UsersPresenter extends \Tatami\Modules\ModulePresenter
     protected function createComponentFormAddUser($name)
     {
 	$form = new \Tatami\Forms\AjaxForm($this, $name);
-	$form->addText('login', 'Login')->setRequired('Please fill %label.');
 	$form->addText('name', 'Name')->setRequired('Please fill %label.');
 	$form->addText('email', 'E-mail')->setRequired('Please fill %label.');
 	$userRoles = $this->em->getRepository('UserRole')->fetchPairs('id', 'name');
@@ -51,7 +49,7 @@ class UsersPresenter extends \Tatami\Modules\ModulePresenter
 
 	    $this->em->flush();
 	    $this->mailBuilder->buildAccountCreatedEmail($user, $token)->send();
-	    $this->flash(sprintf('User added', $user->login));
+	    $this->flash(sprintf('User %s added', $user->name));
 	    $this->invalidateControl('usersBrowser');
 	    $this->popupOff();
 	}

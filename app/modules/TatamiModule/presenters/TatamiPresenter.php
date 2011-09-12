@@ -1,7 +1,7 @@
 <?php
-namespace TatamiModule;
-use Nette\Environment;
+namespace Tatami\Presenters;
 use Tatami\Services\MailBuilder;
+
 abstract class TatamiPresenter extends BasePresenter
 {
     protected 

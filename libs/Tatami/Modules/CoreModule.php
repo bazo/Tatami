@@ -78,7 +78,8 @@ abstract class CoreModule extends \Tatami\Subscriber implements IModule
 
     function loadDashboardWidget(\Tatami\Widgets\WidgetManager &$widgetManager, $args)
     {
-        $widgetManager->addWidget(new $this->widgetName());
+	if(class_exists($this->widgetName))
+	    $widgetManager->addWidget(new $this->widgetName);
     }
 
     protected function onInstall()

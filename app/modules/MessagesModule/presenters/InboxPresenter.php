@@ -1,11 +1,11 @@
 <?php
 namespace MessagesModule;
-
+use Tatami\Presenters\BackendPresenter;
 /**
  * MessagesPresenter
  * @author Martin Bazik
  */
-class InboxPresenter extends \Tatami\Modules\ModulePresenter
+class InboxPresenter extends BackendPresenter
 {
     
 }

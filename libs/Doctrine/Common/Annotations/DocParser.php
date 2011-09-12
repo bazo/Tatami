@@ -166,7 +166,6 @@ final class DocParser
      */
     public function parse($input, $context = '')
     {
-	
         if (false === $pos = strpos($input, '@')) {
             return array();
         }
@@ -179,6 +178,7 @@ final class DocParser
         $this->context = $context;
         $this->lexer->setInput(trim(substr($input, $pos), '* /'));
         $this->lexer->moveNext();
+
         return $this->Annotations();
     }
 
@@ -260,7 +260,7 @@ final class DocParser
         }
         
         // first check if the class already exists, maybe loaded through another AnnotationReader
-        if (class_exists($fqcn)) {
+        if (class_exists($fqcn, false)) {
             return $this->classExists[$fqcn] = true;
         }
 
@@ -297,11 +297,13 @@ final class DocParser
                 $this->lexer->moveNext();
                 continue;
             }
+
             $this->isNestedAnnotation = false;
             if (false !== $annot = $this->Annotation()) {
                 $annotations[] = $annot;
             }
         }
+
         return $annotations;
     }
 
@@ -366,6 +368,7 @@ final class DocParser
                 throw AnnotationException::semanticalError(sprintf('The annotation "@%s" in %s was never imported.', $name, $this->context));
             }
         }
+
         if (!$this->classExists($name)) {
             throw AnnotationException::semanticalError(sprintf('The annotation "@%s" in %s does not exist, or could not be auto-loaded.', $name, $this->context));
         }

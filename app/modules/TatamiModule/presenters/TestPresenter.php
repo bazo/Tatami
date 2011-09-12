@@ -5,13 +5,8 @@ namespace TatamiModule;
  *
  * @author Martin
  */
-class TestPresenter extends BasePresenter
+class TestPresenter extends \Tatami\Presenters\BasePresenter
 {
-    public function actionDefault()
-    {
-
-    }
-    
     protected function createComponentFormTest($name)
     {
 	$form = new \Tatami\Forms\BaseForm($this, $name);

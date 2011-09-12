@@ -7,7 +7,7 @@ namespace TatamiModule;
 
 use Nette\Callback;
 
-class CLIPresenter extends BasePresenter
+class CLIPresenter extends \Tatami\Presenters\BasePresenter
 {
     /** TODO: cele zle */
     private $callbacks = array(

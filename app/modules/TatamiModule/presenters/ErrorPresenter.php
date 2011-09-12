@@ -9,7 +9,7 @@ use Nette\Diagnostics\Debugger,
  * @author     Martin Bazik
  * @package    Tatami
  */
-class ErrorPresenter extends BasePresenter
+class ErrorPresenter extends \Tatami\Presenters\BasePresenter
 {
 
 	/**

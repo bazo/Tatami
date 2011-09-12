@@ -1,10 +1,13 @@
 <?php
 namespace Tatami\ServiceFactories;
-use Nette\DI;
-use Doctrine\Common\Annotations;
-use Symfony\Component\Validator\Mapping\Cache;
-use Symfony\Component\Validator\Mapping\BlackholeMetadataFactory;
+use Nette\DI\IContainer;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Symfony\Component\Validator\Mapping\Loader\AnnotationLoader;
+use Symfony\Component\Validator\Mapping\ClassMetadataFactory;
 use Symfony\Component\Validator\ConstraintValidatorFactory;
+use Symfony\Component\Validator\ValidatorContext;
+use Doctrine\Common\Annotations\AnnotationRegistry;
+use Symfony\Component\Validator\ValidatorFactory as SymfonyValidatorFactory;
 /**
  * Description of ValidatorFactory
  *
@@ -12,12 +15,27 @@ use Symfony\Component\Validator\ConstraintValidatorFactory;
  */
 class ValidatorFactory 
 {
-    public static function create(DI\Container $container)
+    public static function create(IContainer $context)
     {
-	$reader = new Annotations\AnnotationReader;
-	$cache = new Cache\ApcCache('validator');
-	$loader = new AnnotationLoader($reader);
+	$loaders = array();
+        $context = new ValidatorContext();
 	
-	$metadataFactory = new \Doctrine\ORM\Mapping\ClassMetadataFactory($loader, $cache);
+	AnnotationRegistry::registerAutoloadNamespaces(array(
+	    '\Doctrine\ORM\Mapping\\',
+	    '\Symfony\Component\Validator\Constraints\\',
+	    
+	    
+	    ));
+	
+	$annotationReader = new AnnotationReader();
+	$annotationReader->setIgnoreNotImportedAnnotations(true);
+	$loader = new AnnotationLoader($annotationReader);
+	
+	$context->setClassMetadataFactory(new ClassMetadataFactory($loader));
+        $context->setConstraintValidatorFactory(new ConstraintValidatorFactory());
+
+	$factory = new SymfonyValidatorFactory($context);
+
+	return $factory->getValidator();
     }
 }

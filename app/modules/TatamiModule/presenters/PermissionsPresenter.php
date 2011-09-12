@@ -5,7 +5,7 @@ namespace TatamiModule;
  *
  * @author Martin
  */
-class PermissionsPresenter extends \Tatami\Modules\ModulePresenter
+class PermissionsPresenter extends \Tatami\Presenters\BackendPresenter
 {
     public function renderDefault()
     {

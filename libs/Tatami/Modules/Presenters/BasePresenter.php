@@ -1,5 +1,5 @@
 <?php
-namespace TatamiModule;
+namespace Tatami\Presenters;
 use Tatami\Forms;
 
 abstract class BasePresenter extends \Nette\Application\UI\Presenter
@@ -20,12 +20,13 @@ abstract class BasePresenter extends \Nette\Application\UI\Presenter
     public function startup()
     {
         parent::startup();
+	$this->autoCanonicalize = false;
         if (!isset($this->lang))
         {
 
           $this->lang = $this->getHttpRequest()->detectLanguage(array('sk', 'en'));
           if($this->lang == null) $this->lang = 'en';
-          $this->canonicalize();
+          //$this->canonicalize();
         }
         $this->translator = $this->context->getService('translator');
         $this->translator->setLang($this->lang);
@@ -90,6 +91,7 @@ abstract class BasePresenter extends \Nette\Application\UI\Presenter
         $set = \Nette\Latte\Macros\MacroSet::install($latte->parser);
         $set->addMacro('css', callback('\Tatami\Components\AssetsLoader\Macro', 'macroCss'));
 	$set->addMacro('js', callback('\Tatami\Components\AssetsLoader\Macro', 'macroJs'));
+	$set->addMacro('image', callback('\Tatami\Components\AssetsLoader\Macro', 'macroImage'));
     }
     
     protected function createComponentAssetsLoader($name)

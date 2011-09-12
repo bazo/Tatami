@@ -1,6 +1,7 @@
 <?php
 namespace Tatami\ServiceFactories;
 use Tatami\Modules;
+use Tatami\Presenters\IModulePresenter;
 class PresenterFactory extends \Nette\Application\PresenterFactory
 {
     private
@@ -31,7 +32,7 @@ class PresenterFactory extends \Nette\Application\PresenterFactory
          $class = $this->getPresenterClass($name);
          $presenter = new $class;
          $presenter->setContext($this->context);
-	 if($presenter instanceof Modules\ModulePresenter and (isset($this->context->params['installed']) and $this->context->params['installed'] == true))
+	 if($presenter instanceof IModulePresenter and (isset($this->context->params['installed']) and $this->context->params['installed'] == true))
 	 {
              $moduleManager = $this->context->getService('moduleManager');
 	     $moduleName = $moduleManager->getModuleNameFromPresenterClass($class);

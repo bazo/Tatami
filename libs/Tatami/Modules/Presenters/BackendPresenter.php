@@ -1,11 +1,13 @@
 <?php
-namespace Tatami\Modules;
+namespace Tatami\Presenters;
+use Tatami\Modules\IModule;
+use Tatami\Presenters\SecuredPresenter;
 /**
  * Description of ModulePresenter
  *
  * @author Martin
  */
-abstract class ModulePresenter extends \TatamiModule\SecuredPresenter
+abstract class BackendPresenter extends SecuredPresenter implements IBackendModulePresenter
 {
     protected
         /** @var \Tatami\Modules\ModuleManager */
@@ -86,16 +88,4 @@ abstract class ModulePresenter extends \TatamiModule\SecuredPresenter
 	$shortcutsManager = $this->context->getService('shortcutsManager');
         $shortcuts = new \Tatami\Components\Shortcuts($this, $name, $shortcutsManager);
     }
-    
-    protected function createComponentAssetsLoader($name)
-    {
-	$params = $this->context->params;
-	$assetsLoader = new \Tatami\Components\AssetsLoader\AssetsLoader($this, $name);
-	$assetsLoader->setModuleManager($this->moduleManager)
-		    ->setWwwDir($params['wwwDir'])
-		    ->setBasePath($basePath = $this->getHttpRequest()->getUrl()->basePath)
-		    ->setWebtemp($params['wwwDir'] . "/webtemp")
-		    ->setTempUrl($this->getHttpRequest()->getUrl()->baseUrl . "webtemp");
-    }
-    
 }

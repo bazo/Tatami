@@ -24,4 +24,15 @@ class MessagesModule extends Module
     {
         $widgetManager->addWidget(new $this->widgetName());
     }
+    
+    public function loadRoutes(\Nette\Application\IRouter $router, $args)
+    {
+	/*
+	$router[] = $backRouter = new \Nette\Application\Routers\RouteList('Messages');
+	$backRouter[] = new \Nette\Application\Routers\Route('admin/messages/<presenter>[/<action>][/<id>]', array(
+	    'action' => 'default',
+	    'id' => NULL
+	));
+*/
+    }
 }

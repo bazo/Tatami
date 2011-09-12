@@ -5,7 +5,8 @@ use
     Doctrine\ORM\ORMException,
     Doctrine\Common\EventManager,
     Doctrine\ORM\Configuration,
-    Tatami\Models\Repositories\EntityRepository
+    Tatami\Models\Repositories\EntityRepository,
+    Symfony\Component\Validator\ValidatorInterface
 ;
 /**
  * Description of EntityManager
@@ -14,6 +15,11 @@ use
  */
 class EntityManager extends DoctrineEM
 {
+    private
+	/** @var ValidatorInterface */
+	$validator
+    ;
+    
     /**
      * Factory method to create EntityManager instances.
      *
@@ -39,7 +45,12 @@ class EntityManager extends DoctrineEM
             throw new \InvalidArgumentException("Invalid argument: " . $conn);
         }
 
-        return new EntityManager($conn, $config, $conn->getEventManager());
+        return new self($conn, $config, $conn->getEventManager());
+    }
+    
+    public function setValidator(ValidatorInterface $validator)
+    {
+	$this->validator = $validator;
     }
     
     /**
@@ -68,5 +79,23 @@ class EntityManager extends DoctrineEM
         $this->repositories[$entityName] = $repository;
 
         return $repository;
+    }
+    
+    /**
+     * Tells the EntityManager to make an instance managed and persistent.
+     *
+     * The entity will be entered into the database at or before transaction
+     * commit or as a result of the flush operation.
+     * 
+     * NOTE: The persist operation always considers entities that are not yet known to
+     * this EntityManager as NEW. Do not pass detached entities to the persist operation.
+     *
+     * @param object $object The instance to make managed and persistent.
+     */
+    public function persist($entity)
+    {
+        $validationResult = $this->validator->validate($entity);
+	//var_dump($validationResult);exit;
+	parent::persist($entity);
     }
 }

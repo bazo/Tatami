@@ -8,7 +8,8 @@
 use 
     Nette\Diagnostics\Debugger,
     Nette\Application\Routers\SimpleRouter,
-    Nette\Application\Routers\Route
+    Nette\Application\Routers\Route,
+    Tatami\Events\Event
 ;
 
 // Load Nette Framework
@@ -36,6 +37,8 @@ catch(\Nette\FileNotFoundException $e)
     //if not, read the default config and install application
     $configurator->loadConfig($params['appDir'].'/config/config-default.neon');
 }
+$router = new \Tatami\Routing\TatamiRouter;
+$configurator->getContainer()->addService('router', $router);
 
 $application = $configurator->container->application;
 $application->errorPresenter = 'Error';
@@ -43,8 +46,17 @@ $application->errorPresenter = 'Error';
 $application->onStartup[] = function(Nette\Application\Application $application) use($configurator)
 {
     $router = $application->getRouter();
-    $router[] = new Route('index.php', 'Homepage:default', Route::ONE_WAY);
-    $router[] = new Route('admin/<module>/<presenter>/<action>[/<id>]',
+    $router instanceof \Tatami\Routing\Router;
+    $eventManager = $configurator->getContainer()->getService('eventManager');
+    $params = $configurator->getContainer()->params;
+    if(isset($params['installed']) and $params['installed'] == true)
+    {
+	$moduleManager = $configurator->getContainer()->getService('moduleManager');
+	$eventManager->addSubscriber(Event::APPLICATION_STARTUP, $moduleManager);
+    }
+    $eventManager->fireEvent(Event::APPLICATION_STARTUP, $application, $configurator);
+    
+    $router->adminRouter[] = new Route('admin',
 	    array(
 		'module' => 'tatami',
 		'presenter' => 'dashboard',
@@ -52,34 +64,35 @@ $application->onStartup[] = function(Nette\Application\Application $application)
 		'id' => null
 	    ));
     
-    $eventManager = $configurator->getContainer()->getService('eventManager');
-    $params = $configurator->getContainer()->params;
-    if(isset($params['installed']) and $params['installed'] == true)
-    {
-	$moduleManager = $configurator->getContainer()->getService('moduleManager');
-	$eventManager->addSubscriber(Tatami\Events\Event::APPLICATION_STARTUP, $moduleManager);
-    }
-    $eventManager->fireEvent(Tatami\Events\Event::APPLICATION_STARTUP, $application, $configurator);
+    $router->adminRouter[] = new Route('admin/<module>/<presenter>[/<action>][/<id>]',
+	    array(
+		'module' => 'tatami',
+		'presenter' => 'dashboard',
+		'action' => 'default',
+		'id' => null
+	    ));
+    $eventManager->fireEvent(Event::ROUTES_LOAD, $router->frontRouter);
+    
 };
 
 $application->onShutdown[] = function(Nette\Application\Application $application) use($configurator)
 {
-    $configurator->getContainer()->getService('eventManager')->fireEvent(Tatami\Events\Event::APPLICATION_SHUTDOWN, $application);
+    $configurator->getContainer()->getService('eventManager')->fireEvent(Event::APPLICATION_SHUTDOWN, $application);
 };
 
 $application->onError[] = function(Nette\Application\Application $application) use($configurator)
 {
-    $configurator->getContainer()->getService('eventManager')->fireEvent(Tatami\Events\Event::APPLICATION_ERROR, $application);
+    $configurator->getContainer()->getService('eventManager')->fireEvent(Event::APPLICATION_ERROR, $application);
 };
 
 $application->onRequest[] = function(Nette\Application\Application $application) use($configurator)
 {
-    $configurator->getContainer()->getService('eventManager')->fireEvent(Tatami\Events\Event::APPLICATION_REQUEST, $application);
+    $configurator->getContainer()->getService('eventManager')->fireEvent(Event::APPLICATION_REQUEST, $application);
 };
 
 $application->onResponse[] = function(Nette\Application\Application $application) use($configurator)
 {
-    $configurator->getContainer()->getService('eventManager')->fireEvent(Tatami\Events\Event::APPLICATION_RESPONSE, $application);
+    $configurator->getContainer()->getService('eventManager')->fireEvent(Event::APPLICATION_RESPONSE, $application);
 };
 
 $application->run();

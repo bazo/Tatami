@@ -5,7 +5,7 @@
  */
 namespace TatamiModule;
 
-class SearchPresenter extends \Tatami\Modules\ModulePresenter
+class SearchPresenter extends \Tatami\Presenters\BackendPresenter
 {
     public function actionDefault($search)
     {

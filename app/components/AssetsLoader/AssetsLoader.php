@@ -17,7 +17,7 @@ class AssetsLoader extends Control
 	$mode,
 	$wwwDir,
 	$basePath,
-	$module,
+	$module = null,
 	$media = null
     ;
     
@@ -25,7 +25,7 @@ class AssetsLoader extends Control
 	MODE_CSS = ':css:',
 	MODE_JS = ':js:',
 	MODE_ICONS = ':icons:',
-	MODE_IMAGES = ':images:'
+	MODE_IMAGE = ':image:'
     ;
     
     public function setModuleManager(ModuleManager $moduleManager)
@@ -106,6 +106,12 @@ class AssetsLoader extends Control
 	$this->render(func_get_args());
     }
     
+    public function renderImage($filee)
+    {
+	$this->mode = self::MODE_IMAGE;
+	$this->render(func_get_args());
+    }
+    
     private function render($args)
     {
 	$this->files = array();
@@ -130,6 +136,12 @@ class AssetsLoader extends Control
 	    case self::MODE_JS:
 		$renderer = new Renderers\JsRenderer($moduleDir, $files, $this->webtemp, $this->tempUrl);
 	    break;
+	
+	    case self::MODE_IMAGE:
+		$renderer = new Renderers\ImageRenderer($moduleDir, $files, $this->webtemp, $this->tempUrl);
+	    break;
+	
+	
 	}
 	
 	$renderer->render();

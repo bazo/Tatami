@@ -2,7 +2,7 @@
 namespace Tatami\ServiceFactories;
 use 
     Nette\DI,
-     \Tatami\Services\EntityManager
+    Tatami\Services\EntityManager
 ;
 /**
  * EntityManagerFactory
@@ -48,6 +48,8 @@ class EntityManagerFactory
 	    }
 	    else
 		$em = EntityManager::create($dbConfig, $config);
+	    $validator = $container->getService('validator');
+	    $em->setValidator($validator);
 	    return $em;
         }
         catch(PDOException $e)

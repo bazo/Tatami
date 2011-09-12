@@ -14,7 +14,10 @@ class User extends BaseEntity implements \Iterator
          */
         $id,
 	    
-        /** @Column(type="string", length=100) */
+        /** 
+	 * @Column(type="string", length=100)
+	 * @NotBlank
+	 */
         $name,
 	    
         /** @Column(type="string", length=100) */

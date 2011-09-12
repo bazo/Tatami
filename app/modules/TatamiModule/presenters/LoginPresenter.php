@@ -1,7 +1,7 @@
 <?php
 namespace TatamiModule;
 use Nette\Utils\Html;
-class LoginPresenter extends TatamiPresenter
+class LoginPresenter extends \Tatami\Presenters\TatamiPresenter
 {
     private 
 	/** @var \Tatami\Services\EntityManager */

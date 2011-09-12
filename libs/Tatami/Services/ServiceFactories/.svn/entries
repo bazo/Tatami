@@ -2,7 +2,7 @@
 
 dir
 0
-http://svn2.xp-dev.com/svn/tatami/ebusiness/libs/Core/Services
+http://svn2.xp-dev.com/svn/tatami/ebusiness/libs/Core/Services/ServiceFactories
 http://svn2.xp-dev.com/svn/tatami
 add
 
@@ -25,11 +25,4 @@ svn:special svn:externals svn:needs-lock
 
 
 0d9ab640-23bb-4c4e-9a0e-816f0af2d913
-
-ServiceFactories
-dir
-
-
-
-add
 

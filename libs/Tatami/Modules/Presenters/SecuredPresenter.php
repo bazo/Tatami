@@ -1,6 +1,5 @@
 <?php
-namespace TatamiModule;
-use Nette\Environment;
+namespace Tatami\Presenters;
 
 abstract class SecuredPresenter extends TatamiPresenter
 {

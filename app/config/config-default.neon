@@ -47,6 +47,9 @@ common:
 		shortcutsManager:
 			factory: \Tatami\ServiceFactories\ShortcutsManagerFactory::create
 
+		validator:
+			factory: \Tatami\ServiceFactories\ValidatorFactory::create
+
 	memcache:
 		host: false
 		port: false

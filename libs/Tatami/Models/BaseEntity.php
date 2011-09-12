@@ -4,7 +4,6 @@ namespace Entity;
 use Nette\Object;
 use Nette\Environment;
 use Nette\Caching\Cache;
-
 /**
  * @MappedSuperclass
  * @HasLifecycleCallbacks

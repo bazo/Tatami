@@ -6,7 +6,7 @@ use Nette\Forms\Form, Nette\Utils\Html;
  *
  * @author Martin
  */
-class InstallationPresenter extends BasePresenter
+class InstallationPresenter extends \Tatami\Presenters\BasePresenter
 {
     private 
 	$currentStep = 1,
@@ -23,10 +23,15 @@ class InstallationPresenter extends BasePresenter
     public function startup()
     {
 	parent::startup();
+	$params = $this->context->params;
+	if(isset($params['installed']) and $params['installed'] == true)
+	{
+	    $this->redirect(':tatami:login:');
+	}
 	$this->installer = new \Tatami\Installer($this->getService('robotLoader')->getIndexedClasses(), 
-		$this->context->params['appDir'].'/config/config-default.neon',
+		$params['appDir'].'/config/config-default.neon',
                 $this->context,
-                $this->context->params['appDir'].'/config/config.neon');
+                $params['appDir'].'/config/config.neon');
         
 	$this->session = $this->getSession($this->sessionSection);
 	$this->mailBuilder = new \Tatami\Services\MailBuilder($this);

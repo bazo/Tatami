@@ -5,7 +5,7 @@
  */
 namespace TatamiModule;
 
-class ModulesPresenter extends \Tatami\Modules\ModulePresenter
+class ModulesPresenter extends \Tatami\Presenters\BackendPresenter
 {
 
     protected 

@@ -29,6 +29,7 @@ class Macro
     private static function prepareMacro(MacroNode $node, PhpWriter $writer)
     {
 	$media = null;
+	$module = null;
 	while($node->tokenizer->hasNext())
 	{
 	    $words[] = $node->tokenizer->fetchWord();
@@ -45,12 +46,17 @@ class Macro
 		$media = self::parseMedia($word);
 		unset($words[$index]);
 	    }
+	    if(Strings::startsWith($word, "alt="))
+	    {
+		unset($words[$index]);
+	    }
 	}
 
 	$param = implode(', ', $words);
 	$result = $writer->write("\$assetsLoader = \$control->getWidget('assetsLoader');");
 	if(isset($module))
 	    $result .= $writer->write("\$assetsLoader->setModule('$module');");
+	else $result .= $writer->write("\$assetsLoader->setModule(null);");
 	$result .= $writer->write("\$assetsLoader->setMedia('$media');");
 	$result .= 'if ($assetsLoader instanceof Nette\Application\UI\IPartiallyRenderable) $assetsLoader->validateControl();';
 	return array('php' => $result, 'param' => $param);
@@ -71,6 +77,15 @@ class Macro
 	$php = $result['php'];
 	$param = $result['param'];
 	$php .= "\$assetsLoader->renderJs($param)";
+	return $php;
+    }
+    
+    public static function macroImage(MacroNode $node, $writer)
+    {
+	$result = self::prepareMacro($node, $writer);
+	$php = $result['php'];
+	$param = $result['param'];
+	$php .= "\$assetsLoader->renderImage($param)";
 	return $php;
     }
 }

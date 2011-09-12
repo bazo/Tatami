@@ -52,7 +52,7 @@ abstract class AssetsRenderer implements IAssetRenderer
 	return $this->webtemp.'/'.$this->prefix.'-'.md5(implode($this->files)).$this->suffix;
     }
     
-    private function getLastModified()
+    protected function getLastModified()
     {
 	$lastModified = null;
 	foreach($this->files as $file)

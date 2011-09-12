@@ -23,7 +23,7 @@ class ShortcutsManager
 			$this->modules[] = $this->parseModuleName($reflection->getShortName());
 		    }
 		}
-		if($reflection->isSubclassOf('Tatami\Modules\ModulePresenter'))
+		if($reflection->isSubclassOf('Tatami\Presenters\BackendPresenter'))
 		{
 		    $moduleName = $this->parseModuleName($reflection->getNamespaceName());
 		    $presenterName = $this->parsePresenterName($reflection->getShortName());

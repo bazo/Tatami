@@ -13,7 +13,8 @@ class EventManager
 {
 
     private
-        $subscribers = array()
+        $subscribers = array(),
+	$callbacks = array()
     ;
 
     public function __construct()
@@ -36,6 +37,11 @@ class EventManager
         $hash = \spl_object_hash($subscriber);
         $this->subscribers[$eventName][$hash] =  $subscriber;
         return $this;
+    }
+    
+    public function addCallback($eventName, $callback)
+    {
+	
     }
 
     /**
