@@ -186,7 +186,6 @@ class InstallationPresenter extends \Tatami\Presenters\BasePresenter
     {
 	$values = $button->form->values;
 	$this->session->mailSettings = $values;
-	//var_dump($values);exit;
 	$to = $this->session->userAccount->email;
 	
 	$canContinue = true;

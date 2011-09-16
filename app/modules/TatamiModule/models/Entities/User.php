@@ -27,7 +27,7 @@ class User extends BaseEntity implements \Iterator
 	$email,
 	    
         /**
-         * @ManyToOne(targetEntity="UserRole")
+         * @ManyToOne(targetEntity="UserRole", cascade={"persist", "remove"})
          */
         $role,
 	/** @Column(type="datetime") */    
@@ -102,5 +102,10 @@ class User extends BaseEntity implements \Iterator
 	    $password .= $char;
 	}
 	return $password;
+    }
+    
+    public function setRoleId($id)
+    {
+	$this->roleId = $id;
     }
 }

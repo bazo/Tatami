@@ -11,7 +11,7 @@ class UserRole extends BaseEntity
          */
         $id,
             
-        /** @Column(type="string", length=50, nullable=false) */
+        /** @Column(type="string", length=50, unique="true", nullable=false) */
         $name,
             
         /**
@@ -84,5 +84,10 @@ class UserRole extends BaseEntity
     public function getPermissions() 
     {
         return $this->permissions;
+    }
+    
+    public function __toString()
+    {
+	return $this->name;
     }
 }

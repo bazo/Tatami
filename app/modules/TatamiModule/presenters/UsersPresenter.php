@@ -73,4 +73,41 @@ class UsersPresenter extends \Tatami\Presenters\BackendPresenter
         $repository = $this->em->getRepository('User');
         $browser->setRepository($repository);
     }
+    
+    public function handleTest()
+    {
+	$limit = 10000;
+	$batchSize = 20;
+	$role = $this->em->getRepository('userRole')->find(1);
+	for($i = 0; $i <= $limit; $i++)
+	{
+	    $user->setName('meno'.$i);
+	    $user->setEmail('email'.$i.'@email.hovno');
+	    $user->setPassword('heslo'.$i);
+	    $user->setRole($role);
+	    $this->em->persist($user);
+	     if (($i % $batchSize) == 0) {
+		 $this->em->flush();
+		 $this->em->clear();
+		 $role = $this->em->getRepository('userRole')->find(1);
+	    }
+	    
+	}
+	$this->invalidateControl('usersBrowser');
+    }
+    
+    protected function createComponentGridUsers($name)
+    {
+	$grid = new \Gridder\Gridder($this, $name);
+	$repository = $this->em->getRepository('Test');
+	$grid->bindRepository($repository);
+	
+	$grid->addColumn('id');
+	$grid->addColumn('name');
+	/*
+	$grid->addColumn('email');
+	$grid->addColumn('role');
+	 * 
+	 */
+    }
 }
