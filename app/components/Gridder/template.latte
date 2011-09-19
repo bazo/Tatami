@@ -1,0 +1,23 @@
+<table>
+    <thead>
+	<tr n:inner-foreach="$columns as $column">
+	    <th>{$column}</th>
+	</tr>
+    </thead>
+    
+    <tfoot>
+	
+    </tfoot>
+    
+    <tbody>
+	{while ($row = $rows->next()) !== false}
+	<tr n:inner-foreach="$columns as $column">
+	    <td>
+		{$row[0]->$column}
+		
+	    </td>
+	</tr>
+	{$em->detach($row[0])}
+	{/while}
+    </tbody>
+</table>

@@ -56,7 +56,20 @@ class LoginPresenter extends \Tatami\Presenters\TatamiPresenter
     
     protected function createComponentFormLogin($name)
     {
-        $form = new \Tatami\Forms\LoginForm($this, $name);
+        $form = new \Tatami\Forms\BaseForm($this, $name);
+	$identity = $this->getUser()->identity;
+	if($identity != null)
+	{
+	    $form->addHidden('email', $identity->email);
+	}
+	else 
+	{
+	    $form->addText('email', 'Email:')->setRequired('Please provide your %name');
+	}
+        
+        $form->addPassword('password', 'Password:')->setRequired('Please provide your %name');
+        $form->addCheckbox('remember', 'Remember me');
+        $form->addSubmit('btnLogin', 'Login');
         $form->onSuccess[] = callback($this, 'formLoginSubmitted');
     }
 
@@ -151,5 +164,15 @@ class LoginPresenter extends \Tatami\Presenters\TatamiPresenter
 	    $form->addError($e->getMessage());
 	    $this->invalidateControl('form');
 	}
+    }
+    
+    public function handleClearIdentity()
+    {
+	$user = $this->getUser();
+	$user->logout(true);
+	if($this->isAjax()) 
+	    $this->invalidateControl ();
+	else 
+	    $this->redirect('this');
     }
 }

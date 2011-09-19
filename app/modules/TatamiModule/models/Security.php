@@ -56,6 +56,12 @@ class Security extends Object implements \Nette\Security\IAuthenticator
 	
 	if(!is_object($userEntity) or !$this->hasher->checkPassword($credentials[self::PASSWORD], $userEntity->password))
 	    throw new AuthenticationException('Email and password mismatch');
-	return new \Nette\Security\Identity($userEntity->id, $userEntity->getRole()->getName(), $userEntity);
+	$userData = array(
+	    'id' => $userEntity->id,
+	    'name' => $userEntity->name,
+	    'email' => $userEntity->email
+	);
+	$userData = \Nette\ArrayHash::from($userData, true);
+	return new \Nette\Security\Identity($userEntity->id, $userEntity->getRole()->getName(), $userData);
     }
 }

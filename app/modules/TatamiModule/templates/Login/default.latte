@@ -1,50 +1,65 @@
-{var robots => noindex}
+{dump}
+
 {var $title = 'Login'|translate}
 {block #content}
-		{form formLogin class => login-form}
-		<ul n:if="$form->hasErrors()" class="error">
-		    <li n:foreach="$form->errors as $error">{$error}</li>
-		</ul>
-		<table>
-		    <tr>
-			<th>
-			    {label email /}
-			</th>
-			<td>
-			    {input email}
-			</td>
-		    </tr>
-		    <tr>
-			<th>
-			    {label password /}
-			</th>
-			<td>
-			    {input password}
-			</td>
-		    </tr>
-		    <tr>
-			<td>
-			    {input remember}{label remember /}
-			</td>
-			<td>
-			    <a n:href=":tatami:login:forgottenPassword">{_'Forgot your password? Click here!'}</a>
-			</td>
-		    </tr>
-		</table>
-		<div class="block-actions"> 
-		    <ul class="actions-left"> 
-			<li>
-			</li> 
-			<li class="divider-vertical"></li> 
-			<li>
-			    {input btnLogin class=> button}
-			</li> 
-		    </ul> 
-		    <ul class="actions-right"> 
-			<li></li> 
-		    </ul> 
-		</div>
-		{/form}
-	    
+    {snippet}
+	<div class="flash info top" n:if="$user->identity != null"><span class="icon small info"></span>
+	    <span class="message small">
+		{var $link = $presenter->link('clearIdentity!')}
+		{!_sprintf('%s welcome back. Not you? <a href="%s" class="ajax"> Click here</a>', $user->identity->name, $link)}
+	    </span>
+	</div>
+    
+	<div class="flash info top" n:if="$user->identity == null"><span class="icon small info"></span>
+	    <span class="message small">
+		{_'Please fill in your email and password to login.'}
+	    </span>
+	</div>	
+    
+	{form formLogin class => login-form}
+	<ul n:if="$form->hasErrors()" class="error">
+	    <li n:foreach="$form->errors as $error">{$error}</li>
+	</ul>
+	<table>
+	    <tr>
+		<th>
+		    {label email /}
+		</th>
+		<td>
+		    {input email}
+		</td>
+	    </tr>
+	    <tr>
+		<th>
+		    {label password /}
+		</th>
+		<td>
+		    {input password}
+		</td>
+	    </tr>
+	    <tr>
+		<td>
+		    {input remember}{label remember /}
+		</td>
+		<td>
+		    <a n:href=":tatami:login:forgottenPassword">{_'Forgot your password? Click here!'}</a>
+		</td>
+	    </tr>
+	</table>
+	<div class="block-actions"> 
+	    <ul class="actions-left"> 
+		<li>
+		</li> 
+		<li class="divider-vertical"></li> 
+		<li>
+		    {input btnLogin class=> button}
+		</li> 
+	    </ul> 
+	    <ul class="actions-right"> 
+		<li></li> 
+	    </ul> 
+	</div>
+	{/form}
+    {/snippet}   
 {/block}
 

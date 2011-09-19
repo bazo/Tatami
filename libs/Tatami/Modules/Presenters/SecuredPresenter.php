@@ -24,7 +24,7 @@ abstract class SecuredPresenter extends TatamiPresenter
     public function handleLogout()
     {
         $user = $this->getUser();
-        $user->logout(true);
+        $user->logout();
         $this->flash('You were successfuly logged out!', 'ok');
         $this->redirect('Login');
     }
