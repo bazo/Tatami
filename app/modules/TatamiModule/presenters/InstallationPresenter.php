@@ -17,7 +17,9 @@ class InstallationPresenter extends \Tatami\Presenters\BasePresenter
 	$session,
 	$totalSteps = 4,
 	/** @var \Tatami\Services\MailBuilder */
-	$mailBuilder
+	$mailBuilder,
+            
+        $skipSendingEmail = false
     ;
 
     public function startup()
@@ -160,7 +162,7 @@ class InstallationPresenter extends \Tatami\Presenters\BasePresenter
 	$mailer = $form->addRadioList('mailer', 'Select mailer', $mailers)->setDefaultValue('mail');
 	$mailer->addCondition(Form::EQUAL, 'smtp')
                 ->toggle('smtp');
-	
+	$form->addCheckbox('ignore', 'Skip sending test email');
 	$form->addGroup('Smtp settings')->setOption('container', Html::el('div')->id('smtp'));
 	$smtp = $form->addContainer('smtp');
 	$encryptions = array(
@@ -187,20 +189,23 @@ class InstallationPresenter extends \Tatami\Presenters\BasePresenter
 	$values = $button->form->values;
 	$this->session->mailSettings = $values;
 	$to = $this->session->userAccount->email;
-	
+	$this->session->skipSendingEmails = $values->ignore;
 	$canContinue = true;
 	try
 	{
-	    switch($values->mailer)
-	    {
-		case 'mail':
-		    $this->installer->sendTestEmailSendmail($values->from, $to);
-		break;
-	    
-		case 'smtp':
-		    $this->installer->sendTestEmailSmtp($values->from, $to, (array)$values->smtp);
-		break;
-	    }
+            if(!$this->session->skipSendingEmails)
+            {
+                switch($values->mailer)
+                {
+                    case 'mail':
+                        $this->installer->sendTestEmailSendmail($values->from, $to);
+                    break;
+
+                    case 'smtp':
+                        $this->installer->sendTestEmailSmtp($values->from, $to, (array)$values->smtp);
+                    break;
+                }
+            }
 	}
 	catch(\Nette\InvalidStateException $e)
 	{
@@ -248,7 +253,8 @@ class InstallationPresenter extends \Tatami\Presenters\BasePresenter
 	    $this->installer->installDatabase();
 	    $admin = $this->installer->createAdminUserAccount($name, $password, $email);
 	    $this->installer->writeInstalled();
-	    $this->mailBuilder->buildInstallationEmail($admin)->send();
+            if(!$this->session->skipSendingEmails)
+                $this->mailBuilder->buildInstallationEmail($admin)->send();
 	    $this->flash('Installation successful!');
 	    $this->redirect(':tatami:login:');
 	}
