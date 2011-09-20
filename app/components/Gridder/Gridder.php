@@ -10,12 +10,16 @@ use Nette\Application\UI\Control;
 class Gridder extends Control
 {
     private
-	/** @var EntityRepository */
-	$repository,
+	/** @var Sources\IDataSource */
+	$dataSource,
 	    
 	$columns = array()
     ;
     
+    public function setDataSource(Sources\IDataSource $dataSource)
+    {
+	$this->dataSource = $dataSource;
+    }
     
     public function bindRepository(EntityRepository $entityRepository)
     {
@@ -31,11 +35,16 @@ class Gridder extends Control
     {
 	$this->template->setFile(__DIR__.'/template.latte');
 	$this->template->columns = $this->columns;
-	$builder = $this->repository->createQueryBuilder('entity');
-	$iterableResult = $builder->getQuery()->iterate();
-	$this->template->em = $builder->getEntityManager();
-	$this->template->rows = $iterableResult;
 	
+	//$builder = $this->repository->createQueryBuilder('entity');
+	//$iterableResult = $builder->getQuery()->iterate();
+	//$this->template->em = $builder->getEntityManager();
+	
+	
+	$rows = $this->dataSource->getResults();
+	
+	
+	$this->template->rows = $rows;
 	$this->template->render();
     }
 }

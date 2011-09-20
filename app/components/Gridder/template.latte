@@ -10,14 +10,16 @@
     </tfoot>
     
     <tbody>
-	{while ($row = $rows->next()) !== false}
-	<tr n:inner-foreach="$columns as $column">
-	    <td>
-		{$row[0]->$column}
-		
-	    </td>
-	</tr>
-	{$em->detach($row[0])}
+	{while ($rows->valid()) !== false}
+	    {var $row = $rows->current()}
+		<tr n:inner-foreach="$columns as $column">
+		    <td>
+
+			{$row->$column}
+
+		    </td>
+		</tr>
+	    {$rows->next()}
 	{/while}
     </tbody>
 </table>

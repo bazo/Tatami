@@ -6,5 +6,5 @@ namespace Gridder\Sources;
  */
 interface IDataSource 
 {
-    
+    public function getResults();
 }
