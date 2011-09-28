@@ -6,5 +6,6 @@ namespace Gridder\Columns;
  */
 interface IColumn 
 {
-    
+    public function setAlias($alias);
+    public function setFilter($type);
 }

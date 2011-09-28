@@ -99,15 +99,21 @@ class UsersPresenter extends \Tatami\Presenters\BackendPresenter
     protected function createComponentGridUsers($name)
     {
 	$grid = new \Gridder\Gridder($this, $name);
-	$repository = $this->em->getRepository('Test');
-	$grid->bindRepository($repository);
+	$repository = $this->em->getRepository('User');
+	
+	$persister = new \Gridder\Persisters\SessionPersister($this->getSession('usersGrid'));
+	
+	$grid->setPersister($persister);
+	$source = new \Gridder\Sources\EntitySource($repository);
+	
+	$grid->setDataSource($source);
 	
 	$grid->addColumn('id');
 	$grid->addColumn('name');
-	/*
+	
 	$grid->addColumn('email');
 	$grid->addColumn('role');
-	 * 
-	 */
+	 
+	 
     }
 }

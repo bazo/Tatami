@@ -1,25 +1,81 @@
-<table>
-    <thead>
-	<tr n:inner-foreach="$columns as $column">
-	    <th>{$column}</th>
-	</tr>
-    </thead>
-    
-    <tfoot>
-	
-    </tfoot>
-    
-    <tbody>
-	{while ($rows->valid()) !== false}
-	    {var $row = $rows->current()}
-		<tr n:inner-foreach="$columns as $column">
-		    <td>
+<div class="gridder">
+    {snippet flash}
+	{foreach $flashes as $flash}
+	<div class="flash {$flash->type}">
+	    <span class="icon medium {$flash->type}"></span>
+	    <span class="message">{_$flash->message}</span>
+	</div>
+	{/foreach}
+    {/snippet}
+    {snippet}
+	{form form}
+	<div n:if="$hasOperations">
+	    {label operation /}{input operation}{input btnExecuteOperation}
+	</div>
+	<table>
+	    <thead>
+		<tr>
+		    <th n:if="$hasOperations">
+			<a href="#" class="all"><span class="icon selectall" title="{_'Select all'}"></span></a>
+			<a href="#" class="none"><span class="icon selectnone" title="{_'Select none'}"></span></a>
+		    </th>
 
-			{$row->$column}
+		    <th n:foreach="$columns as $column">
+			{$control[$column]->renderHeader()}
+		    </th>
 
-		    </td>
+		    <th n:foreach="$actionColumns as $actionColumn" colspan="{$control[$actionColumn]->getActionsCount()}" >
+			{$control[$actionColumn]->renderHeader()}
+		    </th>
 		</tr>
-	    {$rows->next()}
-	{/while}
-    </tbody>
-</table>
+
+		<tr n:if="$hasFilters" >
+		    <th>
+		    </th>
+		    <th n:foreach="$columns as $column">
+			{if $control[$column]->hasFilter()}
+			    {$control['form']['filters'][$column]->control}
+			{/if}
+		    </th>
+		    <th>
+			{input btnApplyFilters}
+			{input btnCancelFilters}
+		    </th>
+		</tr>
+	    </thead>
+
+	    <tfoot>
+
+	    </tfoot>
+
+	    <tbody>
+		{while ($rows->valid()) !== false}
+		    {var $row = $rows->current()}
+		    {var $row = $row[0]}
+		    {dump $row}
+		    <tr>
+
+			<td n:if="$hasOperations">
+			    {?$control->addRecordCheckbox($row->$primaryKey)}
+			    {$control['form']['records'][$row->$primaryKey]->control}
+			</td>
+
+			{foreach $columns as $column}
+			    {$control[$column]->setRecord($row->$column, $row)->render()}
+			{/foreach}
+
+			 <td n:foreach="$actionColumns as $actionColumn" n:inner-foreach="$control[$actionColumn]->getActions() as $action" colspan="{$control[$actionColumn]->getActionsCount()}" >
+			{$action->setRecord($row)->render()}
+			</td>
+
+		    </tr>
+		    {$rows->next()}
+		{/while}
+	    </tbody>
+	</table>
+	{/form}
+	{if $totalPages > 1}
+	    {include 'paginator.latte'}
+	{/if}
+    {/snippet}
+</div>

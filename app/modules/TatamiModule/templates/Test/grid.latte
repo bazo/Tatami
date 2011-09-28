@@ -1,1 +1,9 @@
+{block #js}
+{js module:tatami 'jquery.livequery.js', 'gridder.js'}
+{/block}
+{block #content}
+{snippet flash}
+	    {foreach $flashes as $flash}<div class="flash {$flash->type}"><span class="icon medium {$flash->type}"></span>
+		<span class="message">{_$flash->message}</span></div>{/foreach}
+	{/snippet}
 {control grid}

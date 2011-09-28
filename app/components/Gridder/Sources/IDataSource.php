@@ -7,4 +7,9 @@ namespace Gridder\Sources;
 interface IDataSource 
 {
     public function getResults();
+    public function getTotalCount();
+    public function limit($offset, $limit);
+    public function getRecordsByIds($ids);
+    public function getPrimaryKey();
+    public function applyFilters($filters);
 }

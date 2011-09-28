@@ -11,7 +11,6 @@ use
     Nette\Application\Routers\Route,
     Tatami\Events\Event
 ;
-
 // Load Nette Framework
 $params['libsDir'] = __DIR__ . '/../libs';
 require $params['libsDir'] . '/Nette/loader.php';
