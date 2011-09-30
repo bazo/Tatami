@@ -1,11 +1,26 @@
-{form formPaginator}
-<a class="ajax" n:if="$page != 1" href="{link changePage page => 1}">First</a>
-<a class="ajax" n:if="$previousPage > 0" href="{link changePage page => $previousPage}">Previous</a>
-{input page} of {$totalPages}
-<a class="ajax" n:if="$nextPage <= $totalPages" href="{link changePage page => $nextPage}">Next</a>
-<a class="ajax" n:if="$page != $totalPages" href="{link changePage page => $totalPages}">Last</a>
-Showing: {$from} - {$to} of {$totalRecords}
-
-{input itemsPerPage}
-{input btnSubmitPaginator}
-{/form}
+<div class="paginator">
+    {form formPaginator}
+    <div class="items-per-page">
+	<div class="activity-indicator"></div>
+	Showing: {$from} - {$to} of {$totalRecords}
+	{input itemsPerPage}
+	{input btnSubmitPaginator}
+	<a class="reset ajax" href="{link reset!}" title="Reset"><span class="icon normal refresh"></span></a>
+    </div>
+    <div class="pagination">
+	<a class="ajax" n:tag-if="$page != 1" href="{link changePage page => 1}">
+	    <span class="button-paginator first">First</span>
+	</a>
+	<a class="ajax" n:tag-if="$previousPage > 0" href="{link changePage page => $previousPage}">
+	    <span class="button-paginator previous">Previous</span>
+	</a>
+	{input page} of {$totalPages}
+	<a class="ajax" n:tag-if="$nextPage <= $totalPages" href="{link changePage page => $nextPage}">
+	    <span class="button-paginator next">Next</span>
+	</a>
+	<a class="ajax" n:tag-if="$page != $totalPages" href="{link changePage page => $totalPages}">
+	    <span class="button-paginator last">Last</span>
+	</a>
+    </div>
+    {/form}
+</div>

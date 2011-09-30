@@ -18,7 +18,7 @@ abstract class BaseColumn extends Control implements IColumn
         $alias,
         $hasFilter = false,
         $filterType,
-        $defaultFilterType = 'string',
+        $defaultFilterType = 'text',
         $type
     ;
 
@@ -33,9 +33,9 @@ abstract class BaseColumn extends Control implements IColumn
      * @param mixed $record
      * @return BaseColumn
      */
-    public function setRecord($value, $record)
+    public function setRecord($record)
     {
-        $this->value = $value;
+        $this->value = $record->{$this->name};
         $this->record = $record;
         return $this;
     }
@@ -120,8 +120,18 @@ abstract class BaseColumn extends Control implements IColumn
         return $this->getComponent('filter')->getFormControl();
     }
 
+    public function disableFilter()
+    {
+	$this->hasFilter = false;
+    }
+    
     protected function beforeSetFilter()
     {
+	if($this->hasFilter)
+	{
+		$filter = $this->getComponent('filter');
+		$this->removeComponent($filter);
+	}
         $this->hasFilter = true;
         $this->parent->hasFilters = true;
     }
@@ -133,19 +143,11 @@ abstract class BaseColumn extends Control implements IColumn
         return new Filters\TextFilter($this, 'filter');
     }
     
-    /**
-     * modified by Vahram added a default wildcast value at the end
-     */
-    public function setArrayFilter($items = array(), $strict = false)
+    public function setArrayFilter($items, $field = null)
     {
-        if(!$strict && !array_key_exists('', $items))
-        {
-	    $items = array('' => '-') + $items;    
-	}
-        
         $this->beforeSetFilter();
         $this->filterType = 'array';
-        return new Filters\ArrayFilter($this, 'filter', $items);
+        return new Filters\ArrayFilter($this, 'filter', $items, $field);
     }
 
     public function getAlias()
@@ -177,6 +179,7 @@ abstract class BaseColumn extends Control implements IColumn
 
     public function render()
     {
+	
 	$value = $this->getValue();
 	$html = Html::el('td')->class('cell '.$this->type.' '.$this->name);
 	if($value instanceof Html)
@@ -184,7 +187,7 @@ abstract class BaseColumn extends Control implements IColumn
 	    $html->add($value);
 	}
 
-	else if($value == null)
+	elseif($value == null)
 	{
 	    $html->setText('');
 	}
@@ -192,26 +195,9 @@ abstract class BaseColumn extends Control implements IColumn
 	{
 	    $html->setText($value);
 	}
-
         echo $html;
     }
 
-    protected function getEditModeHtml()
-    {
-        return Html::el('input')->type('text')->name($this->name)->value($this->value);
-    }
-
-    public function handleMakeEditable()
-    {
-        $this->editMode = true;
-        $this->parent->invalidateControl();
-    }
-
-    public function handleSaveEdit($value)
-    {
-        
-    }
-    
     public function filterByOtherFieldArray($field, $items)
     {
 	$items = array('' => '-') + $items;    

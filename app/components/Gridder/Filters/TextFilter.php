@@ -6,7 +6,7 @@ use Nette\Forms\Controls\TextInput;
  *
  * @author Martin
  */
-class TextFilter extends BaseFilter
+class TextFilter extends Filter
 {
     public function render()
     {
@@ -27,6 +27,6 @@ class TextFilter extends BaseFilter
 
     public function getFilter(&$value)
     {
-        return new FilterObject($this->parent->name, 'like %s', $value, '%'. $value.'%');
+        return new FilterObject($this->parent->name, 'like', $value, '%'. $value.'%');
     }
 }

@@ -23,6 +23,15 @@ class UserRoleRepository extends EntityRepository
     
     public function getDropdownValues()
     {
-	
+	$roles = $this->createQueryBuilder('userRole')
+		->select('userRole.id as id, userRole.name as name')
+		//->where('userRole.parent IS NULL')
+		->getQuery()
+		->getArrayResult();
+	foreach($roles as $role)
+	{
+	    $values[(int)$role['id']] = $role['name'];
+	}
+	return $values;
     }
 }

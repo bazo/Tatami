@@ -1,0 +1,154 @@
+.block-content{
+    padding: 0;
+}
+.block-content .gridder{
+}
+.gridder{
+    width: 100%;
+    position: relative;
+}
+.gridder > div{
+    width: 100%;
+}
+.gridder form{
+    margin: 0;
+    width: 100%;
+}
+.gridder form table{
+    width: 100%;
+}
+.gridder table thead tr:first-child{
+    background: url('images/block-header-bg.png') repeat-x;
+    
+}
+.gridder table thead tr{
+    border-bottom: 1px #9BA6AB solid;
+}
+.gridder table th.actions, .gridder table td.actions{
+    width: 200px;
+    text-align: center;
+}
+.gridder table td.actions a{
+    display: inline-block;
+}
+.gridder table thead input[type="text"], .gridder table thead select{
+    padding-left: 10px;
+    width: 90%;
+}
+.gridder table thead tr:first-child th{
+    font-weight: bold;
+    text-transform: capitalize;
+    height: 38px;
+}
+.gridder table tbody tr{
+    height: 40px;
+    width: 100%;
+    color: #222222;
+    font-family: 'PT Sans','Tahoma',sans-serif; 
+}
+.gridder table tr td, .gridder table tr th{
+    vertical-align: middle;
+    border-right: 1px #BEBEBE solid;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.gridder table tr td{
+    padding-left: 15px;
+}
+.gridder table tr td:last-child, .gridder table tr th:last-child{
+    border: none;
+}
+.gridder table tbody tr.odd{
+    background-color: #f2f2f2;
+}
+.gridder table tbody tr.even{
+    background-color: #e6e6e6;
+}
+.gridder table tbody tr:hover{
+    background-color: #d8dce6;
+}
+.gridder .paginator{
+    height: 44px;
+    background: url('images/block-actions-bg.png') repeat-x scroll left bottom transparent;
+    color: #F3F3F3;
+    overflow: hidden;
+}
+.gridder .paginator form{
+    display: inline-block;
+    width: 100%;
+    text-align: right;
+    margin-top: 10px;
+}
+.gridder .paginator .items-per-page{
+    float: left;
+    margin-left: 20px;
+    height: 30px;
+    overflow: hidden;
+    vertical-align: middle;
+}
+.gridder .paginator .items-per-page a.reset{
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    float: right;
+    margin-left: 10px;
+}
+.gridder .paginator .items-per-page *{
+}
+.gridder .paginator .items-per-page .icon{
+    margin-top: 2px;
+}
+.gridder .paginator .pagination{
+    float: right;
+    margin-right: 20px;
+}
+.gridder .paginator form input, .gridder .paginator form select{
+    width: auto;
+}
+.gridder .paginator form select{
+    background-color: #5d6267;
+    border: none;
+    text-align: center;
+    color: #F3F3F3;
+}
+.gridder .button.cancel{
+    background: url("images/button-red.png") repeat-x scroll 0 0 #2D5672;
+}
+.gridder .button.cancel:hover {
+    background: url("images/button-red.png") repeat-x scroll 0 -24px #834A3F;
+}
+.gridder .button.cancel:active {
+    background: url("images/button-red.png") repeat-x scroll 0 -48px #A85F51;
+}
+.gridder .paginator .button-paginator{
+    background-color: #EBEBEB;
+    border-color: #FFFFFF #B5B5B5 #B5B5B5 #FFFFFF;
+    border-style: solid;
+    border-width: 1px;
+    cursor: pointer;
+    margin: 0;
+    padding: 5px 10px;
+    margin: 0;
+    display: inline-block;
+    cursor: default;
+    color: #9F9F9F;
+}
+.gridder .paginator a{
+    width: auto;
+    display: inline-block;
+}
+.gridder .paginator a:hover .button-paginator{
+    color: #2D5672;
+}
+.gridder .paginator a .button-paginator{
+    color: #373737;
+    cursor: pointer;
+}
+.gridder .paginator .button-paginator.first{
+    border-radius: 3px 0 0 3px;
+    margin-right: -4px;
+}
+.gridder .paginator .button-paginator.last{
+    border-radius: 0 3px 3px 0;
+    margin-left: -4px;
+}

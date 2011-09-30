@@ -4,6 +4,11 @@ namespace Gridder\Persisters;
  * Description of Persister
  *
  * @author Martin
+ * @property filters
+ * @property itemsPerPage
+ * @property recordCheckboxes
+ * @property page
+ * @property totalPages
  */
 abstract class Persister implements IPersister
 {
@@ -11,6 +16,7 @@ abstract class Persister implements IPersister
     public function get($key){}
     public function keyExists($key){}
     public function delete($key) {}
+    public function reset() {}
     
     public function __set($key, $data)
     {

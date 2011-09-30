@@ -19,7 +19,7 @@ $params['logDir'] = __DIR__ . '/../log';
 Debugger::$logDirectory = $params['logDir'];
 Debugger::$strictMode = TRUE;
 //Debugger::$productionMode = false;
-Debugger::enable();
+Debugger::enable('188.167.64.246');
 
 $params['assetsDir'] = __DIR__ . '/assets';
 

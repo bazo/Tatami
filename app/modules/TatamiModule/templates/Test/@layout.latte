@@ -7,7 +7,8 @@
 
 	{*<title>Tatami - {_'Login'} {if isset($test)}{$test}{/if}</title>*}
 {snippet title title}Tatami - {_'Login'}{/snippet}
-	{*css module:tatami 'reset.css', 'common.css', 'icons.css', 'forms.css', 'login.css'*}
+	{css module:tatami 'reset.css', 'common.css', 'icons.css', 'forms.css'}
+	{block #css}{/block}
 	{js module:tatami 'jquery.js', 'jquery.nette.js', 'netteForms.js', 'jquery.ajaxform.js'}
 	{block #js}{/block}
 	<link rel="shortcut icon" href="{$basePath}/favicon.ico" type="image/x-icon">

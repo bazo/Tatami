@@ -91,12 +91,13 @@ class TestPresenter extends \Tatami\Presenters\BasePresenter
 	$grid->addColumn('id')->setAlias('Idecko')->setFilter('text');
 	
 	$grid->addColumn('name')->setFilter('text');
-	
+	/*
 	$ac = $grid->addActionColumn('actions');
 	$ac->addAction('test', 'delete!');
 	$ac->addAction('test2', 'delete!');
 	$ac->addAction('test3', 'delete!');
-	
+	*/
+	/*
 	$grid->addOperation('test', function($records){
 	    $message = sprintf('You have selected %s records in method %s', count($records), __FUNCTION__);
 	    $type = 'ok';
@@ -108,6 +109,8 @@ class TestPresenter extends \Tatami\Presenters\BasePresenter
 	$operation->setAlias('BUBUBU')->setCallback($callback);
 	
 	$grid->addOperation($operation);
+	 * 
+	 */
     }
     
     function mehehe($records)

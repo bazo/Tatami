@@ -66,31 +66,29 @@ class UsersPresenter extends \Tatami\Presenters\BackendPresenter
 	}
     }
     
-
-    protected function createComponentUsersBrowser($name)
-    {
-        $browser = new \Tatami\Components\UsersBrowser($this, $name);
-        $repository = $this->em->getRepository('User');
-        $browser->setRepository($repository);
-    }
-    
     public function handleTest()
     {
+	ini_set('max_execution_time', 0);
 	$limit = 10000;
 	$batchSize = 20;
 	$role = $this->em->getRepository('userRole')->find(1);
 	for($i = 0; $i <= $limit; $i++)
 	{
+	    try{
+	    $user = new \Entity\User;
 	    $user->setName('meno'.$i);
 	    $user->setEmail('email'.$i.'@email.hovno');
 	    $user->setPassword('heslo'.$i);
 	    $user->setRole($role);
 	    $this->em->persist($user);
-	     if (($i % $batchSize) == 0) {
+	    if (($i % $batchSize) == 0) {
 		 $this->em->flush();
 		 $this->em->clear();
 		 $role = $this->em->getRepository('userRole')->find(1);
 	    }
+	    }
+	    catch(\Exception $e) {}
+	     
 	    
 	}
 	$this->invalidateControl('usersBrowser');
@@ -102,18 +100,34 @@ class UsersPresenter extends \Tatami\Presenters\BackendPresenter
 	$repository = $this->em->getRepository('User');
 	
 	$persister = new \Gridder\Persisters\SessionPersister($this->getSession('usersGrid'));
-	
 	$grid->setPersister($persister);
-	$source = new \Gridder\Sources\EntitySource($repository);
+	
+	$queryBuilder = $this->em->createQueryBuilder()->
+	select('u')->from('Entity\User', 'u');
+	
+	$source = new \Gridder\Sources\RepositorySource($repository, \Gridder\Sources\RepositorySource::HYDRATION_COMPLEX);
+	//$source = new \Gridder\Sources\QueryBuilderSource($queryBuilder, \Gridder\Sources\QueryBuilderSource::HYDRATION_COMPLEX);
 	
 	$grid->setDataSource($source);
-	
+	$grid->autoAddFilters = true;
 	$grid->addColumn('id');
 	$grid->addColumn('name');
-	
 	$grid->addColumn('email');
-	$grid->addColumn('role');
-	 
-	 
+	
+	$items = $this->em->getRepository('UserRole')->getDropDownValues();
+	
+	$grid->addColumn('role')->setArrayFilter($items);
+	
+	$grid->addColumn('permissions', 'entityChild')
+		->setPath('role->permissions')
+		->disableFilter();
+	
+	$ac = $grid->addActionColumn('actions');
+	$ac->addAction('View', 'view')->setIcon('normal view')->hideTitle();
+    }
+    
+    public function renderView($id)
+    {
+	
     }
 }

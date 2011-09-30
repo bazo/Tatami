@@ -37,4 +37,9 @@ class SessionPersister extends Persister
     {
 	$this->storage->offsetUnset($key);
     }
+    
+    public function reset()
+    {
+	$this->storage->remove();
+    }
 }

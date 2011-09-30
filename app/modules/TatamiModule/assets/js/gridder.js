@@ -4,6 +4,7 @@
  */
 $(document).ready(function(){
 
+/*
     $('.gridder a.ajax').live('click', function(event){
 	   event.preventDefault();
 	    $.get(this.href);
@@ -14,9 +15,18 @@ $(document).ready(function(){
 	$(this).ajaxSubmit();
 	return false;
     });
+*/
+    $('.gridder .paginator select[name="page"]').live('change', function(){
+	$(this).parents('form').ajaxSubmit();
+    });
+
+    $(".gridder .activity-indicator").ajaxStart(function(){
+       $(this).text('buu');
+     });
 
    $('.gridder').livequery(function(){
        
+    
       
        /*
        

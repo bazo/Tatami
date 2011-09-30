@@ -24,7 +24,7 @@ class ArraySource extends Source
     {
 	foreach ($array as $key => $row)
 	{
-	    if(!is_object($row)) $array[$key][0] = (object)$row;
+	    if(!is_object($row)) $array[$key] = (object)$row;
 	}
 	return $array;
     }

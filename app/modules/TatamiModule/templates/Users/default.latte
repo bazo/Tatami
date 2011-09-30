@@ -1,10 +1,11 @@
 {var $title = 'Users'|translate}
 
+{block #commands}
+    <a n:href="add" class="ajax"><span class="icon add"></span>{_'Add user'}</a>
+    <a n:href="test!" class="ajax"><span class="icon add"></span>TEST</a>
+{/block}
+
 {block #content}
-<a n:href="add" class="ajax"><span class="icon add"></span>{_'Add user'}</a>
-{snippet usersBrowser}    
-    {control usersBrowser:tree}
-    <a n:href="test!" class="ajax">test</a>
-    {control gridUsers}
-{/snippet}
+
+{control gridUsers}
 {/block}

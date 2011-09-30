@@ -24,20 +24,20 @@
 			{$control[$column]->renderHeader()}
 		    </th>
 
-		    <th n:foreach="$actionColumns as $actionColumn" colspan="{$control[$actionColumn]->getActionsCount()}" >
+		    <th class="actions" n:foreach="$actionColumns as $actionColumn" colspan="{$control[$actionColumn]->getActionsCount()}" >
 			{$control[$actionColumn]->renderHeader()}
 		    </th>
 		</tr>
 
 		<tr n:if="$hasFilters" >
-		    <th>
+		    <th n:if="$hasOperations">
 		    </th>
 		    <th n:foreach="$columns as $column">
 			{if $control[$column]->hasFilter()}
 			    {$control['form']['filters'][$column]->control}
 			{/if}
 		    </th>
-		    <th>
+		    <th class="actions">
 			{input btnApplyFilters}
 			{input btnCancelFilters}
 		    </th>
@@ -49,11 +49,8 @@
 	    </tfoot>
 
 	    <tbody>
-		{while ($rows->valid()) !== false}
-		    {var $row = $rows->current()}
-		    {var $row = $row[0]}
-		    {dump $row}
-		    <tr>
+		{foreach $rows as $row}
+		    <tr n:class="$iterator->odd ? odd, $iterator->even ? even">
 
 			<td n:if="$hasOperations">
 			    {?$control->addRecordCheckbox($row->$primaryKey)}
@@ -61,16 +58,16 @@
 			</td>
 
 			{foreach $columns as $column}
-			    {$control[$column]->setRecord($row->$column, $row)->render()}
+			    {$control[$column]->setRecord($row)->render()}
 			{/foreach}
 
-			 <td n:foreach="$actionColumns as $actionColumn" n:inner-foreach="$control[$actionColumn]->getActions() as $action" colspan="{$control[$actionColumn]->getActionsCount()}" >
+			 <td class="actions" n:foreach="$actionColumns as $actionColumn" n:inner-foreach="$control[$actionColumn]->getActions() as $action" colspan="{$control[$actionColumn]->getActionsCount()}" >
 			{$action->setRecord($row)->render()}
 			</td>
 
 		    </tr>
-		    {$rows->next()}
-		{/while}
+		{/foreach}
+		
 	    </tbody>
 	</table>
 	{/form}

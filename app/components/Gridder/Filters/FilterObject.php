@@ -20,17 +20,13 @@ class FilterObject
         $emptyValue = ''
     ;
 
-    public function  __construct($field, $operator, $value, $queryValue)
+    public function  __construct($field, $operator, $value, $queryValue, $emptyValue = '')
     {
         $this->field = $field;
         $this->operator = $operator;
         $this->value = $value;
         $this->queryValue = $queryValue;
-    }
-
-    public function apply($df)
-    {
-        return $df->where($this->field.' '.$this->operator, $this->queryValue);
+	$this->emptyValue = $emptyValue;
     }
 
     public function getValue()
@@ -41,5 +37,25 @@ class FilterObject
     public function getEmptyValue()
     {
         return $this->emptyValue;
+    }
+    
+    public function getOperator()
+    {
+	return $this->operator;
+    }
+    
+    public function getQueryValue()
+    {
+	return $this->queryValue;
+    }
+       
+    public function getField()
+    {
+	return $this->field;
+    }
+
+    public function isEmpty()
+    {
+	return $this->value == $this->emptyValue;
     }
 }

@@ -1,14 +1,30 @@
 <?php
 namespace Gridder\Filters;
 use \Nette\Application\UI\Control, \Nette\Forms\Controls;
+use Nette\Forms\Controls\TextInput;
 /**
  * BaseFilter
  *
  * @author Martin Bažík
  * @package Core
  */
-abstract class BaseFilter extends Control implements IFilter
+abstract class Filter extends Control implements IFilter
 {
+    protected
+	$operator = 'like'
+    ;
+    
+    const 
+	LIKE = 'like',
+	EQUAL = '='
+    ;
+
+
+    public function setOperator($operator)
+    {
+	$this->operator = $operator;
+    }
+    
     public function render()
     {
         return $this->name;
@@ -26,7 +42,7 @@ abstract class BaseFilter extends Control implements IFilter
 
     public function getFilter(&$value)
     {
-        return new FilterObject($this->parent->name, 'like %s', $value, '%'.$value.'%');
+        return new FilterObject($this->parent->name, $this->operator, $value, '%'.$value.'%');
     }
 
 

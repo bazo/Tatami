@@ -30,24 +30,27 @@ class Gridder extends Control
 	    
 	/** @var array */
         $paginatorOptions = array(
-            'displayedItems' => array('2', '5', '10', '20', '30', '40', '50', '100', '200', '500', '1000'),
-            'defaultItem' => '5'
+            'displayedItems' => array(2, 5, 10, 20, 30, 40, 50, 100, 200, 500, 1000, 10000),
+            'defaultItem' => '10'
         ),
 	$translator,
 	/** @var Persisters\Persister */
 	$persister,
+	    
+	$itemsPerPage = 10,
+	$page = 1,
 	$presenter
     ;
     
-    public
-	$hasFilters,
-	/** @persistenta */    
-	$itemsPerPage = 5,
-	    
-	/** @persistent */    
-	$page = 1
+    public 
+	/** 
+	 * @internal 
+	 * @var bool
+	 */
+        $hasFilters,
+	/** @var bool */
+	$autoAddFilters = false
     ;
-
 
     public function __construct(IContainer $parent = NULL, $name = NULL)
     {
@@ -107,12 +110,12 @@ class Gridder extends Control
      * Adds a column to show
      * @param type $name
      * @param type $type
-     * @return IColumn
+     * @return Columns\BaseColumn
      */
     public function addColumn($name, $type = 'text')
     {
 	$this->columns[] = $name;
-	return $this->columnMapper->map($this, $name, $type);
+	return $this->columnMapper->map($this, $name, $type, $this->autoAddFilters);
     }
     
     /**
@@ -207,15 +210,25 @@ class Gridder extends Control
 	
 	if($this->hasFilters)
 	{
+	    
 	    $filters = $form->addContainer('filters');
             foreach($this->getComponents(false, 'Gridder\Columns\IColumn') as $column)
             {
                 if($column->hasFilter())
                 {
                     $filters->addComponent($column->getFilter(), $column->name);
-                    if (isset($this->filters[$column->name]))
+		    if($form->isSubmitted())
+		    {
+			$httpData = $form->getHttpData();
+			if(isset($httpData['btnCancelFilters']))
+			{
+			    unset($this->persister->filters);
+			    $filters[$column->name]->setValue(null);
+			}
+		    }
+                    elseif (isset($this->persister->filters[$column->name]))
                     {
-                        $filters[$column->name]->setDefaultValue($this->filters[$column->name]->getValue());
+                        $filters[$column->name]->setDefaultValue($this->persister->filters[$column->name]->getValue());
                     }
                 }
             }
@@ -253,19 +266,17 @@ class Gridder extends Control
         {
             $filterObjects[$filter] = $this->getComponent($filter)->getComponent('filter')->getFilter($value);//apply($this->ds, $value);
         }
-        $this->filters = $filterObjects;
-	var_dump($this->filters);
-	var_dump($filters);
+        $this->persister->filters = $filterObjects;
+	$this->invalidateControl();
     }
     
     public function cancelFilters(\Nette\Forms\Controls\Button $button)
     {
-	$values = $button->form->values;
+	$this->invalidateControl();
     }
     
     public function createComponentFormPaginator($name)
     {
-	\Nette\Diagnostics\Debugger::fireLog(__METHOD__);
 	$form = new Form($this, $name);
 	$form->getElementPrototype()->class = 'ajax';
 	$options = array_combine(array_values($this->paginatorOptions['displayedItems']), $this->paginatorOptions['displayedItems']);
@@ -285,7 +296,7 @@ class Gridder extends Control
 	   $form['itemsPerPage']->setDefaultValue($this->paginatorOptions['defaultItem']);
 	}
 	    
-	$form->addSubmit('btnSubmitPaginator');
+	$form->addSubmit('btnSubmitPaginator')->getControlPrototype()->class = 'button apply';
 	$form->onSuccess[] = callback($this, 'paginatorSubmitted');
     }
     
@@ -306,6 +317,12 @@ class Gridder extends Control
 	$this->invalidateControl();
     }
     
+    public function handleReset()
+    {
+	$this->persister->reset();
+	$this->invalidateControl();
+    }
+    
     public function render()
     {
 	$this->template->setFile(__DIR__.'/template.latte');
@@ -316,7 +333,7 @@ class Gridder extends Control
 	{
 	    $this->itemsPerPage = $this->persister->itemsPerPage;
 	}
-	$totalCount = $this->dataSource->applyFilters($this->filters)->getTotalCount();
+	$totalCount = $this->dataSource->applyFilters($this->persister->filters)->getTotalCount();
 	$this->persister->totalPages = $this->template->totalPages = (int)ceil($totalCount / $this->itemsPerPage);
 	if(isset($this->persister->page))
 	{

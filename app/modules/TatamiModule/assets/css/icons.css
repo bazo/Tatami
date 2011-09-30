@@ -42,12 +42,24 @@
 .icon.small.info{
     background-image: url('icons/small/info.png');
 }
+.icon.small.refresh{
+    background-image: url('icons/small/refresh.png');
+}
 /* NORMAL ICONS */
 .icon.normal.download{
     background-image: url('icons/normal/package-download.png');
 }
 .icon.normal.close{
     background-image: url('icons/normal/close.png');
+}
+.icon.normal.refresh{
+    background-image: url('icons/normal/refresh.png');
+}
+.icon.normal.view{
+    background-image: url('icons/normal/view.png');
+}
+.icon.normal.zoom{
+    background-image: url('icons/normal/zoom.png');
 }
 /* MEDIUM ICONS */
 .icon.medium.download{

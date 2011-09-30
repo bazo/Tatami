@@ -1,5 +1,6 @@
 <?php
 namespace Gridder\Columns;
+
 /**
  * Description of TextClass
  *

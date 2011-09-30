@@ -18,10 +18,10 @@
 	<meta name="robots" content="noindex"/>
 
 	<title>Tatami</title>
-	{css module:tatami 'reset.css', 'common.css', 'layout.css', 'forms.css', 'icons.css'}
+	{css module:tatami 'reset.css', 'common.css', 'layout.css', 'forms.css', 'icons.css', 'gridder.css'}
 	{css module:tatami media:'only screen and (min-device-width: 768px) and (max-device-width: 1024px)' 'ipad.css'}
         {block #css}{/block}
-	{js module:tatami 'jquery.js', 'jquery.nette.js', 'netteForms.js', 'jquery.ajaxform.js', 'tatami.js'}
+	{js module:tatami 'jquery.js', 'jquery.nette.js', 'netteForms.js', 'jquery.ajaxform.js', 'jquery.livequery.js', 'tatami.js', 'gridder.js'}
         {block #js}{/block}
 	<link rel="shortcut icon" href="{$basePath}/favicon.ico" type="image/x-icon"/>
 </head>
@@ -116,6 +116,7 @@
 			<span class="message">{_$flash->message}</span></div>{/foreach}
 		    {/snippet}
 		    <h1 class="title" n:ifset="$title">{$title}</h1>
+		    {block #commands}{/block}
 		    <div class="block-border">
 			<div class="block-content">
 			    {include #content}

@@ -8,7 +8,13 @@ namespace Gridder\Sources;
 class Source implements IDataSource
 {
     protected
-	$primaryKey
+	$primaryKey,
+	$filterChainMode = 'and'
+    ;
+    
+    const
+	CHAIN_MODE_AND = 'and',
+	CHAIN_MODE_OR = 'or'
     ;
     
     public function setPrimaryKey($primaryKey)
@@ -22,6 +28,12 @@ class Source implements IDataSource
 	return $this->primaryKey;
     }
     
+    public function setFilterChainMode($filterChainMode)
+    {
+	$this->filterChainMode = $filterChainMode;
+	return $this;
+    }
+
     public function getResults() {}
     public function getTotalCount() {}
     public function limit($offset, $limit) {}

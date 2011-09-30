@@ -50,6 +50,9 @@ class Permission extends BaseEntity
         return $this;
     }
 
-
+    public function __toString()
+    {
+	return $this->resource->name.' : '.$this->privilege;
+    }
     
 }
