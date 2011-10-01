@@ -18,6 +18,17 @@ class MessagesModule extends Module
                 'Sent' => ':Messages:sent:'
             )
         )
+	/*    ,
+	$permissions = array(
+            'message' => array(
+                'view' => 'View message',
+                'edit' => 'Edit message',
+                'add' => 'Add message',
+                'delete' => 'Delete message'
+            )
+        )
+	 * 
+	 */
     ;
     
     function loadDashboardWidget(\Tatami\Widgets\WidgetManager &$widgetManager, $args)

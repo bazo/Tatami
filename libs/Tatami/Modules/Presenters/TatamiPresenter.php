@@ -6,7 +6,8 @@ abstract class TatamiPresenter extends BasePresenter
 {
     protected 
 	/** @var \Tatami\Services\MailBuilder */
-	$mailBuilder
+	$mailBuilder,
+	$toolbar = null
     ;
     
     public function  startup()

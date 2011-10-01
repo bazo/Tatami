@@ -38,7 +38,14 @@ class MailBuilder
 	$this->fromName = $presenter->context->params['mail']['fromName'];
 	$this->lang = $presenter->lang;
 	$this->template = $this->createTemplate($presenter);
-	$this->mailer = $presenter->context->mailer;
+	if(isset($presenter->context->params['mail']['ignore']) and $presenter->context->params['mail']['ignore'] == true) 
+	{
+	    $this->mailer = new \Tatami\Tools\NullMailer();
+	}
+	else
+	{
+	    $this->mailer = $presenter->context->mailer;
+	}
     }
     
     /**

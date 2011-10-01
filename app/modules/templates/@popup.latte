@@ -7,7 +7,7 @@
 {snippet popup}
     <div id="popup-overlay">
 	<div id="popup-window" class="block-border">
-	    <div class="block-header"><h1>{$title}</h1>
+	    <div class="block-header"><h1 n:if="$title">{$title}</h1>
 		<a href="{link closePopup!}" class="ajax close"><span class="icon normal close"></span></a>
 	    </div>
 	    <div class="block-content">

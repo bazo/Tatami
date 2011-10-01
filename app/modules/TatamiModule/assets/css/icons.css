@@ -52,6 +52,12 @@
 .icon.normal.close{
     background-image: url('icons/normal/close.png');
 }
+.icon.normal.edit{
+    background-image: url('icons/normal/modify.png');
+}
+.icon.normal.delete{
+    background-image: url('icons/normal/delete.png');
+}
 .icon.normal.refresh{
     background-image: url('icons/normal/refresh.png');
 }
@@ -62,6 +68,9 @@
     background-image: url('icons/normal/zoom.png');
 }
 /* MEDIUM ICONS */
+.icon.medium.add{
+    background-image: url('icons/medium/add.png');
+}
 .icon.medium.download{
     background-image: url('icons/medium/package-download.png');
 }
@@ -81,6 +90,9 @@
 }
 .icon.medium.error{
     background-image: url('icons/medium/exclamation.png');
+}
+.icon.medium.users{
+    background-image: url('icons/medium/users.png');
 }
 /* LARGE ICONS */
 .icon.large.module-default{

@@ -223,25 +223,28 @@ class Action extends Component implements IAction
 	{
 	    $title = '';
 	}
-        if(empty($this->onActionRender))
-        {
-            $icon = $this->icon != null ? $this->icon : $this->title;
-            $output = Html::el('a')
-			->add(Html::el('span')
-			->class(sprintf('icon %s', Strings::lower($icon))))
-                       ->href($this->presenter->link($this->destination, array($this->key => $this->value) + $this->params))
-		       ->title($this->title)
-                       ->add($title)
-                      ;
-        }
-        else
+	$icon = $this->icon != null ? $this->icon : $this->title;
+	$output = Html::el('a')
+		    ->add(Html::el('span')
+		    ->class(sprintf('icon %s', Strings::lower($icon))))
+		   ->href($this->presenter->link($this->destination, array($this->key => $this->value) + $this->params))
+		   ->title($this->title)
+		   ->add($title)
+		  ;
+        if(!empty($this->onActionRender))
         {
             foreach ($this->onActionRender as $function)
             {
-                $output .= $function($this->value, $this->record);
+                $output = $function($this->value, $this->record, $this->title, $output);
             }
         }
-        if($this->ajax) $output->addClass('ajax');
+	if($output instanceof Html)
+	{
+	    if($this->ajax) 
+	    {
+		$output->addClass('ajax');
+	    }
+	}
         return $output;
     }
 }

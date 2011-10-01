@@ -5,20 +5,20 @@
 	Showing: {$from} - {$to} of {$totalRecords}
 	{input itemsPerPage}
 	{input btnSubmitPaginator}
-	<a class="reset ajax" href="{link reset!}" title="Reset"><span class="icon normal refresh"></span></a>
+	<a class="reset ajax" n:href="reset!" title="Reset"><span class="icon normal refresh"></span></a>
     </div>
     <div class="pagination">
-	<a class="ajax" n:tag-if="$page != 1" href="{link changePage page => 1}">
+	<a class="ajax" n:tag-if="$page != 1" n:href="changePage! page => 1">
 	    <span class="button-paginator first">First</span>
 	</a>
-	<a class="ajax" n:tag-if="$previousPage > 0" href="{link changePage page => $previousPage}">
+	<a class="ajax" n:tag-if="$previousPage > 0" n:href="changePage page => $previousPage">
 	    <span class="button-paginator previous">Previous</span>
 	</a>
 	{input page} of {$totalPages}
-	<a class="ajax" n:tag-if="$nextPage <= $totalPages" href="{link changePage page => $nextPage}">
+	<a class="ajax" n:tag-if="$nextPage <= $totalPages" n:href="changePage page => $nextPage">
 	    <span class="button-paginator next">Next</span>
 	</a>
-	<a class="ajax" n:tag-if="$page != $totalPages" href="{link changePage page => $totalPages}">
+	<a class="ajax" n:tag-if="$page != $totalPages" n:href="changePage page => $totalPages">
 	    <span class="button-paginator last">Last</span>
 	</a>
     </div>

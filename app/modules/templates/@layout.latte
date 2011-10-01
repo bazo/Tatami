@@ -17,11 +17,11 @@
 	<meta name="description" content="Tatami admin"/>
 	<meta name="robots" content="noindex"/>
 
-	<title>Tatami</title>
+	<title>{if $title}{$title} - {/if}Tatami</title>
 	{css module:tatami 'reset.css', 'common.css', 'layout.css', 'forms.css', 'icons.css', 'gridder.css'}
 	{css module:tatami media:'only screen and (min-device-width: 768px) and (max-device-width: 1024px)' 'ipad.css'}
         {block #css}{/block}
-	{js module:tatami 'jquery.js', 'jquery.nette.js', 'netteForms.js', 'jquery.ajaxform.js', 'jquery.livequery.js', 'tatami.js', 'gridder.js'}
+	{js module:tatami 'jquery.js', 'netteForms.js', 'jquery.nette.js', 'jquery.ajaxform.js', 'jquery.livequery.js', 'tatami.js', 'gridder.js'}
         {block #js}{/block}
 	<link rel="shortcut icon" href="{$basePath}/favicon.ico" type="image/x-icon"/>
 </head>
@@ -115,8 +115,12 @@
 		    {foreach $flashes as $flash}<div class="flash {$flash->type}"><span class="icon medium {$flash->type}"></span>
 			<span class="message">{_$flash->message}</span></div>{/foreach}
 		    {/snippet}
-		    <h1 class="title" n:ifset="$title">{$title}</h1>
-		    {block #commands}{/block}
+		    <div id="content-title-bar">
+			<h1 class="title" n:ifset="$title">{$title}</h1>
+			<div id="command-bar">
+			    {block #commands}{/block}
+			</div>
+		    </div>
 		    <div class="block-border">
 			<div class="block-content">
 			    {include #content}
@@ -126,13 +130,8 @@
 		</div>
 	    </div>
 	</div>
-	
-        
-        
-	
     </div>
 {snippet popup}
-    {control popup}
 {/snippet}
 </body>
 </html>

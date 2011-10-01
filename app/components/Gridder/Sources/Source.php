@@ -9,7 +9,9 @@ class Source implements IDataSource
 {
     protected
 	$primaryKey,
-	$filterChainMode = 'and'
+	$filterChainMode = 'and',
+	$supportSFiltering = false,
+	$supportsSorting = false
     ;
     
     const
@@ -39,4 +41,14 @@ class Source implements IDataSource
     public function limit($offset, $limit) {}
     public function getRecordsByIds($ids) {}
     public function applyFilters($filters) {}
+    
+    public function supportsFiltering()
+    {
+	return $this->supportSFiltering;
+    }
+    
+    public function supportsSorting()
+    {
+	return $this->supportsSorting;
+    }
 }

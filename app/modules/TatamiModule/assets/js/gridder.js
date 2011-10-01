@@ -20,10 +20,11 @@ $(document).ready(function(){
 	$(this).parents('form').ajaxSubmit();
     });
 
+/*
     $(".gridder .activity-indicator").ajaxStart(function(){
        $(this).text('buu');
      });
-
+*/
    $('.gridder').livequery(function(){
        
     

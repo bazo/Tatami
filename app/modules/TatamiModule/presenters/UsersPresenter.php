@@ -5,21 +5,8 @@ namespace TatamiModule;
  *
  * @author Martin
  */
-class UsersPresenter extends \Tatami\Presenters\BackendPresenter
+class UsersPresenter extends BasePresenter
 {
-    protected $toolbar = 'users';
-    
-    public function renderDefault()
-    {
-        $limit = 10;
-        $offset = 0;
-        $users = $this->em->getRepository('User');//->findBy(array(), null, $limit, $offset);
-    }
-    
-    public function actionAdd()
-    {
-	$this->popupOn();
-    }
     
     protected function createComponentFormAddUser($name)
     {
@@ -28,14 +15,15 @@ class UsersPresenter extends \Tatami\Presenters\BackendPresenter
 	$form->addText('email', 'E-mail')->setRequired('Please fill %label.');
 	$userRoles = $this->em->getRepository('UserRole')->fetchPairs('id', 'name');
 	$form->addSelect('role', 'Role', $userRoles);
-	$form->addSubmit('btnSubmit', 'Save');
+	$form->addSubmit('btnSubmit', 'Create');
 	$form->onSuccess[] = callback($this, 'formAddSubmitted');
     }
 
     public function formAddSubmitted(\Nette\Application\UI\Form $form)
     {
 	$values = $form->values;
-	try{
+	try
+	{
 	    $userRole = $this->em->getRepository('UserRole')->find($values->role);
 	    $values->role = $userRole;
 	    
@@ -50,7 +38,7 @@ class UsersPresenter extends \Tatami\Presenters\BackendPresenter
 	    $this->em->flush();
 	    $this->mailBuilder->buildAccountCreatedEmail($user, $token)->send();
 	    $this->flash(sprintf('User %s added', $user->name));
-	    $this->invalidateControl('usersBrowser');
+	    $this->invalidateControl('grid');
 	    $this->popupOff();
 	}
 	catch(\PDOException $e)
@@ -74,33 +62,35 @@ class UsersPresenter extends \Tatami\Presenters\BackendPresenter
 	$role = $this->em->getRepository('userRole')->find(1);
 	for($i = 0; $i <= $limit; $i++)
 	{
-	    try{
-	    $user = new \Entity\User;
-	    $user->setName('meno'.$i);
-	    $user->setEmail('email'.$i.'@email.hovno');
-	    $user->setPassword('heslo'.$i);
-	    $user->setRole($role);
-	    $this->em->persist($user);
-	    if (($i % $batchSize) == 0) {
-		 $this->em->flush();
-		 $this->em->clear();
-		 $role = $this->em->getRepository('userRole')->find(1);
+	    try
+	    {
+		$user = new \Entity\User;
+		$user->setName('meno'.$i);
+		$user->setEmail('email'.$i.'@email.hovno');
+		$user->setPassword('heslo'.$i);
+		$user->setRole($role);
+		$this->em->persist($user);
+		if (($i % $batchSize) == 0) 
+		{
+		     $this->em->flush();
+		     $this->em->clear();
+		     $role = $this->em->getRepository('userRole')->find(1);
+		}
 	    }
+	    catch(\Exception $e) 
+	    {
+		
 	    }
-	    catch(\Exception $e) {}
-	     
-	    
 	}
 	$this->invalidateControl('usersBrowser');
     }
     
     protected function createComponentGridUsers($name)
     {
-	$grid = new \Gridder\Gridder($this, $name);
+	
 	$repository = $this->em->getRepository('User');
 	
 	$persister = new \Gridder\Persisters\SessionPersister($this->getSession('usersGrid'));
-	$grid->setPersister($persister);
 	
 	$queryBuilder = $this->em->createQueryBuilder()->
 	select('u')->from('Entity\User', 'u');
@@ -108,13 +98,13 @@ class UsersPresenter extends \Tatami\Presenters\BackendPresenter
 	$source = new \Gridder\Sources\RepositorySource($repository, \Gridder\Sources\RepositorySource::HYDRATION_COMPLEX);
 	//$source = new \Gridder\Sources\QueryBuilderSource($queryBuilder, \Gridder\Sources\QueryBuilderSource::HYDRATION_COMPLEX);
 	
-	$grid->setDataSource($source);
+	$grid = new \Gridder\Gridder($source, $persister, $this, $name);
 	$grid->autoAddFilters = true;
 	$grid->addColumn('id');
 	$grid->addColumn('name');
 	$grid->addColumn('email');
 	
-	$items = $this->em->getRepository('UserRole')->getDropDownValues();
+	$items = $this->em->getRepository('UserRole')->fetchPairs('id', 'name');
 	
 	$grid->addColumn('role')->setArrayFilter($items);
 	
@@ -126,8 +116,9 @@ class UsersPresenter extends \Tatami\Presenters\BackendPresenter
 	$ac->addAction('View', 'view')->setIcon('normal view')->hideTitle();
     }
     
-    public function renderView($id)
+    public function handleAdd()
     {
-	
+	$this->view = 'add';
+	$this->popupOn();
     }
 }

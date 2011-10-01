@@ -9,6 +9,12 @@ use \Doctrine\ORM\QueryBuilder;
  */
 class RepositorySource extends QueryBuilderSource
 {
+    
+    protected
+	$supportSFiltering = true,
+	$supportsSorting = true
+    ;
+    
     public function __construct(EntityRepository $repository, $hydrationMode = self::HYDRATION_SIMPLE, $alias = 'entity')
     {
 	$queryBuilder = $repository->createQueryBuilder($alias);
@@ -36,5 +42,15 @@ class RepositorySource extends QueryBuilderSource
 	    }
 	}
 	return $this;
+    }
+    
+    public function supportsFiltering()
+    {
+	return true;
+    }
+    
+    public function supportsSorting()
+    {
+	return true;
     }
 }

@@ -52,19 +52,21 @@ class Gridder extends Control
 	$autoAddFilters = false
     ;
 
-    public function __construct(IContainer $parent = NULL, $name = NULL)
+    const
+	ORDER_BY_ASC = ':asc:',
+	ORDER_BY_DESC = ':desc:'
+    ;
+    
+    public function __construct(Sources\IDataSource $source, IPersister $persister, IContainer $parent = NULL, $name = NULL)
     {
 	parent::__construct($parent, $name);
 	$presenter = $parent->getPresenter();
 	$this->presenter =& $presenter;
 	$this->columnMapper = new ColumnMapper;
-    }
-
-    public function setPersister(IPersister $persister)
-    {
+	$this->setDataSource($source);
 	$this->persister = $persister;
     }
-    
+
     /**
      * Returns paginator options
      * @return array
@@ -88,7 +90,7 @@ class Gridder extends Control
      * Set the datasource for the table rows
      * @param Sources\IDataSource $dataSource 
      */
-    public function setDataSource(Sources\IDataSource $dataSource)
+    private function setDataSource(Sources\IDataSource $dataSource)
     {
 	$this->dataSource = $dataSource;
 	$this->primaryKey = $dataSource->getPrimaryKey();
@@ -106,6 +108,18 @@ class Gridder extends Control
 	return $this;
     }
         
+    public function setInitialItemsPerPage($itemsPerPage)
+    {
+	$this->itemsPerPage = $itemsPerPage;
+	$this->paginatorOptions['defaultItem'] = $itemsPerPage;
+	if(array_search($itemsPerPage, $this->paginatorOptions['displayedItems']) == false)
+	{
+	    array_push($this->paginatorOptions['displayedItems'], $itemsPerPage);
+	    sort($this->paginatorOptions['displayedItems']);
+	}
+	return $this;
+    }
+    
     /**
      * Adds a column to show
      * @param type $name
@@ -296,7 +310,7 @@ class Gridder extends Control
 	   $form['itemsPerPage']->setDefaultValue($this->paginatorOptions['defaultItem']);
 	}
 	    
-	$form->addSubmit('btnSubmitPaginator')->getControlPrototype()->class = 'button apply';
+	$form->addSubmit('btnSubmitPaginator', 'Ok')->getControlPrototype()->class = 'button apply';
 	$form->onSuccess[] = callback($this, 'paginatorSubmitted');
     }
     
@@ -315,6 +329,37 @@ class Gridder extends Control
 	unset($this->persister->recordCheckboxes);
 	$this->persister->page = $page;
 	$this->invalidateControl();
+    }
+    
+    public function handleOrderBy($column)
+    {
+	$ordering = $this->persister->ordering;
+        
+        $keys = array_keys($this->columns);
+        $key = array_search($column, $keys);
+        if(isset($ordering[$key][$column]))
+        {
+            $currentDirection = $ordering[$key][$column];
+            switch($currentDirection)
+            {
+                case self::ORDER_BY_DESC:
+                    $direction = self::ORDER_BY_ASC;
+                    $ordering[$key] = array($column => $direction);
+                break;
+
+                case self::ORDER_BY_ASC:
+                    unset($ordering[$key]);
+                break;
+            }
+        }
+        else
+        {
+            $direction = self::ORDER_BY_DESC;
+            $ordering[$key] = array($column => $direction);
+        }
+
+        $this->persister->ordering = $ordering;
+        $this->invalidateControl();
     }
     
     public function handleReset()
@@ -359,7 +404,13 @@ class Gridder extends Control
 	$this->template->totalRecords = $totalCount;
 	$this->template->primaryKey = $this->primaryKey;
 	$this->template->hasOperations = $this->hasOperations;
+	
+	if(!$this->dataSource->supportsFiltering())
+	{
+	    $this->hasFilters = false;
+	}
 	$this->template->hasFilters = $this->hasFilters;
+	$this->template->supportsSorting = $this->dataSource->supportsSorting();
 	$this->template->rows = $rows;
 	$this->template->render();
     }

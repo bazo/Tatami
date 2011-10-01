@@ -1,0 +1,25 @@
+{var $title = 'test'}
+{block #content}
+{snippet form}
+    {form formEditPermissions}
+	{foreach $form['permissions']->getComponents() as $group => $container}
+	<fieldset>
+	    <legend>{$group}</legend>
+	    {foreach $container->getControls() as $control}
+	    {$control->control}{$control->label}
+	    {/foreach}
+	</fieldset>
+	{/foreach}
+	<div class="block-actions"> 
+	    <ul class="actions-left"> 
+		<li>
+		</li> 
+		<li class="divider-vertical"></li> 
+		<li>
+		    {input btnSubmit class=> button}
+		</li> 
+	    </ul> 
+	</div>
+    {/form}
+{/snippet}
+{/block}

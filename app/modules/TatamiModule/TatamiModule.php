@@ -19,28 +19,26 @@ final class TatamiModule extends CoreModule implements IEssentialModule
 		':tatami:dashboard:',
 		'Modules' => ':tatami:modules:',
 		'Users' => ':tatami:users:',
-                'Permissions' => ':tatami:permissions:'
+                'User roles' => ':tatami:roles:'
 	    )
         ),
 	    
 	$toolbar = array(
-	    'users' => array(
+	    'all' => array(
 			array(
-			    'label' => 'Create new user',
-			    'destination' => ':tatmi:users:',
-			    'icon' => 'user-new',
+			    'label' => 'Users',
+			    'destination' => ':tatami:users:',
+			    'icon' => 'users',
+			    'ajax' => false
+			),
+			array(
+			    'label' => 'Install module from internet',
+			    'destination' => ':tatami:modules:browseModules',
+			    'icon' => 'download',
 			    'ajax' => true
 			)
+		    )	    
 	    ),
-	    'modules' => array(
-		array(
-		    'label' => 'Install module from internet',
-		    'destination' => ':tatami:modules:browseModules',
-		    'icon' => 'download',
-		    'ajax' => true
-		)
-	    )
-	),
             
         $permissions = array(
             'user' => array(

@@ -1,7 +1,7 @@
 <?php
 namespace TatamiModule;
 
-class DashboardPresenter extends \Tatami\Presenters\BackendPresenter
+class DashboardPresenter extends BasePresenter
 {
     public function renderDefault()
     {

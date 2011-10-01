@@ -3,7 +3,6 @@ h1 {
 }
 h1, h2, h3, h4, h5, h6 {
     color: #475D68;
-    line-height: 10px;
     text-shadow: 0 1px 0 #FFFFFF;
 }
 body{
@@ -39,13 +38,22 @@ header .divider-header{
 header #toolbox{
     margin-left: 260px;
     height: 43px;
-    padding-left: 10px;
+}
+header #toolbox ul{
+    margin-left: 15px;
+    margin-top: 3px;
+}
+header #toolbox ul li{
+    float: left;
+    margin-right: 15px;
 }
 header #toolbox nav{
     float: left;
 }
 header #toolbox #statusbar{
     float: right;
+    margin-top: 5px;
+    margin-right: 20px;
 }
 header #toolbox #user-menu{
     color: #EBEBEB;
@@ -78,7 +86,7 @@ header #toolbox #user-menu a:hover{
 }
 #main aside #shortcuts-header h1{
     text-align: left;
-    padding-top: 15px;
+    padding-top: 10px;
     padding-left: 10px;
 }
 #main aside #shortcuts-panel{
@@ -211,7 +219,7 @@ header #toolbox #user-menu a:hover{
 #search-box{
     display: inline-block;
     float: right;
-    margin-right: 5px;
+    margin-right: 20px;
 }
 #search-box form{
     display: block;
@@ -239,8 +247,24 @@ header #toolbox #user-menu a:hover{
     padding-top: 14px;
     padding-left: -1%;
 }
+#main #main-content #content-title-bar{
+    margin-bottom: 20px;
+    width: 100%;
+    overflow: hidden;
+    height: 32px;
+}
 #main #main-content h1{
     font-weight: bold;
-    margin-top: 10px;
-    width: 100%;
+    width: auto;
+    float: left;
+    margin-top: 5px;
+    margin-right: 20px;
+}
+#main #main-content #command-bar{
+    display: block;
+    vertical-align: middle;
+    height: 100%;
+}
+#main #main-content #content-title-bar #command-bar > *{
+    display: inline-block;
 }

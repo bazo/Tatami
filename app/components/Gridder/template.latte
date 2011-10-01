@@ -21,10 +21,10 @@
 		    </th>
 
 		    <th n:foreach="$columns as $column">
-			{$control[$column]->renderHeader()}
+			<a class="ajax" n:tag-if="$supportsSorting" n:href="orderBy! column => $column">{$control[$column]->renderHeader()}</a>
 		    </th>
 
-		    <th class="actions" n:foreach="$actionColumns as $actionColumn" colspan="{$control[$actionColumn]->getActionsCount()}" >
+		    <th class="actions" n:foreach="$actionColumns as $actionColumn" >
 			{$control[$actionColumn]->renderHeader()}
 		    </th>
 		</tr>
@@ -61,7 +61,7 @@
 			    {$control[$column]->setRecord($row)->render()}
 			{/foreach}
 
-			 <td class="actions" n:foreach="$actionColumns as $actionColumn" n:inner-foreach="$control[$actionColumn]->getActions() as $action" colspan="{$control[$actionColumn]->getActionsCount()}" >
+			 <td class="actions" n:foreach="$actionColumns as $actionColumn" n:inner-foreach="$control[$actionColumn]->getActions() as $action" >
 			{$action->setRecord($row)->render()}
 			</td>
 

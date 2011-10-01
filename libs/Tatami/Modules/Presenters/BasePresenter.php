@@ -50,7 +50,7 @@ abstract class BasePresenter extends \Nette\Application\UI\Presenter
     {
         if($this->isAjax())
         {
-            $this->getSession('original_view')->original_view =  $this->getView();
+            //$this->getSession('original_view')->original_view =  $this->getView();
             $this->setLayout('popup');
             $this->invalidateControl('popup');
         }

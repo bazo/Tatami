@@ -12,4 +12,6 @@ interface IDataSource
     public function getRecordsByIds($ids);
     public function getPrimaryKey();
     public function applyFilters($filters);
+    public function supportsFiltering();
+    public function supportsSorting();
 }

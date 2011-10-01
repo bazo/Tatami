@@ -1,6 +1,7 @@
 <?php
 namespace Tatami;
 use Nette\Mail\Message, Nette\Mail\SmtpMailer;
+
 /**
  * Installer
  *
@@ -126,14 +127,21 @@ class Installer
     private function installUserRoles()
     {
         $user = new \Entity\UserRole;
-        $user->setName('User');
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
         
         $admin = new \Entity\UserRole;
         $admin->setName('Admin');
-        $admin->setParent($user);
-        
+	
+	$adminResource = new \Entity\Resource('all');
+	$adminPermission = new \Entity\Permission;
+	$adminPermission->setResource($adminResource)
+		->setPrivilege('all')
+		->setPrivilegeText('All');
+	$admin->addPermission($adminPermission);
+        $this->entityManager->persist($admin);
+	
+	$user->setName('User');
+        $this->entityManager->persist($user);
+	
         $tatamiModule = new Modules\TatamiModule;
         $tatamiPermissions = $tatamiModule->getPermissions();
         
@@ -146,11 +154,9 @@ class Installer
                 $permission = new \Entity\Permission;
                 $permission->setResource($resource)->setPrivilege($privilege)
                         ->setPrivilegeText($privilegeText);
-                $admin->addPermission($permission);
+		$this->entityManager->persist($permission);
             }        
         }
-        
-        $this->entityManager->persist($admin);
         $this->entityManager->flush();
     }
     

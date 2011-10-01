@@ -14,13 +14,6 @@ class PermissionsBrowser extends BaseControl
         $this->repository = $repository;
     }
     
-    public function renderTree()
-    {
-	$this->template->setFile(__DIR__.'/tree.latte');
-        $this->template->items = $this->repository->getRolesTree();
-	$this->template->render();
-    }
-    
     public function renderGrid()
     {
 	$this->template->setFile(__DIR__.'/grid.latte');

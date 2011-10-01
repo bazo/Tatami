@@ -5,13 +5,8 @@
  */
 namespace TatamiModule;
 
-class ModulesPresenter extends \Tatami\Presenters\BackendPresenter
+class ModulesPresenter extends BasePresenter
 {
-
-    protected 
-	$toolbar = 'modules'
-    ;
-
 
     public function createComponentModuleViewer($name)
     {

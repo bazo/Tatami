@@ -5,6 +5,6 @@
  */
 namespace TatamiModule;
 
-class SettingsPresenter extends \Tatami\Presenters\BackendPresenter
+class SettingsPresenter extends BasePresenter
 {
 }

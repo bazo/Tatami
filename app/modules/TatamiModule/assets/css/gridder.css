@@ -7,7 +7,7 @@
     width: 100%;
     position: relative;
 }
-.gridder > div{
+.gridder + div{
     width: 100%;
 }
 .gridder form{
@@ -44,7 +44,7 @@
     height: 40px;
     width: 100%;
     color: #222222;
-    font-family: 'PT Sans','Tahoma',sans-serif; 
+    font-family: "PT Sans","Tahoma",sans-serif; 
 }
 .gridder table tr td, .gridder table tr th{
     vertical-align: middle;
@@ -66,6 +66,12 @@
 }
 .gridder table tbody tr:hover{
     background-color: #d8dce6;
+}
+.gridder table tbody tr td.actions a{
+    margin-right: 10px;
+}
+.gridder table tbody tr td.actions a:last-child{
+    margin-right: 0;
 }
 .gridder .paginator{
     height: 44px;

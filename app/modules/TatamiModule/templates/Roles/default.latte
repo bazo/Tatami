@@ -1,0 +1,11 @@
+{var $title = 'User roles'|translate}
+
+{block #commands}
+    <a n:href="add!" class="ajax" title="{_'Add user role'}"><span class="icon medium add"></span></a>
+{/block}
+
+{block #content}
+    {snippet grid}
+	{control gridRoles}
+    {/snippet}
+{/block}

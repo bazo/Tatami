@@ -24,16 +24,19 @@ class Acl extends Permission
         $roles = $entityManager->getRepository('UserRole')->findAll();
         foreach($roles as $role)
         {
-            if(is_object($role->getParent()))
-                $this->addRole($role->getName(), $role->getParent()->getName());
-            else $this->addRole($role->getName());
-            
-            foreach($role->getPermissions() as $permission)
-            {
-                $this->allow($role->getName(), $permission->getResource()->getName(), $permission->getPrivilege());
-            }
+	    $this->addRole($role->getName());
+	    if($role->name == 'Admin')
+	    {
+		$this->allow($role->getName(), Permission::ALL, Permission::ALL);
+	    }
+	    else
+	    {
+		foreach($role->getPermissions() as $permission)
+		{
+		    $this->allow($role->getName(), $permission->getResource()->getName(), $permission->getPrivilege());
+		}
+	    }
         }
-        
         $eventManager->fireEvent(\Tatami\Events\Event::PERMISSIONS_LOAD, $this);
     }
 }
