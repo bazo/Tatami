@@ -18,10 +18,10 @@
 	<meta name="robots" content="noindex"/>
 
 	<title>{if $title}{$title} - {/if}Tatami</title>
-	{css module:tatami 'reset.css', 'common.css', 'layout.css', 'forms.css', 'icons.css', 'gridder.css'}
+	{css module:tatami 'reset.css', 'jquery-ui-1.8.16.custom.css', 'common.css', 'layout.css', 'forms.css', 'icons.css', 'gridder.css'}
 	{css module:tatami media:'only screen and (min-device-width: 768px) and (max-device-width: 1024px)' 'ipad.css'}
         {block #css}{/block}
-	{js module:tatami 'jquery.js', 'netteForms.js', 'jquery.nette.js', 'jquery.ajaxform.js', 'jquery.livequery.js', 'tatami.js', 'gridder.js'}
+	{js module:tatami 'jquery.js', 'jquery-ui-1.8.16.custom.min.js', 'netteForms.js', 'jquery.nette.js', 'jquery.ajaxform.js', 'jquery.livequery.js', 'tatami.js', 'gridder.js'}
         {block #js}{/block}
 	<link rel="shortcut icon" href="{$basePath}/favicon.ico" type="image/x-icon"/>
 </head>
@@ -121,8 +121,8 @@
 			    {block #commands}{/block}
 			</div>
 		    </div>
-		    <div class="block-border">
-			<div class="block-content">
+		    <div n:tag-if="!isset($turnOffBlock)" class="block-border">
+			<div n:tag-if="!isset($turnOffBlock)" class="block-content">
 			    {include #content}
 			</div>
 		    </div>

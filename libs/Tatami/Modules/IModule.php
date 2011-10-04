@@ -7,8 +7,6 @@ use Tatami\Events;
  */
 interface IModule 
 {
-    public function loadDashboardWidget(\Tatami\Widgets\WidgetManager &$widgetManager, $args);
-    
     public function getName();
 
     public function getRoutes();

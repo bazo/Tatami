@@ -30,6 +30,7 @@ class User extends BaseEntity implements \Iterator
          * @ManyToOne(targetEntity="UserRole", cascade={"persist", "remove"})
          */
         $role,
+	    
 	/** @Column(type="datetime") */    
 	$created
     ;
@@ -83,6 +84,11 @@ class User extends BaseEntity implements \Iterator
         return $this;
     }
 
+    public function getCreated()
+    {
+	return $this->created;
+    }
+        
     /** @PrePersist */
     public function onPrePersist()
     {

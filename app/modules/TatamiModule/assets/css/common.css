@@ -14,7 +14,7 @@ h1{
     font-size: 22px;
 }
 .block-border {
-    background: url("images/shine-effect.png") repeat-x scroll 0 0 rgba(33, 40, 44, 0.7);
+    background: url("images/shine-effect.png") repeat-x rgba(33, 40, 44, 0.7);
     border: 1px solid #25333C;
     border-radius: 5px 5px 5px 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
@@ -55,7 +55,7 @@ h1{
     border-radius: 3px 3px 3px 3px;
     padding: 0 10px;
     position: relative;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 .block-actions {
     background: url("images/block-actions-bg.png") repeat-x scroll left bottom transparent;

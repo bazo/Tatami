@@ -40,6 +40,7 @@ class ModuleViewer extends BaseControl
     public function handleActivateModule($name)
     {
 	$this->moduleManager->activateModule($name);
+	$this->moduleManager->initializeModules();
 	$this->invalidateControl('view');
 	$this->onModuleStateChange->invoke();
     }
@@ -47,6 +48,7 @@ class ModuleViewer extends BaseControl
     public function handleDeactivateModule($name)
     {
 	$this->moduleManager->deactivateModule($name);
+	$this->moduleManager->initializeModules();
 	$this->invalidateControl('view');
 	$this->onModuleStateChange->invoke();
     }
@@ -54,6 +56,7 @@ class ModuleViewer extends BaseControl
     public function handleDeleteModule($name)
     {
 	$this->moduleManager->deleteModule($name);
+	$this->moduleManager->initializeModules();
 	$this->invalidateControl('view');
 	$this->onModuleStateChange->invoke();
     }

@@ -12,7 +12,9 @@ abstract class CoreModule extends \Tatami\Subscriber implements IModule
     protected
         $moduleName = null,
 	    
-        $widgetName = null,
+	$entities = array(),    
+	   
+	$widgets = array(),    
 	    
         $routes = array(),
 	    
@@ -42,11 +44,6 @@ abstract class CoreModule extends \Tatami\Subscriber implements IModule
 	return $file;
     }
     
-    public function onDashboardLoad(&$dispatcher, $args)
-    {
-	return $this->loadDashboardWidget($dispatcher, $args);
-    }
-    
     public function onRoutesLoad(&$dispatcher, $args)
     {
 	return $this->loadRoutes($dispatcher, $args);
@@ -62,9 +59,14 @@ abstract class CoreModule extends \Tatami\Subscriber implements IModule
 	
     }
 
-    public function onPermissionsLoad(\Tatami\Security\Acl $acl)
+    public function getEntities()
     {
-        
+	return $this->entities;
+    }
+    
+    public function getWidgets()
+    {
+	return $this->widgets;
     }
     
     public function getName()
@@ -72,17 +74,18 @@ abstract class CoreModule extends \Tatami\Subscriber implements IModule
         return $this->moduleName != null ? $this->moduleName :  \str_replace('Module', '', $this->getReflection()->getShortName());
     }
     
+    public function getData()
+    {
+	$data = array();
+	return $data;
+    }
+    
     public function loadRoutes(\Nette\Application\IRouter $router, $args)
     {
+	
     }
 
-    function loadDashboardWidget(\Tatami\Widgets\WidgetManager &$widgetManager, $args)
-    {
-	if(class_exists($this->widgetName))
-	    $widgetManager->addWidget(new $this->widgetName);
-    }
-
-    protected function onInstall()
+    public function onInstall()
     {
 
     }

@@ -121,4 +121,9 @@ class UsersPresenter extends BasePresenter
 	$this->view = 'add';
 	$this->popupOn();
     }
+    
+    public function renderView($id)
+    {
+	$this->template->userEntity = $this->em->getRepository('User')->find($id);
+    }
 }

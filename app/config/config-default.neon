@@ -35,6 +35,7 @@ common:
 			factory: \Tatami\ServiceFactories\PresenterFactory::create
 			
 		translator: \Tatami\Tools\Translator
+    
 		entityManager:
 			factory: \Tatami\ServiceFactories\EntityManagerFactory::create
 			
@@ -46,6 +47,9 @@ common:
 			
 		shortcutsManager:
 			factory: \Tatami\ServiceFactories\ShortcutsManagerFactory::create
+
+		widgetsManager:
+			factory: \Tatami\ServiceFactories\WidgetsManagerFactory::create
 
 		validator:
 			factory: \Tatami\ServiceFactories\ValidatorFactory::create

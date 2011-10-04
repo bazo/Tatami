@@ -94,6 +94,9 @@
 .icon.medium.users{
     background-image: url('icons/medium/users.png');
 }
+.icon.medium.settings{
+    background-image: url('icons/medium/settings.png');
+}
 /* LARGE ICONS */
 .icon.large.module-default{
     background-image: url('icons/large/module-default.png');

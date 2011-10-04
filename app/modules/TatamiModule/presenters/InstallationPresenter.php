@@ -250,11 +250,23 @@ class InstallationPresenter extends \Tatami\Presenters\BasePresenter
 	$email = $this->session->userAccount->email;
 	try
 	{
-	    $this->installer->installDatabase();
+	    //$this->installer->installDatabase();
+	    
+	    $moduleManager = $this->context->getService('moduleManager');
+	    $tatamiModule = new \Tatami\Modules\TatamiModule;
+	    
+	    $this->installer->clearDatabase();
+	    
+	    $moduleManager->installModule($tatamiModule);
+	    $this->installer->installUserRoles();
 	    $admin = $this->installer->createAdminUserAccount($name, $password, $email);
+	    $moduleManager->activateModule($tatamiModule->getName());
 	    $this->installer->writeInstalled();
             if(!$this->session->skipSendingEmails)
-                $this->mailBuilder->buildInstallationEmail($admin)->send();
+	    {
+		$this->mailBuilder->buildInstallationEmail($admin)->send();
+	    }
+	    
 	    $this->flash('Installation successful!');
 	    $this->redirect(':tatami:login:');
 	}

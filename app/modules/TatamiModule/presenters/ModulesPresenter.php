@@ -26,11 +26,19 @@ class ModulesPresenter extends BasePresenter
 	foreach($availableModules as $module)
 	{
 	    if($this->moduleManager->isModuleInstalled($module->name))
-		    $module->installed = true;
-	    else $module->installed = false;
+	    {
+		$module->installed = true;
+	    }
+	    else 
+	    {
+		$module->installed = false;
+	    }
 	}
 	$this->template->availableModules = $availableModules;
-	if($this->isAjax()) $this->setLayout('popup');
+	if($this->isAjax())
+	{
+	    $this->setLayout('popup');
+	}
 	$this->invalidateControl('popup');
     }
     

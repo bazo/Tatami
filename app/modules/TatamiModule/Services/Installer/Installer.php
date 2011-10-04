@@ -83,6 +83,12 @@ class Installer
         }
     }
     
+    public function clearDatabase()
+    {
+	$schemaTool =  new \Doctrine\ORM\Tools\SchemaTool($this->entityManager);
+	$schemaTool->dropDatabase();
+    }
+    
     public function installDatabase()
     {
 	$schemaTool =  new \Doctrine\ORM\Tools\SchemaTool($this->entityManager);
@@ -113,18 +119,7 @@ class Installer
 	}
     }
     
-    private function activateTatami()
-    {
-        $tatami = new \Entity\Module;
-        $tatami->setName('Tatami');
-        $tatami->setInstalled(true);
-        $tatami->setActive(true);
-        
-        $this->entityManager->persist($tatami);
-	$this->entityManager->flush();
-    }
-    
-    private function installUserRoles()
+    public function installUserRoles()
     {
         $user = new \Entity\UserRole;
         
@@ -142,6 +137,7 @@ class Installer
 	$user->setName('User');
         $this->entityManager->persist($user);
 	
+	/*
         $tatamiModule = new Modules\TatamiModule;
         $tatamiPermissions = $tatamiModule->getPermissions();
         
@@ -157,6 +153,7 @@ class Installer
 		$this->entityManager->persist($permission);
             }        
         }
+	 */
         $this->entityManager->flush();
     }
     

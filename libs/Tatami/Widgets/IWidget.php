@@ -6,5 +6,4 @@ namespace Tatami\Widgets;
  */
 interface IWidget 
 {
-    public function render();
 }

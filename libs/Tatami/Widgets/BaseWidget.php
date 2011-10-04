@@ -9,16 +9,14 @@ abstract class BaseWidget extends \Nette\Application\UI\Control implements IWidg
 {
     
     protected 
-        $templateFile = 'widget.phtml'
+        $templateFile = 'widget.phtml',
+	$caption = 'Example'
     ;
     
-    private
-        $name
-    ;
-
     public function render()
     {
         $this->template->setFile(\dirname($this->reflection->getFilename()).'/'.$this->templateFile);
+	$this->template->caption = $this->caption;
         $this->template->render();
     }
 }

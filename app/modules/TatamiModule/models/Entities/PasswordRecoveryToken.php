@@ -10,13 +10,16 @@ class PasswordRecoveryToken extends BaseEntity
         
 	/** @Column(type="string", length=53, unique=true) */
         $token,
+	    
         /**
          * @ManyToOne(targetEntity="User")
 	 * @var User
          */
         $user,
+	    
 	/** @Column(type="datetime") */    
 	$created,
+	    
 	/** @Column(type="boolean") */    
 	$used
     ;

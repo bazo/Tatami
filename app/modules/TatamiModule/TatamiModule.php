@@ -12,7 +12,21 @@ final class TatamiModule extends CoreModule implements IEssentialModule
 	    
         $entryPoint = ':Tatami:dashboard:default',
 	    
-        $widgetName = 'Tatami\Modules\MessagesModule\MessagesWidget',
+	$entities = array(
+	    'Entity\Module',
+	    'Entity\User',
+	    'Entity\PasswordRecoveryToken',
+	    'Entity\Resource',
+	    'Entity\Permission',
+	    'Entity\UserRole',
+	    'Entity\Widget'
+	),    
+	    
+	$widgets = array(
+	    'Messages' => 'Tatami\Modules\MessagesModule\MessagesWidget',
+	    'Messages2' => 'Tatami\Modules\MessagesModule\MessagesWidget2',
+	    'Messages3' => 'Tatami\Modules\MessagesModule\MessagesWidget3'
+	),    
 	    
         $navigation = array(
 	    'Tatami' => array(
@@ -58,6 +72,6 @@ final class TatamiModule extends CoreModule implements IEssentialModule
 	    'action' => 'default',
 	    'id' => NULL
 	));
-*/
+	*/
     }
 }

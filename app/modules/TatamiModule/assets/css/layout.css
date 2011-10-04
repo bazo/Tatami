@@ -236,7 +236,7 @@ header #toolbox #user-menu a:hover{
     height: 14px;
 }
 #main #main-background{
-    background: url("images/main-bg.png") repeat-x scroll center transparent;;
+    background: url("images/main-bg.png") repeat-x top transparent;
     min-height: 434px;
     margin-top: -14px;
 }

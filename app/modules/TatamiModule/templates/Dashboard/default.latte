@@ -7,8 +7,40 @@
 
 {var $title =  'Dashboard'|translate}
 
+{var $turnOffBlock = true}
+
+{block #css}
+    {css 'dashboard.css'}
+{/block}
+
+{block #js}
+    {js 'jquery.cookie.js', 'dashboard.js'}
+{/block}
+
+{block #commands}
+<a href="#" title="{_'Setup'}"><span class="icon medium settings"></span></a>
+{/block}
+
 {block #content}
-<div n:foreach="$widgets as $widgetName => $widget" class="dasboard-widget">
-    {control $widgetName}
+<div id="widgets" data-ondrop-callback="{link widgetDropped!}">
+    {snippet widgets}
+    <div n:foreach="$widgets as $widget" class="dashboard-widget" data-name="{$widget->name}">
+		{control $widget->name}
+    </div>
+    {/snippet}
+    
 </div>
+
+<div id="available-widgets" class="block-border" data-ondrop-callback="{link widgetDisabled!}">
+    <div class="block-header">{_'Available widgets'}</div>
+	<div class="block-content">
+	    {snippet availableWidgets}
+	    <div n:foreach="$inactiveWidgets as $widget" class="available-dashboard-widget" data-name="{$widget->name}">
+		<span>{$widget->name}</span>
+	    </div>
+	    {/snippet}
+	</div>
+    </div>
+
+
 {/block}

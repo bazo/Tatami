@@ -118,7 +118,7 @@ final class ModuleManager extends \Tatami\Subscriber
 	return $this->entityManager->getRepository('Module')->findAll();
     }
     
-    private function initializeModules()
+    public function initializeModules()
     {
 	$modules = $this->findModules();
 	$this->modules = array();
@@ -139,11 +139,54 @@ final class ModuleManager extends \Tatami\Subscriber
 		$module->setActive();
 		$this->registerModule($module->getName());
 		//signup module for events
-		$this->eventManager->addSubscriber(Events\Event::DASHBOARD_LOAD, $module);
-		$this->eventManager->addSubscriber(Events\Event::PERMISSIONS_LOAD, $module);
+		//$this->eventManager->addSubscriber(Events\Event::DASHBOARD_LOAD, $module);
+		//$this->eventManager->addSubscriber(Events\Event::PERMISSIONS_LOAD, $module);
 		$this->eventManager->addSubscriber(Events\Event::ROUTES_LOAD, $module);
 	    }
 	    $this->modules[$module->getName()] = $module;
+	}
+    }
+    
+    
+    private function createSchema($entities)
+    {
+	$schemaTool =  new \Doctrine\ORM\Tools\SchemaTool($this->entityManager);
+	foreach($entities as $entityClass)
+	{
+	    $classes[] = $this->entityManager->getClassMetadata($entityClass);
+	}
+	if(!empty($classes))
+	{
+	    $schemaTool->createSchema($classes);
+	}
+    }
+    
+    private function installResources($permissions)
+    {
+	foreach($permissions as $resourceName => $privileges)
+	{
+	    $resource = new \Entity\Resource($resourceName);
+            
+            foreach($privileges as $privilege => $privilegeText)
+            {
+                $permission = new \Entity\Permission;
+                $permission->setResource($resource)->setPrivilege($privilege)
+                        ->setPrivilegeText($privilegeText);
+		$this->entityManager->persist($permission);
+            }        
+	}
+    }
+    
+    private function installWidgets($widgets, $module)
+    {
+	foreach($widgets as $widgetName => $widgetClass)
+	{
+	    $widget = new \Entity\Widget;
+	    $widget->setModule($module);
+	    $widget->setName($widgetName);
+	    $widget->setClass($widgetClass);
+	    $widget->setActive(false);
+	    $this->entityManager->persist($widget);
 	}
     }
     
@@ -153,13 +196,26 @@ final class ModuleManager extends \Tatami\Subscriber
 	$moduleEntity->setName($module->getName());
 	$moduleEntity->setInstalled(true);
 	$moduleEntity->setActive(false);
+	$this->entityManager->flush();
 	try
 	{
 	   $this->entityManager->persist($moduleEntity);
+	   $module instanceof CoreModule;
+	   
+	   $entities = $module->getEntities();
+	   $this->createSchema($entities);
+	   
+	   $permissions = $module->getPermissions();
+	   $this->installResources($permissions);
+	   
+	   $widgets = $module->getWidgets();
+	   $this->installWidgets($widgets, $moduleEntity);
+	   
 	   $this->entityManager->flush();
 	}
 	catch(\PDOException $e)
 	{
+	    var_dump($e->getMessage());exit;
 	   $this->entityManager->detach($moduleEntity);
 	}
 	return $this;
@@ -194,7 +250,7 @@ final class ModuleManager extends \Tatami\Subscriber
 	$moduleEntity->setActive(true);
 	$this->entityManager->persist($moduleEntity);
 	$this->entityManager->flush();
-	$this->initializeModules();
+	//$this->initializeModules();
 	return $this;
     }
 
@@ -204,7 +260,7 @@ final class ModuleManager extends \Tatami\Subscriber
 	$moduleEntity->setActive(false);
 	$this->entityManager->persist($moduleEntity);
 	$this->entityManager->flush();
-	$this->initializeModules();
+	//$this->initializeModules();
 	return $this;
     }
     

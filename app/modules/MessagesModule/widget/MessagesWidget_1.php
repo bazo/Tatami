@@ -5,9 +5,9 @@ namespace Tatami\Modules\MessagesModule;
  *
  * @author Martin
  */
-class MessagesWidget extends \Tatami\Widgets\BaseWidget 
+class MessagesWidget2 extends \Tatami\Widgets\BaseWidget 
 {
     protected 
-	$caption = 'messages'
+	$caption = 'messages2'
     ;
 }

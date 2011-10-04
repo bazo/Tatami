@@ -1,0 +1,17 @@
+{var $title = $userEntity->name}
+{block #content}
+<table>
+    <tr>
+	<th>{_'E-mail'}:</th>
+	<td>{$userEntity->email}</td>
+    </tr>
+    <tr>
+	<th>{_'Role'}:</th>
+	<td>{$userEntity->role->name}</td>
+    </tr>
+    <tr>
+	<th>{_'Created'}:</th>
+	<td>{$userEntity->created|date:'d.m.Y H:i:s'}</td>
+    </tr>
+</table>
+{/block}

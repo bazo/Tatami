@@ -13,16 +13,4 @@ abstract class Module extends CoreModule
 	$version
     ;
     
-    protected
-        $name = null,
-        $widgetName = null,
-        $routes = array(),
-        $permissions = array(),
-        $entryPoint = null
-    ;
-    
-    public function loadDashboardWidget(\Tatami\Widgets\WidgetManager &$widgetManager, $args)
-    {
-        $widgetManager->addWidget(new static::$widgetName());
-    }
 }
