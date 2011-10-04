@@ -30,10 +30,8 @@
     padding: 20px;
     padding-top: 40px;
 }
-.ui-draggable{
-    z-index: 200000000;
-}
-#available-widgets .block-header{
+.ui-draggable-dragging{
+    z-index: 2;
 }
 .available-dashboard-widget{
     height: 30px;
