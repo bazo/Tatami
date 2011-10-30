@@ -156,6 +156,9 @@ header #toolbox #user-menu a:hover{
     background-image: none;
     background-color: #324452;
 }
+#main aside nav ul li.active ul li.active a, #main aside nav ul li.expanded ul li.active a{
+    color: #ffffff;
+}
 #main aside nav ul li:hover ul li a{
     background-color: #324452;
 }

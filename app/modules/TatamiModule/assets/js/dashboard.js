@@ -46,11 +46,16 @@ $(document).ready(function(){
 	    }
 	});
 	var widgetName = $(this).data('name');
+	
 	var position = $.cookie(widgetName);
-	var coords = position.split(':');
-	var top = parseInt(coords[0]);
-	var left = parseInt(coords[1]);
-	$(this).css({position: 'absolute', top: top+'px', left: left+'px'});
+	if(position != null)
+	{
+	    var coords = position.split(':');
+	    var top = parseInt(coords[0]);
+	    var left = parseInt(coords[1]);
+	    $(this).css({position: 'absolute', top: top+'px', left: left+'px'});
+	}
+	
     });
     
     $('.available-dashboard-widget').livequery(function(){

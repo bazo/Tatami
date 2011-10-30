@@ -5,7 +5,7 @@
 	{if $item->hasChildren()}
 	<span class="arrow"></span>
 	<ul n:inner-foreach="$item->getChildren() as $child" class="sub">
-	    <li><a href="{plink $child->getDestination()}">{$child->getLabel()}</a></li>
+	    <li {ifCurrent $child->getDestination()}class="active"{/ifCurrent}><a href="{plink $child->getDestination()}">{$child->getLabel()}</a></li>
 	</ul>
 	{/if}
     </li>
